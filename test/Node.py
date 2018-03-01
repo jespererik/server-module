@@ -7,6 +7,9 @@ import SensorSimulator
 import RestfulNode
 import time
 
+#Add errorhandling to all functions which have a request to the server
+#Where they could get a invalid packet structure response
+
 node_config = {
    'NODE_NAME': '',
    'LOCATION': ''
@@ -30,7 +33,7 @@ def Read_Node_Config():
 def Write_Node_Config(new_key, new_value):
     Try_File_Open("../shared/node.conf")
     with open("../shared/node.conf", "w") as conf_file:
-        for key, value in zip(node_config.keys(), node_config.values()):
+        for key, value in node_config.iteritems():
             if new_key == key:
                 conf_file.write(key + ':' + new_value + '\n')
             else:
@@ -54,10 +57,10 @@ def __init():
             response = requests.post(url, json = node_config)
             response.raise_for_status()
             #node_logger.info('Server Init Complete')
-            responseData = json.loads(response.content)
-            print(responseData)
-            if (responseData['NODE_NAME'] !=  node_config['NODE_NAME']):
-                Write_Node_Config('NODE_NAME', responseData['NODE_NAME'])
+            response_data = json.loads(response.content)
+            print(response_data)
+            if (response_data['NODE_NAME'] !=  node_config['NODE_NAME']):
+                Write_Node_Config('NODE_NAME', response_data['NODE_NAME'])
             else:
                 pass
             break

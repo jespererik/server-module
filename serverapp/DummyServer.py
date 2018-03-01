@@ -25,7 +25,7 @@ def nodeTemp():
 
 
 def main():
-    Server.create_database()
+    Server.init_database()
     app.run(debug = True)
 
 

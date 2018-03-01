@@ -9,7 +9,7 @@ import sys
 
 sensorData = {
         'NODE_NAME': '',
-        'SENSOR_NAME'
+        'SENSOR_NAME': '',
         'TYPE': '',
         'TIMESTAMP':'',
         'DATA': ''
