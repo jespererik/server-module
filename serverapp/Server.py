@@ -141,6 +141,8 @@ def create_new_node(location):
 def add_sensor_to_node(sensor_name, node_name):
     SERVER_LOGGER.debug('ENTER')
 
+    #TODO fix this, doesn't add the sensors to the database
+
     SERVER_LOGGER.debug('\n Inserting "sensor" {} on "node" {}'.format(sensor_name, node_name))
     sensor_info = (sensor_name, DBHelper.get_node_id_by_name(DB_CONNECTION, node_name))
     DBHelper.insert_sensor(DB_CONNECTION, sensor_info)
@@ -150,7 +152,10 @@ def add_sensor_to_node(sensor_name, node_name):
 def add_node_reading(sensor_name, node_name, reading_entry):
     SERVER_LOGGER.debug('ENTER')
 
-    if(DBHelper.get_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name) is None):
+    #TODO Fix values being added under the wrong column namely data and timestamp
+    #might be a fault in the insert_reading() function in DBHelper
+
+    if(DBHelper.get_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name)):
         SERVER_LOGGER.debug('\n "sensor" {} not found on "node" adding'.format(sensor_name, node_name))
         DBHelper.add_sensor_to_node(DB_CONNECTION, new_sensor_name, node_name)
     reading_entry += (DBHelper.get_sensor_id_by_name(DB_CONNECTION ,sensor_name, node_name),)

@@ -1,0 +1,6 @@
+TODO Fix logging calls to actually send to the correct file and
+to propagate to higher up loggers
+    something like this
+        DBLogger logs to Database.log and propagates to
+        ServerLogger which logs to ServerLog and propagates to
+        SystemLogger which logs to systemLogs and is the root logger
