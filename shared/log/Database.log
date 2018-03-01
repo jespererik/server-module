@@ -1,0 +1,332 @@
+2018-03-01 08:01:08,696 DBHelper create_connection DEBUG ENTER
+2018-03-01 08:01:20,391 DBHelper create_connection DEBUG ENTER
+2018-03-01 08:01:20,393 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 08:01:20,393 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:20,393 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE,
+                    location text
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 08:01:20,394 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE,
+                    location text
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 08:01:20,395 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 08:01:20,395 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 08:01:20,395 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:20,395 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 08:01:44,525 DBHelper create_connection DEBUG ENTER
+2018-03-01 08:01:44,526 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 08:01:44,526 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:44,526 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE,
+                    location text
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 08:01:44,527 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE,
+                    location text
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 08:01:44,527 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 08:01:44,527 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 08:01:44,527 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:44,527 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 08:01:44,536 _internal _log INFO  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-01 08:01:44,541 _internal _log INFO  * Restarting with stat
+2018-03-01 08:01:44,706 DBHelper create_connection DEBUG ENTER
+2018-03-01 08:01:44,707 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 08:01:44,707 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:44,707 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE,
+                    location text
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 08:01:44,708 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE,
+                    location text
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 08:01:44,708 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG ENTER
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 08:01:44,708 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 08:01:44,708 DBHelper create_table DEBUG EXIT
+2018-03-01 08:01:44,709 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 08:01:44,719 _internal _log WARNING  * Debugger is active!
+2018-03-01 08:01:44,745 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 08:02:09,441 Server __is_init_packet DEBUG ENTER
+2018-03-01 08:02:09,441 Server __is_init_packet DEBUG 
+ Check failed for {u'LOCATION': u'inhouse', u'NODE_NAME': u''}
+2018-03-01 08:02:09,441 Server __is_init_packet DEBUG EXIT
+2018-03-01 08:02:09,442 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:09] "POST /init HTTP/1.1" 200 -
+2018-03-01 08:02:09,468 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:09,468 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:09,468 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:09.443997', u'TYPE': u'Temperature', u'DATA': 0, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:09,468 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:09,468 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:09,468 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:09] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:14,631 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:14,631 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:14,631 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:14.566713', u'TYPE': u'Temperature', u'DATA': 9.479975122145053, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:14,631 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:14,631 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:14,631 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:14] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:19,827 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:19,827 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:19,827 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:19.697543', u'TYPE': u'Temperature', u'DATA': 9.498468249884784, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:19,827 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:19,828 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:19,828 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:19] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:24,995 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:24,995 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:24,995 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:24.849201', u'TYPE': u'Temperature', u'DATA': 10.505866194444902, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:24,995 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:24,995 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:24,996 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:24] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:30,234 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:30,235 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:30,235 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:30.165240', u'TYPE': u'Temperature', u'DATA': 22.02076788037736, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:30,235 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:30,235 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:30,235 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:30] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:35,342 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:35,342 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:35,342 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:35.306872', u'TYPE': u'Temperature', u'DATA': 12.446692789518108, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:35,342 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:35,342 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:35,342 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:35] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:40,391 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:40,392 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:40,392 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:40.364502', u'TYPE': u'Temperature', u'DATA': 16.59907438425828, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:40,392 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:40,392 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:40,392 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:40] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:45,441 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:45,441 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:45,441 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:45.407899', u'TYPE': u'Temperature', u'DATA': 17.42792014194679, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:45,441 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:45,441 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:45,442 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:45] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:50,536 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:50,536 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:50,536 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:50.485414', u'TYPE': u'Temperature', u'DATA': 17.428096155647886, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:50,536 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:50,536 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:50,536 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:50] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:02:55,655 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:02:55,655 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:02:55,655 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:02:55.620842', u'TYPE': u'Temperature', u'DATA': 14.486406834000288, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:02:55,655 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:02:55,655 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:02:55,656 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:02:55] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:00,759 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:00,759 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:00,759 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:00.718463', u'TYPE': u'Temperature', u'DATA': 8.6614273184248, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:00,759 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:00,760 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:00,760 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:00] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:05,931 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:05,931 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:05,931 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:05.803176', u'TYPE': u'Temperature', u'DATA': 10.000014957520806, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:05,931 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:05,931 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:05,932 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:05] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:11,063 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:11,063 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:11,063 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:10.969670', u'TYPE': u'Temperature', u'DATA': 16.2664122272214, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:11,063 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:11,063 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:11,063 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:11] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:16,196 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:16,196 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:16,197 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:16.123390', u'TYPE': u'Temperature', u'DATA': 1.262221078563077, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:16,197 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:16,197 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:16,197 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:16] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:21,338 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:21,338 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:21,338 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:21.256346', u'TYPE': u'Temperature', u'DATA': 16.91259491035822, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:21,338 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:21,338 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:21,338 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:21] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:26,465 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:26,465 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:26,465 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:26.445085', u'TYPE': u'Temperature', u'DATA': 13.984736892074727, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:26,465 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:26,465 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:26,466 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:26] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:31,543 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:31,543 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:31,543 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:31.514969', u'TYPE': u'Temperature', u'DATA': 15.967180504883128, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:31,543 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:31,543 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:31,543 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:31] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:36,616 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:36,616 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:36,617 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:36.594831', u'TYPE': u'Temperature', u'DATA': 14.74242243401035, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:36,617 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:36,617 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:36,617 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:36] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 08:03:41,714 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 08:03:41,714 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 08:03:41,714 Server __is_sensor_data_packet DEBUG 
+ Check Failed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 08:03:41.662562', u'TYPE': u'Temperature', u'DATA': 15.609205258955816, u'SENSOR_NAMETYPE': u''}
+2018-03-01 08:03:41,714 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 08:03:41,714 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 08:03:41,715 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 08:03:41] "POST /Temp HTTP/1.1" 201 -

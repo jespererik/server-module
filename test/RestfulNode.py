@@ -8,10 +8,11 @@ import sys
 #app = Flask(__name__)
 
 sensorData = {
-        'nodeID'    :'',
-        'dataType'  :'',
-        'timestamp' :'',
-        'data'      :''
+        'NODE_NAME': '',
+        'SENSOR_NAME'
+        'TYPE': '',
+        'TIMESTAMP':'',
+        'DATA': ''
     }
 
 def tryFileOpen(filepath):
@@ -28,11 +29,12 @@ def errorLog(url, err):
     logfile.close()
 
 def postTemp(addr): 
-    sensorData['dataType'] = "Temperature"
+    sensorData['TYPE'] = "Temperature"
+    sensorData['SENSOR_NAME'] = 'DHT12'
     url = addr + '/Temp'
     while True:
         try:
-            sensorData['data'] = getTemperature()
+            sensorData['DATA'] = getTemperature()
             sensorData['timestamp'] = str(datetime.now())
             requests.post(url, json=sensorData)
         except requests.exceptions.ConnectionError as err:
@@ -65,8 +67,8 @@ def getTest():
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 '''
-def Run_Rest(Node_ID, Server_Port, Server_IP):
-    sensorData['nodeID'] = Node_ID
-    server_addr = 'http://'  + Server_IP + ':' + Server_Port
+def Run_Rest():
+    sensorData['NODE_NAME'] = 'Node#1'
+    server_addr = 'http://127.0.0.1:5000'
     #app.run(port = 5005)    
     postTemp(server_addr)

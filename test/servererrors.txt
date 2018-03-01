@@ -1,0 +1,3 @@
+HTTPError 500: internal server error
+
+Replace returns of restful services with more meaningful messages like error messagess or greeting cars?

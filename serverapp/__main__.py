@@ -1,0 +1,3 @@
+import DummyServer
+
+DummyServer.run()
