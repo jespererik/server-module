@@ -19,6 +19,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+.DS_STORE
 
 # Installer logs
 pip-log.txt
@@ -33,3 +34,10 @@ coverage.xml
 
 # Translations
 *.mo
+
+#Database
+*.db
+
+#Log
+.log
+.conf
