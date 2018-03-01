@@ -4512,3 +4512,1793 @@
 2018-03-01 11:08:35,563 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145318309888
 2018-03-01 11:08:35,563 DBHelper get_sensor_id_by_name DEBUG EXIT
 2018-03-01 11:08:35,570 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 11:08:35] "POST /Temp HTTP/1.1" 500 -
+2018-03-01 11:42:54,129 DBHelper create_connection DEBUG ENTER
+2018-03-01 11:42:54,132 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 11:42:54,132 DBHelper create_node_tables ERROR 
+  Failed to create all tables, see create_table() calls for more information
+2018-03-01 11:42:54,132 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 11:43:40,642 DBHelper create_connection DEBUG ENTER
+2018-03-01 11:43:40,643 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 11:43:40,643 DBHelper create_node_tables ERROR 
+  Failed to create all tables, see create_table() calls for more information
+2018-03-01 11:43:40,643 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 11:43:40,652 _internal _log INFO  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-01 11:43:40,654 _internal _log INFO  * Restarting with stat
+2018-03-01 11:43:40,813 DBHelper create_connection DEBUG ENTER
+2018-03-01 11:43:40,814 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 11:43:40,814 DBHelper create_node_tables ERROR 
+  Failed to create all tables, see create_table() calls for more information
+2018-03-01 11:43:40,814 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 11:43:40,822 _internal _log WARNING  * Debugger is active!
+2018-03-01 11:43:40,838 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 12:33:05,782 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:33:05,785 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:33:05,785 DBHelper create_table DEBUG ENTER
+2018-03-01 12:33:05,785 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:33:05,786 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG EXIT
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG ENTER
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:33:05,786 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG EXIT
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG ENTER
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:33:05,786 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:33:05,786 DBHelper create_table DEBUG EXIT
+2018-03-01 12:33:05,786 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:33:05,786 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:33:05,786 DBHelper insert_node DEBUG 
+  Inserting ('Node#1', 'outhouse') into table "nodes"
+2018-03-01 12:33:05,787 DBHelper insert_node ERROR 
+  
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG 
+  Inserting ('Node#2', 'outhouse') into table "nodes"
+2018-03-01 12:33:05,787 DBHelper insert_node ERROR 
+  
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG 
+  Inserting ('Node#3', 'inhouse') into table "nodes"
+2018-03-01 12:33:05,787 DBHelper insert_node ERROR 
+  
+2018-03-01 12:33:05,787 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:35:41,951 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:35:41,952 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:35:41,952 DBHelper create_table DEBUG ENTER
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:35:41,953 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG EXIT
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG ENTER
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:35:41,953 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG EXIT
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG ENTER
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:35:41,953 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:35:41,953 DBHelper create_table DEBUG EXIT
+2018-03-01 12:35:41,954 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:35:41,954 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:35:41,954 DBHelper insert_node DEBUG 
+  Inserting ('Node#1', 'outhouse') into table "nodes"
+2018-03-01 12:35:41,954 DBHelper insert_node ERROR 
+  
+2018-03-01 12:35:41,954 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:35:41,954 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:35:41,954 DBHelper insert_node DEBUG 
+  Inserting ('Node#2', 'outhouse') into table "nodes"
+2018-03-01 12:35:41,954 DBHelper insert_node ERROR 
+  
+2018-03-01 12:35:41,954 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:35:41,955 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:35:41,955 DBHelper insert_node DEBUG 
+  Inserting ('Node#3', 'inhouse') into table "nodes"
+2018-03-01 12:35:41,955 DBHelper insert_node ERROR 
+  
+2018-03-01 12:35:41,955 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:35:41,955 DBHelper get_node_id_by_name DEBUG ENTER
+2018-03-01 12:35:41,955 DBHelper get_node_id_by_name DEBUG 
+  Querying for id with name Node#1 in nodes
+2018-03-01 12:35:41,955 DBHelper get_node_id_by_name DEBUG 
+  Found 1
+2018-03-01 12:35:41,956 DBHelper get_node_id_by_name DEBUG EXIT
+2018-03-01 12:35:41,956 DBHelper insert_sensor DEBUG ENTER
+2018-03-01 12:35:41,956 DBHelper insert_sensor DEBUG 
+  Inserting ('DHT11', 1) into table "sensors"
+2018-03-01 12:35:41,956 DBHelper insert_sensor ERROR 
+  
+2018-03-01 12:35:41,956 DBHelper insert_sensor DEBUG EXIT
+2018-03-01 12:35:41,956 DBHelper get_node_id_by_name DEBUG ENTER
+2018-03-01 12:35:41,956 DBHelper get_node_id_by_name DEBUG 
+  Querying for id with name Node#2 in nodes
+2018-03-01 12:35:41,956 DBHelper get_node_id_by_name DEBUG 
+  Found 2
+2018-03-01 12:35:41,956 DBHelper get_node_id_by_name DEBUG EXIT
+2018-03-01 12:35:41,956 DBHelper insert_sensor DEBUG ENTER
+2018-03-01 12:35:41,956 DBHelper insert_sensor DEBUG 
+  Inserting ('DHT11', 2) into table "sensors"
+2018-03-01 12:35:41,956 DBHelper insert_sensor ERROR 
+  
+2018-03-01 12:35:41,956 DBHelper insert_sensor DEBUG EXIT
+2018-03-01 12:35:41,957 DBHelper get_node_id_by_name DEBUG ENTER
+2018-03-01 12:35:41,957 DBHelper get_node_id_by_name DEBUG 
+  Querying for id with name Node#3 in nodes
+2018-03-01 12:35:41,957 DBHelper get_node_id_by_name DEBUG 
+  Found 3
+2018-03-01 12:35:41,957 DBHelper get_node_id_by_name DEBUG EXIT
+2018-03-01 12:35:41,957 DBHelper insert_sensor DEBUG ENTER
+2018-03-01 12:35:41,957 DBHelper insert_sensor DEBUG 
+  Inserting ('DHT11', 3) into table "sensors"
+2018-03-01 12:35:41,957 DBHelper insert_sensor ERROR 
+  
+2018-03-01 12:35:41,958 DBHelper insert_sensor DEBUG EXIT
+2018-03-01 12:35:41,958 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:35:41,958 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT11 with nodes.name Node#1 in sensor
+2018-03-01 12:35:41,958 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:35:41,958 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:35:41,958 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:35:41,958 DBHelper insert_reading DEBUG 
+  Inserting ('temperature', 23.43, datetime.datetime(2018, 3, 1, 12, 35, 41, 958152), 1) into table "readings"
+2018-03-01 12:35:41,961 DBHelper insert_reading INFO 
+   Inserted ('temperature', 23.43, datetime.datetime(2018, 3, 1, 12, 35, 41, 958152), 1) into table "readings"
+2018-03-01 12:35:41,961 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:35:41,961 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:35:41,962 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT11 with nodes.name Node#3 in sensor
+2018-03-01 12:35:41,962 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:35:41,962 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:35:41,962 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:35:41,962 DBHelper insert_reading DEBUG 
+  Inserting ('temperature', 23.43, datetime.datetime(2018, 3, 1, 12, 35, 41, 961953), 1) into table "readings"
+2018-03-01 12:35:41,964 DBHelper insert_reading INFO 
+   Inserted ('temperature', 23.43, datetime.datetime(2018, 3, 1, 12, 35, 41, 961953), 1) into table "readings"
+2018-03-01 12:35:41,964 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:35:41,964 DBHelper get_readings_by_location DEBUG ENTER
+2018-03-01 12:35:41,964 DBHelper get_readings_by_location DEBUG 
+  Querying for readings with location outhouse
+2018-03-01 12:35:41,965 DBHelper get_readings_by_location DEBUG 
+  Found [(23.43, u'2018-03-01 11:03:07.640498'), (23.43, u'2018-03-01 11:03:07.642299'), (23.43, u'2018-03-01 11:03:14.361427'), (23.43, u'2018-03-01 11:03:14.364039'), (23.43, u'2018-03-01 12:35:41.958152'), (23.43, u'2018-03-01 12:35:41.961953')]
+2018-03-01 12:35:41,965 DBHelper get_readings_by_location DEBUG EXIT
+2018-03-01 12:35:41,965 DBHelper get_readings_by_location DEBUG ENTER
+2018-03-01 12:35:41,965 DBHelper get_readings_by_location DEBUG 
+  Querying for readings with location inhouse
+2018-03-01 12:35:41,965 DBHelper get_readings_by_location DEBUG 
+  Found []
+2018-03-01 12:35:41,966 DBHelper get_readings_by_location DEBUG EXIT
+2018-03-01 12:35:41,966 DBHelper get_nodes_by_name DEBUG ENTER
+2018-03-01 12:35:41,967 DBHelper get_nodes_by_name DEBUG 
+  Querying nodes for * with name Node#1
+2018-03-01 12:35:41,967 DBHelper get_nodes_by_name DEBUG 
+  Found [(1, u'Node#1', u'outhouse', u'2018-03-01')]
+2018-03-01 12:35:41,967 DBHelper get_nodes_by_name DEBUG EXIT
+2018-03-01 12:35:41,967 DBHelper get_sensors_by_name DEBUG ENTER
+2018-03-01 12:35:41,968 DBHelper get_sensors_by_name DEBUG 
+  Querying sensors for * with name DHT11
+2018-03-01 12:35:41,968 DBHelper get_sensors_by_name DEBUG 
+  Found [(1, u'DHT11', 1), (2, u'DHT11', 2), (3, u'DHT11', 3)]
+2018-03-01 12:35:41,968 DBHelper get_sensors_by_name DEBUG EXIT
+2018-03-01 12:35:41,968 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:35:41,968 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT11 with nodes.name Node#1 in sensor
+2018-03-01 12:35:41,969 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:35:41,969 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:35:41,969 DBHelper get_readings_by_sensor_id DEBUG ENTER
+2018-03-01 12:35:41,969 DBHelper get_readings_by_sensor_id DEBUG 
+  Querying for sensor_id 1 in readings
+2018-03-01 12:35:41,969 DBHelper get_readings_by_sensor_id DEBUG 
+  Found [(23.43, u'2018-03-01 11:03:07.640498'), (23.43, u'2018-03-01 11:03:07.642299'), (23.43, u'2018-03-01 11:03:14.361427'), (23.43, u'2018-03-01 11:03:14.364039'), (23.43, u'2018-03-01 12:35:41.958152'), (23.43, u'2018-03-01 12:35:41.961953')]
+2018-03-01 12:35:41,969 DBHelper get_readings_by_sensor_id DEBUG EXIT
+2018-03-01 12:36:23,253 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:36:23,255 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:36:23,255 DBHelper create_table DEBUG ENTER
+2018-03-01 12:36:23,255 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:36:23,256 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:36:23,256 DBHelper create_table DEBUG EXIT
+2018-03-01 12:36:23,256 DBHelper create_table DEBUG ENTER
+2018-03-01 12:36:23,257 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:36:23,258 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:36:23,258 DBHelper create_table DEBUG EXIT
+2018-03-01 12:36:23,258 DBHelper create_table DEBUG ENTER
+2018-03-01 12:36:23,258 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:36:23,259 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:36:23,259 DBHelper create_table DEBUG EXIT
+2018-03-01 12:36:23,259 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:36:23,276 _internal _log INFO  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-01 12:36:23,279 _internal _log INFO  * Restarting with stat
+2018-03-01 12:36:23,493 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:36:23,494 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:36:23,495 DBHelper create_table DEBUG ENTER
+2018-03-01 12:36:23,495 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:36:23,496 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:36:23,496 DBHelper create_table DEBUG EXIT
+2018-03-01 12:36:23,496 DBHelper create_table DEBUG ENTER
+2018-03-01 12:36:23,496 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:36:23,496 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:36:23,497 DBHelper create_table DEBUG EXIT
+2018-03-01 12:36:23,497 DBHelper create_table DEBUG ENTER
+2018-03-01 12:36:23,497 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:36:23,497 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:36:23,497 DBHelper create_table DEBUG EXIT
+2018-03-01 12:36:23,497 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:36:23,511 _internal _log WARNING  * Debugger is active!
+2018-03-01 12:36:23,531 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 12:37:09,954 Server node_init_packet_handler DEBUG ENTER
+2018-03-01 12:37:09,954 Server __is_init_packet DEBUG ENTER
+2018-03-01 12:37:09,954 Server __is_init_packet DEBUG 
+ Check passed for {u'LOCATION': u'inhouse', u'NODE_NAME': u''}
+2018-03-01 12:37:09,954 Server __is_init_packet DEBUG EXIT
+2018-03-01 12:37:09,968 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:37:09] "POST /init HTTP/1.1" 500 -
+2018-03-01 12:37:33,465 _internal _log INFO  * Detected change in '/Users/oumu/workspace/server-module/serverapp/Server.py', reloading
+2018-03-01 12:37:33,503 _internal _log INFO  * Restarting with stat
+2018-03-01 12:37:33,772 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:37:33,773 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:37:33,773 DBHelper create_table DEBUG ENTER
+2018-03-01 12:37:33,773 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:37:33,774 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG EXIT
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG ENTER
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:37:33,774 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG EXIT
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG ENTER
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:37:33,774 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:37:33,774 DBHelper create_table DEBUG EXIT
+2018-03-01 12:37:33,774 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:37:33,785 _internal _log WARNING  * Debugger is active!
+2018-03-01 12:37:33,811 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 12:38:07,933 Server node_init_packet_handler DEBUG ENTER
+2018-03-01 12:38:07,934 Server __is_init_packet DEBUG ENTER
+2018-03-01 12:38:07,934 Server __is_init_packet DEBUG 
+ Check passed for {u'LOCATION': u'inhouse', u'NODE_NAME': u''}
+2018-03-01 12:38:07,934 Server __is_init_packet DEBUG EXIT
+2018-03-01 12:38:07,934 Server create_new_node DEBUG ENTER
+2018-03-01 12:38:07,943 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:38:07] "POST /init HTTP/1.1" 500 -
+2018-03-01 12:38:37,601 _internal _log INFO  * Detected change in '/Users/oumu/workspace/server-module/serverapp/Server.py', reloading
+2018-03-01 12:38:37,633 _internal _log INFO  * Restarting with stat
+2018-03-01 12:38:37,856 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:38:37,859 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:38:37,859 DBHelper create_table DEBUG ENTER
+2018-03-01 12:38:37,859 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:38:37,859 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG EXIT
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG ENTER
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:38:37,860 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG EXIT
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG ENTER
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:38:37,860 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:38:37,860 DBHelper create_table DEBUG EXIT
+2018-03-01 12:38:37,861 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:38:37,871 _internal _log WARNING  * Debugger is active!
+2018-03-01 12:38:37,900 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 12:38:42,103 Server node_init_packet_handler DEBUG ENTER
+2018-03-01 12:38:42,103 Server __is_init_packet DEBUG ENTER
+2018-03-01 12:38:42,103 Server __is_init_packet DEBUG 
+ Check passed for {u'LOCATION': u'inhouse', u'NODE_NAME': u''}
+2018-03-01 12:38:42,103 Server __is_init_packet DEBUG EXIT
+2018-03-01 12:38:42,103 Server create_new_node DEBUG ENTER
+2018-03-01 12:38:42,103 DBHelper is_table_empty DEBUG ENTER
+2018-03-01 12:38:42,103 DBHelper is_table_empty ERROR 
+  
+2018-03-01 12:38:42,103 DBHelper is_table_empty DEBUG EXIT
+2018-03-01 12:38:42,103 Server create_new_node DEBUG 
+   No nodes in table "nodes" creating first node "Node#1"
+2018-03-01 12:38:42,103 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:38:42,103 DBHelper insert_node ERROR 
+  
+2018-03-01 12:38:42,103 DBHelper insert_node DEBUG EXIT
+2018-03-01 12:38:42,103 Server create_new_node DEBUG EXIT
+2018-03-01 12:38:42,104 Server node_init_packet_handler DEBUG EXIT
+2018-03-01 12:38:42,104 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:38:42] "POST /init HTTP/1.1" 200 -
+2018-03-01 12:38:42,113 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:38:42,113 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:38:42,113 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:42.106726', u'TYPE': u'Temperature', u'DATA': 0}
+2018-03-01 12:38:42,113 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:38:42,113 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:42.106726', u'TYPE': u'Temperature', u'DATA': 0}, adding to database
+2018-03-01 12:38:42,113 Server add_node_reading DEBUG ENTER
+2018-03-01 12:38:42,113 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:42,113 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:42,113 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:42,114 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:42,114 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:42,114 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:42,124 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:38:42] "POST /Temp HTTP/1.1" 500 -
+2018-03-01 12:38:47,157 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:38:47,157 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:38:47,157 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:47.151115', u'TYPE': u'Temperature', u'DATA': 4.469181669391468}
+2018-03-01 12:38:47,157 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:38:47,158 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:47.151115', u'TYPE': u'Temperature', u'DATA': 4.469181669391468}, adding to database
+2018-03-01 12:38:47,158 Server add_node_reading DEBUG ENTER
+2018-03-01 12:38:47,158 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:47,158 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:47,158 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:47,158 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:47,158 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:47,158 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:47,171 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:38:47] "POST /Temp HTTP/1.1" 500 -
+2018-03-01 12:38:52,203 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:38:52,203 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:38:52,203 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:52.183191', u'TYPE': u'Temperature', u'DATA': 15.420970058930035}
+2018-03-01 12:38:52,204 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:38:52,204 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:52.183191', u'TYPE': u'Temperature', u'DATA': 15.420970058930035}, adding to database
+2018-03-01 12:38:52,204 Server add_node_reading DEBUG ENTER
+2018-03-01 12:38:52,204 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:52,204 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:52,204 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:52,204 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:52,204 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:52,204 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:52,212 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:38:52] "POST /Temp HTTP/1.1" 500 -
+2018-03-01 12:38:57,249 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:38:57,249 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:38:57,249 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:57.240502', u'TYPE': u'Temperature', u'DATA': 8.509016974504757}
+2018-03-01 12:38:57,249 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:38:57,249 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:38:57.240502', u'TYPE': u'Temperature', u'DATA': 8.509016974504757}, adding to database
+2018-03-01 12:38:57,249 Server add_node_reading DEBUG ENTER
+2018-03-01 12:38:57,249 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:57,249 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:57,249 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:57,249 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:38:57,249 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:38:57,249 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:38:57,257 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:38:57] "POST /Temp HTTP/1.1" 500 -
+2018-03-01 12:39:02,296 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:02,296 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:02,296 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:02.266819', u'TYPE': u'Temperature', u'DATA': -2.0394983407911047}
+2018-03-01 12:39:02,296 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:02,296 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:02.266819', u'TYPE': u'Temperature', u'DATA': -2.0394983407911047}, adding to database
+2018-03-01 12:39:02,296 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:02,296 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:02,296 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:39:02,296 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:02,297 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:02,297 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145522466816
+2018-03-01 12:39:02,297 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:02,312 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:02] "POST /Temp HTTP/1.1" 500 -
+2018-03-01 12:39:03,189 _internal _log INFO  * Detected change in '/Users/oumu/workspace/server-module/serverapp/Server.py', reloading
+2018-03-01 12:39:03,216 _internal _log INFO  * Restarting with stat
+2018-03-01 12:39:03,443 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:39:03,445 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:39:03,445 DBHelper create_table DEBUG ENTER
+2018-03-01 12:39:03,445 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:39:03,446 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG EXIT
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG ENTER
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:39:03,446 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG EXIT
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG ENTER
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:39:03,446 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:39:03,446 DBHelper create_table DEBUG EXIT
+2018-03-01 12:39:03,447 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:39:03,458 _internal _log WARNING  * Debugger is active!
+2018-03-01 12:39:03,480 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 12:39:08,543 Server node_init_packet_handler DEBUG ENTER
+2018-03-01 12:39:08,543 Server __is_init_packet DEBUG ENTER
+2018-03-01 12:39:08,543 Server __is_init_packet DEBUG 
+ Check passed for {u'LOCATION': u'inhouse', u'NODE_NAME': u'Node#1'}
+2018-03-01 12:39:08,543 Server __is_init_packet DEBUG EXIT
+2018-03-01 12:39:08,543 Server node_init_packet_handler DEBUG EXIT
+2018-03-01 12:39:08,543 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:08] "POST /init HTTP/1.1" 200 -
+2018-03-01 12:39:08,559 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:08,559 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:08,559 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:08.545426', u'TYPE': u'Temperature', u'DATA': 0}
+2018-03-01 12:39:08,560 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:08,560 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:08.545426', u'TYPE': u'Temperature', u'DATA': 0}, adding to database
+2018-03-01 12:39:08,560 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:08,560 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:08,560 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:08,560 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:08,560 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:08,560 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:08,560 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:08,560 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 0, 1)
+2018-03-01 12:39:08,560 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:08,560 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:08,560 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:08,560 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:08,561 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:08,561 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:08] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:13,598 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:13,598 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:13,598 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:13.573994', u'TYPE': u'Temperature', u'DATA': 3.7996428500366917}
+2018-03-01 12:39:13,598 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:13,598 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:13.573994', u'TYPE': u'Temperature', u'DATA': 3.7996428500366917}, adding to database
+2018-03-01 12:39:13,598 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:13,598 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:13,598 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:13,598 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:13,598 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:13,599 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:13,599 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:13,599 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 3.7996428500366917, 1)
+2018-03-01 12:39:13,599 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:13,599 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:13,599 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:13,599 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:13,599 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:13,599 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:13] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:18,635 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:18,635 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:18,635 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:18.615198', u'TYPE': u'Temperature', u'DATA': 22.27552427000876}
+2018-03-01 12:39:18,635 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:18,635 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:18.615198', u'TYPE': u'Temperature', u'DATA': 22.27552427000876}, adding to database
+2018-03-01 12:39:18,635 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:18,636 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:18,636 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:18,636 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:18,636 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:18,636 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:18,636 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:18,636 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 22.27552427000876, 1)
+2018-03-01 12:39:18,636 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:18,636 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:18,636 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:18,636 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:18,636 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:18,637 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:18] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:23,649 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:23,649 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:23,649 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:23.647146', u'TYPE': u'Temperature', u'DATA': 15.596447059378301}
+2018-03-01 12:39:23,650 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:23,650 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:23.647146', u'TYPE': u'Temperature', u'DATA': 15.596447059378301}, adding to database
+2018-03-01 12:39:23,650 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:23,650 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:23,650 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:23,650 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:23,650 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:23,650 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:23,650 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:23,650 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 15.596447059378301, 1)
+2018-03-01 12:39:23,650 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:23,650 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:23,650 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:23,650 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:23,650 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:23,651 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:23] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:28,701 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:28,701 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:28,701 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:28.688964', u'TYPE': u'Temperature', u'DATA': 5.088626368239605}
+2018-03-01 12:39:28,701 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:28,702 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:28.688964', u'TYPE': u'Temperature', u'DATA': 5.088626368239605}, adding to database
+2018-03-01 12:39:28,702 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:28,702 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:28,702 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:28,703 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:28,703 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:28,703 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:28,703 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:28,703 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 5.088626368239605, 1)
+2018-03-01 12:39:28,703 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:28,703 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:28,704 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:28,704 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:28,704 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:28,705 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:28] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:33,765 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:33,765 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:33,765 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:33.725824', u'TYPE': u'Temperature', u'DATA': 4.951860535438135}
+2018-03-01 12:39:33,765 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:33,765 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:33.725824', u'TYPE': u'Temperature', u'DATA': 4.951860535438135}, adding to database
+2018-03-01 12:39:33,765 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:33,765 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:33,765 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:33,765 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:33,765 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:33,765 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:33,765 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:33,765 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 4.951860535438135, 1)
+2018-03-01 12:39:33,765 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:33,766 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:33,766 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:33,766 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:33,766 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:33,767 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:33] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:38,816 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:38,816 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:38,816 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:38.773304', u'TYPE': u'Temperature', u'DATA': 16.11362090439235}
+2018-03-01 12:39:38,816 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:38,816 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:38.773304', u'TYPE': u'Temperature', u'DATA': 16.11362090439235}, adding to database
+2018-03-01 12:39:38,816 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:38,816 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:38,816 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:38,816 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:38,817 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:38,817 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:38,817 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:38,817 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 16.11362090439235, 1)
+2018-03-01 12:39:38,817 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:38,817 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:38,817 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:38,817 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:38,818 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:38,818 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:38] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:43,841 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:43,841 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:43,841 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:43.832673', u'TYPE': u'Temperature', u'DATA': 17.02878605611702}
+2018-03-01 12:39:43,841 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:43,841 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:43.832673', u'TYPE': u'Temperature', u'DATA': 17.02878605611702}, adding to database
+2018-03-01 12:39:43,841 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:43,841 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:43,841 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:43,841 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:43,841 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:43,841 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:43,841 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:43,841 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 17.02878605611702, 1)
+2018-03-01 12:39:43,841 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:43,841 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:43,842 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:43,842 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:43,842 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:43,842 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:43] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:48,854 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:48,854 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:48,854 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:48.848429', u'TYPE': u'Temperature', u'DATA': 8.19289679498623}
+2018-03-01 12:39:48,854 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:48,854 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:48.848429', u'TYPE': u'Temperature', u'DATA': 8.19289679498623}, adding to database
+2018-03-01 12:39:48,854 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:48,854 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:48,855 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:48,855 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:48,855 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:48,855 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:48,856 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:48,856 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 8.19289679498623, 1)
+2018-03-01 12:39:48,856 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:48,856 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:48,856 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:48,856 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:48,856 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:48,857 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:48] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:53,912 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:53,912 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:53,912 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:53.871230', u'TYPE': u'Temperature', u'DATA': 19.777738334046926}
+2018-03-01 12:39:53,912 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:53,913 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:53.871230', u'TYPE': u'Temperature', u'DATA': 19.777738334046926}, adding to database
+2018-03-01 12:39:53,913 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:53,913 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:53,913 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:53,913 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:53,913 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:53,913 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:53,913 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:53,913 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 19.777738334046926, 1)
+2018-03-01 12:39:53,913 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:53,913 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:53,913 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:53,913 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:53,913 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:53,913 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:53] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:39:58,931 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:39:58,931 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:39:58,931 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:58.921253', u'TYPE': u'Temperature', u'DATA': 13.112338772079585}
+2018-03-01 12:39:58,931 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:39:58,932 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:39:58.921253', u'TYPE': u'Temperature', u'DATA': 13.112338772079585}, adding to database
+2018-03-01 12:39:58,932 Server add_node_reading DEBUG ENTER
+2018-03-01 12:39:58,932 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:58,932 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:58,932 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:58,932 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:39:58,932 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:39:58,932 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:39:58,932 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 13.112338772079585, 1)
+2018-03-01 12:39:58,933 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:39:58,933 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:39:58,933 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:39:58,933 Server add_node_reading DEBUG EXIT
+2018-03-01 12:39:58,933 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:39:58,934 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:39:58] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:40:03,969 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:40:03,969 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:40:03,970 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:03.943869', u'TYPE': u'Temperature', u'DATA': 12.810686282360388}
+2018-03-01 12:40:03,970 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:40:03,970 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:03.943869', u'TYPE': u'Temperature', u'DATA': 12.810686282360388}, adding to database
+2018-03-01 12:40:03,970 Server add_node_reading DEBUG ENTER
+2018-03-01 12:40:03,971 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:03,971 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:03,971 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:03,971 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:03,971 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:03,971 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:03,971 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 12.810686282360388, 1)
+2018-03-01 12:40:03,971 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:40:03,972 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:40:03,972 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:40:03,972 Server add_node_reading DEBUG EXIT
+2018-03-01 12:40:03,972 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:40:03,972 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:40:03] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:40:09,030 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:40:09,030 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:40:09,030 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:08.988590', u'TYPE': u'Temperature', u'DATA': 9.812602671943287}
+2018-03-01 12:40:09,030 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:40:09,030 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:08.988590', u'TYPE': u'Temperature', u'DATA': 9.812602671943287}, adding to database
+2018-03-01 12:40:09,030 Server add_node_reading DEBUG ENTER
+2018-03-01 12:40:09,030 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:09,030 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:09,030 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:09,030 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:09,030 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:09,030 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:09,030 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 9.812602671943287, 1)
+2018-03-01 12:40:09,031 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:40:09,031 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:40:09,031 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:40:09,031 Server add_node_reading DEBUG EXIT
+2018-03-01 12:40:09,031 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:40:09,031 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:40:09] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:40:14,060 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:40:14,060 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:40:14,060 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:14.054299', u'TYPE': u'Temperature', u'DATA': 8.80715794269299}
+2018-03-01 12:40:14,060 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:40:14,060 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:14.054299', u'TYPE': u'Temperature', u'DATA': 8.80715794269299}, adding to database
+2018-03-01 12:40:14,060 Server add_node_reading DEBUG ENTER
+2018-03-01 12:40:14,060 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:14,060 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:14,060 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:14,060 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:14,060 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:14,060 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:14,060 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 8.80715794269299, 1)
+2018-03-01 12:40:14,061 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:40:14,061 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:40:14,061 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:40:14,061 Server add_node_reading DEBUG EXIT
+2018-03-01 12:40:14,061 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:40:14,061 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:40:14] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:40:19,107 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:40:19,107 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:40:19,107 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:19.070648', u'TYPE': u'Temperature', u'DATA': 4.864245320658703}
+2018-03-01 12:40:19,108 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:40:19,108 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:19.070648', u'TYPE': u'Temperature', u'DATA': 4.864245320658703}, adding to database
+2018-03-01 12:40:19,108 Server add_node_reading DEBUG ENTER
+2018-03-01 12:40:19,108 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:19,108 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:19,108 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:19,108 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:19,108 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:19,108 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:19,108 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 4.864245320658703, 1)
+2018-03-01 12:40:19,109 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:40:19,109 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:40:19,109 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:40:19,109 Server add_node_reading DEBUG EXIT
+2018-03-01 12:40:19,109 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:40:19,109 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:40:19] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:40:24,139 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:40:24,139 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:40:24,139 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:24.128925', u'TYPE': u'Temperature', u'DATA': 11.883408998444253}
+2018-03-01 12:40:24,139 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:40:24,139 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'SENSOR_NAME': u'DHT12', u'TIMESTAMP': u'', u'NODE_NAME': u'Node#1', u'timestamp': u'2018-03-01 12:40:24.128925', u'TYPE': u'Temperature', u'DATA': 11.883408998444253}, adding to database
+2018-03-01 12:40:24,139 Server add_node_reading DEBUG ENTER
+2018-03-01 12:40:24,140 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:24,140 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:24,140 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:24,140 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:40:24,140 DBHelper get_sensor_id_by_name ERROR SQLite objects created in a thread can only be used in that same thread.The object was created in thread id 140735966012224 and this is thread id 123145538277376
+2018-03-01 12:40:24,140 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:40:24,140 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'', 11.883408998444253, 1)
+2018-03-01 12:40:24,140 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:40:24,140 DBHelper insert_reading ERROR 
+  
+2018-03-01 12:40:24,140 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:40:24,140 Server add_node_reading DEBUG EXIT
+2018-03-01 12:40:24,140 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:40:24,140 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:40:24] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:43:24,436 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:43:24,437 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:43:24,437 DBHelper create_table DEBUG ENTER
+2018-03-01 12:43:24,437 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:43:24,438 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:43:24,439 DBHelper create_table DEBUG EXIT
+2018-03-01 12:43:24,439 DBHelper create_table DEBUG ENTER
+2018-03-01 12:43:24,439 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:43:24,440 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:43:24,440 DBHelper create_table DEBUG EXIT
+2018-03-01 12:43:24,440 DBHelper create_table DEBUG ENTER
+2018-03-01 12:43:24,440 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:43:24,442 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:43:24,442 DBHelper create_table DEBUG EXIT
+2018-03-01 12:43:24,442 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:43:24,451 _internal _log INFO  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-01 12:43:24,454 _internal _log INFO  * Restarting with stat
+2018-03-01 12:43:24,621 DBHelper create_connection DEBUG ENTER
+2018-03-01 12:43:24,622 DBHelper create_node_tables DEBUG ENTER
+2018-03-01 12:43:24,622 DBHelper create_table DEBUG ENTER
+2018-03-01 12:43:24,622 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:43:24,623 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS nodes(
+                    id integer PRIMARY KEY, 
+                    name text NOT NULL UNIQUE ,
+                    location text,
+                    created DateTime DEFAULT CURRENT_DATE
+                );
+            
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG EXIT
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG ENTER
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:43:24,623 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS sensors(
+                id integer PRIMARY KEY, 
+                name text NOT NULL,
+                node_id integer, 
+                    FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+                UNIQUE (id, node_id)
+                UNIQUE (node_id, name)     
+                );                         
+            
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG EXIT
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG ENTER
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG 
+  Creating table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:43:24,623 DBHelper create_table INFO 
+   Created table CREATE TABLE IF NOT EXISTS readings (
+                readingtype text, 
+                data float, 
+                timestamp DateTime,
+                sensor_id integer NOT NULL,
+                    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            
+2018-03-01 12:43:24,623 DBHelper create_table DEBUG EXIT
+2018-03-01 12:43:24,624 DBHelper create_node_tables DEBUG EXIT
+2018-03-01 12:43:24,632 _internal _log WARNING  * Debugger is active!
+2018-03-01 12:43:24,647 _internal _log INFO  * Debugger PIN: 253-412-455
+2018-03-01 12:43:46,838 Server node_init_packet_handler DEBUG ENTER
+2018-03-01 12:43:46,838 Server __is_init_packet DEBUG ENTER
+2018-03-01 12:43:46,838 Server __is_init_packet DEBUG 
+ Check passed for {u'LOCATION': u'inhouse', u'NODE_NAME': u''}
+2018-03-01 12:43:46,838 Server __is_init_packet DEBUG EXIT
+2018-03-01 12:43:46,838 Server create_new_node DEBUG ENTER
+2018-03-01 12:43:46,839 DBHelper is_table_empty DEBUG ENTER
+2018-03-01 12:43:46,839 DBHelper is_table_empty DEBUG 
+  is empty? nodes
+2018-03-01 12:43:46,839 DBHelper is_table_empty ERROR 
+  
+2018-03-01 12:43:46,839 DBHelper is_table_empty DEBUG EXIT
+2018-03-01 12:43:46,839 Server create_new_node DEBUG 
+   No nodes in table "nodes" creating first node "Node#1"
+2018-03-01 12:43:46,839 DBHelper insert_node DEBUG ENTER
+2018-03-01 12:43:46,839 DBHelper insert_node DEBUG 
+  Inserting ('Node#1', u'inhouse') into table "nodes"
+2018-03-01 12:43:46,841 DBHelper insert_node INFO 
+   Inserted ('Node#1', u'inhouse') into table "nodes"
+2018-03-01 12:43:46,841 Server create_new_node DEBUG EXIT
+2018-03-01 12:43:46,841 Server node_init_packet_handler DEBUG EXIT
+2018-03-01 12:43:46,842 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:43:46] "POST /init HTTP/1.1" 200 -
+2018-03-01 12:43:46,852 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:43:46,852 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:43:46,852 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:43:46.844021', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 0, u'TYPE': u'Temperature'}
+2018-03-01 12:43:46,853 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:43:46,853 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:43:46.844021', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 0, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:43:46,853 Server add_node_reading DEBUG ENTER
+2018-03-01 12:43:46,853 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:43:46,853 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:43:46,853 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:43:46,853 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:43:46,853 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:43:46,853 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:43:46,854 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:43:46,854 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:43:46,854 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:43:46.844021', 0, 1)
+2018-03-01 12:43:46,854 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:43:46,854 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:43:46.844021', 0, 1) into table "readings"
+2018-03-01 12:43:46,855 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:43:46.844021', 0, 1) into table "readings"
+2018-03-01 12:43:46,855 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:43:46,855 Server add_node_reading DEBUG EXIT
+2018-03-01 12:43:46,855 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:43:46,855 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:43:46] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:43:51,927 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:43:51,927 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:43:51,927 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:43:51.875299', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 16.198456629486387, u'TYPE': u'Temperature'}
+2018-03-01 12:43:51,928 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:43:51,928 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:43:51.875299', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 16.198456629486387, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:43:51,928 Server add_node_reading DEBUG ENTER
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:43:51,928 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:43:51,928 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:43:51.875299', 16.198456629486387, 1)
+2018-03-01 12:43:51,928 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:43:51,929 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:43:51.875299', 16.198456629486387, 1) into table "readings"
+2018-03-01 12:43:51,930 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:43:51.875299', 16.198456629486387, 1) into table "readings"
+2018-03-01 12:43:51,931 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:43:51,931 Server add_node_reading DEBUG EXIT
+2018-03-01 12:43:51,931 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:43:51,931 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:43:51] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:43:56,948 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:43:56,949 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:43:56,949 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:43:56.937773', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 15.32333310791787, u'TYPE': u'Temperature'}
+2018-03-01 12:43:56,949 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:43:56,949 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:43:56.937773', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 15.32333310791787, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:43:56,949 Server add_node_reading DEBUG ENTER
+2018-03-01 12:43:56,949 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:43:56,949 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:43:56,949 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:43:56,949 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:43:56,949 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:43:56,950 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:43:56,950 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:43:56,950 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:43:56,950 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:43:56.937773', 15.32333310791787, 1)
+2018-03-01 12:43:56,950 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:43:56,950 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:43:56.937773', 15.32333310791787, 1) into table "readings"
+2018-03-01 12:43:56,952 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:43:56.937773', 15.32333310791787, 1) into table "readings"
+2018-03-01 12:43:56,952 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:43:56,952 Server add_node_reading DEBUG EXIT
+2018-03-01 12:43:56,952 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:43:56,953 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:43:56] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:02,026 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:02,026 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:02,026 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:01.970491', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 14.843107355093258, u'TYPE': u'Temperature'}
+2018-03-01 12:44:02,026 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:02,026 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:01.970491', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 14.843107355093258, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:02,026 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:02,026 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:02,026 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:02,026 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:02,026 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:02,027 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:02,027 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:02,027 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:02,027 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:02,027 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:01.970491', 14.843107355093258, 1)
+2018-03-01 12:44:02,027 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:02,027 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:01.970491', 14.843107355093258, 1) into table "readings"
+2018-03-01 12:44:02,028 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:01.970491', 14.843107355093258, 1) into table "readings"
+2018-03-01 12:44:02,028 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:02,028 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:02,028 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:02,029 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:02] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:07,138 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:07,138 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:07,138 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:07.084808', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 11.121513934847156, u'TYPE': u'Temperature'}
+2018-03-01 12:44:07,138 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:07,138 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:07.084808', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 11.121513934847156, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:07,139 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:07,139 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:07,140 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:07,140 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:07.084808', 11.121513934847156, 1)
+2018-03-01 12:44:07,140 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:07,140 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:07.084808', 11.121513934847156, 1) into table "readings"
+2018-03-01 12:44:07,142 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:07.084808', 11.121513934847156, 1) into table "readings"
+2018-03-01 12:44:07,142 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:07,142 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:07,142 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:07,143 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:07] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:12,179 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:12,179 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:12,179 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:12.165999', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 6.015935213182391, u'TYPE': u'Temperature'}
+2018-03-01 12:44:12,179 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:12,179 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:12.165999', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 6.015935213182391, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:12,179 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:12,179 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:12,179 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:12.165999', 6.015935213182391, 1)
+2018-03-01 12:44:12,180 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:12,180 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:12.165999', 6.015935213182391, 1) into table "readings"
+2018-03-01 12:44:12,181 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:12.165999', 6.015935213182391, 1) into table "readings"
+2018-03-01 12:44:12,182 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:12,182 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:12,182 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:12,182 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:12] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:17,221 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:17,221 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:17,221 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:17.208892', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 12.02631858217219, u'TYPE': u'Temperature'}
+2018-03-01 12:44:17,221 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:17,221 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:17.208892', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 12.02631858217219, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:17,221 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:17,221 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:17,222 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:17.208892', 12.02631858217219, 1)
+2018-03-01 12:44:17,222 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:17,222 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:17.208892', 12.02631858217219, 1) into table "readings"
+2018-03-01 12:44:17,224 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:17.208892', 12.02631858217219, 1) into table "readings"
+2018-03-01 12:44:17,224 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:17,224 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:17,224 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:17,224 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:17] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:22,262 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:22,266 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:22,266 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:22.234574', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 6.846648368398833, u'TYPE': u'Temperature'}
+2018-03-01 12:44:22,266 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:22,266 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:22.234574', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 6.846648368398833, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:22,266 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:22,266 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:22,267 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:22.234574', 6.846648368398833, 1)
+2018-03-01 12:44:22,267 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:22,267 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:22.234574', 6.846648368398833, 1) into table "readings"
+2018-03-01 12:44:22,268 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:22.234574', 6.846648368398833, 1) into table "readings"
+2018-03-01 12:44:22,268 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:22,268 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:22,268 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:22,268 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:22] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:27,326 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:27,326 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:27,326 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:27.286822', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 5.44458931648507, u'TYPE': u'Temperature'}
+2018-03-01 12:44:27,326 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:27,327 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:27.286822', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 5.44458931648507, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:27,327 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:27,327 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:27,327 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:27,327 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:27,327 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:27,327 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:27,327 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:27,328 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:27,328 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:27,328 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:27.286822', 5.44458931648507, 1)
+2018-03-01 12:44:27,328 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:27,328 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:27.286822', 5.44458931648507, 1) into table "readings"
+2018-03-01 12:44:27,330 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:27.286822', 5.44458931648507, 1) into table "readings"
+2018-03-01 12:44:27,330 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:27,330 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:27,330 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:27,331 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:27] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:32,376 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:32,377 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:32,377 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:32.358472', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 11.507948783955992, u'TYPE': u'Temperature'}
+2018-03-01 12:44:32,377 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:32,377 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:32.358472', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 11.507948783955992, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:32,377 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:32,377 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:32,377 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:32,378 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:32,378 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:32,378 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:32,378 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:32,378 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:32,378 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:32,378 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:32.358472', 11.507948783955992, 1)
+2018-03-01 12:44:32,378 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:32,378 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:32.358472', 11.507948783955992, 1) into table "readings"
+2018-03-01 12:44:32,380 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:32.358472', 11.507948783955992, 1) into table "readings"
+2018-03-01 12:44:32,380 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:32,381 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:32,381 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:32,381 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:32] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:37,428 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:37,428 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:37,428 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:37.398418', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 13.010244059132964, u'TYPE': u'Temperature'}
+2018-03-01 12:44:37,428 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:37,428 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:37.398418', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 13.010244059132964, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:37,428 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:37,428 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:37,429 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:37,429 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:37.398418', 13.010244059132964, 1)
+2018-03-01 12:44:37,429 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:37,429 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:37.398418', 13.010244059132964, 1) into table "readings"
+2018-03-01 12:44:37,431 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:37.398418', 13.010244059132964, 1) into table "readings"
+2018-03-01 12:44:37,431 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:37,431 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:37,431 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:37,432 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:37] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:42,551 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:42,552 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:42,552 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:42.438373', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 13.43398424690626, u'TYPE': u'Temperature'}
+2018-03-01 12:44:42,552 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:42,552 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:42.438373', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 13.43398424690626, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:42,552 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:42,552 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:42,552 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:42,552 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:42,552 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:42,552 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:42,553 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:42,553 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:42,553 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:42,553 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:42.438373', 13.43398424690626, 1)
+2018-03-01 12:44:42,553 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:42,553 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:42.438373', 13.43398424690626, 1) into table "readings"
+2018-03-01 12:44:42,555 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:42.438373', 13.43398424690626, 1) into table "readings"
+2018-03-01 12:44:42,555 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:42,555 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:42,555 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:42,556 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:42] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:47,572 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:47,573 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:47,573 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:47.561225', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 14.814497603581605, u'TYPE': u'Temperature'}
+2018-03-01 12:44:47,573 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:47,573 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:47.561225', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 14.814497603581605, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:47,573 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:47,573 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:47,573 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:47.561225', 14.814497603581605, 1)
+2018-03-01 12:44:47,573 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:47,573 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:47.561225', 14.814497603581605, 1) into table "readings"
+2018-03-01 12:44:47,575 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:47.561225', 14.814497603581605, 1) into table "readings"
+2018-03-01 12:44:47,575 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:47,575 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:47,575 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:47,576 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:47] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:52,644 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:52,646 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:52,646 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:52.597032', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 11.986379422854085, u'TYPE': u'Temperature'}
+2018-03-01 12:44:52,646 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:52,646 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:52.597032', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 11.986379422854085, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:52,646 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:52,647 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:52,647 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:52.597032', 11.986379422854085, 1)
+2018-03-01 12:44:52,647 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:52,647 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:52.597032', 11.986379422854085, 1) into table "readings"
+2018-03-01 12:44:52,648 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:52.597032', 11.986379422854085, 1) into table "readings"
+2018-03-01 12:44:52,648 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:52,648 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:52,649 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:52,649 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:52] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:44:57,699 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:44:57,699 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:44:57,699 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:44:57.662651', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 9.587474318155298, u'TYPE': u'Temperature'}
+2018-03-01 12:44:57,699 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:44:57,699 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:44:57.662651', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 9.587474318155298, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:44:57,699 Server add_node_reading DEBUG ENTER
+2018-03-01 12:44:57,699 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:57,699 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:57,700 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:57,700 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:57,700 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:44:57,700 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:44:57,700 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:44:57,700 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:44:57,700 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:44:57.662651', 9.587474318155298, 1)
+2018-03-01 12:44:57,700 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:44:57,700 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:44:57.662651', 9.587474318155298, 1) into table "readings"
+2018-03-01 12:44:57,702 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:44:57.662651', 9.587474318155298, 1) into table "readings"
+2018-03-01 12:44:57,702 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:44:57,702 Server add_node_reading DEBUG EXIT
+2018-03-01 12:44:57,702 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:44:57,703 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:44:57] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:45:02,757 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:45:02,757 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:45:02,757 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:45:02.726790', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 9.191818755699938, u'TYPE': u'Temperature'}
+2018-03-01 12:45:02,757 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:45:02,757 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:45:02.726790', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 9.191818755699938, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:45:02,757 Server add_node_reading DEBUG ENTER
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:02,757 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:02,758 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:02,758 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:45:02.726790', 9.191818755699938, 1)
+2018-03-01 12:45:02,758 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:45:02,758 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:45:02.726790', 9.191818755699938, 1) into table "readings"
+2018-03-01 12:45:02,760 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:45:02.726790', 9.191818755699938, 1) into table "readings"
+2018-03-01 12:45:02,760 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:45:02,760 Server add_node_reading DEBUG EXIT
+2018-03-01 12:45:02,760 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:45:02,760 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:45:02] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:45:07,804 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:45:07,805 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:45:07,805 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:45:07.786610', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 10.299801638280105, u'TYPE': u'Temperature'}
+2018-03-01 12:45:07,805 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:45:07,805 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:45:07.786610', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 10.299801638280105, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:45:07,805 Server add_node_reading DEBUG ENTER
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:07,805 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:07,805 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:45:07.786610', 10.299801638280105, 1)
+2018-03-01 12:45:07,806 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:45:07,806 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:45:07.786610', 10.299801638280105, 1) into table "readings"
+2018-03-01 12:45:07,807 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:45:07.786610', 10.299801638280105, 1) into table "readings"
+2018-03-01 12:45:07,807 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:45:07,807 Server add_node_reading DEBUG EXIT
+2018-03-01 12:45:07,807 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:45:07,808 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:45:07] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:45:12,909 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:45:12,909 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:45:12,909 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:45:12.849889', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 7.898783800055841, u'TYPE': u'Temperature'}
+2018-03-01 12:45:12,909 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:45:12,909 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:45:12.849889', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 7.898783800055841, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:45:12,909 Server add_node_reading DEBUG ENTER
+2018-03-01 12:45:12,909 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:12,909 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:12,909 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:12,910 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:12,910 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:12,910 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:12,910 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:12,910 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:12,910 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:45:12.849889', 7.898783800055841, 1)
+2018-03-01 12:45:12,910 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:45:12,910 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:45:12.849889', 7.898783800055841, 1) into table "readings"
+2018-03-01 12:45:12,912 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:45:12.849889', 7.898783800055841, 1) into table "readings"
+2018-03-01 12:45:12,912 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:45:12,912 Server add_node_reading DEBUG EXIT
+2018-03-01 12:45:12,912 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:45:12,913 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:45:12] "POST /Temp HTTP/1.1" 201 -
+2018-03-01 12:45:17,941 Server node_data_packet_handler DEBUG ENTER
+2018-03-01 12:45:17,941 Server __is_sensor_data_packet DEBUG ENTER
+2018-03-01 12:45:17,942 Server __is_sensor_data_packet DEBUG 
+ Check passed for {u'TIMESTAMP': u'2018-03-01 12:45:17.924159', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 16.40868532604395, u'TYPE': u'Temperature'}
+2018-03-01 12:45:17,942 Server __is_sensor_data_packet DEBUG EXIT
+2018-03-01 12:45:17,942 Server node_data_packet_handler DEBUG 
+ Recieved "sensor_data_packet" {u'TIMESTAMP': u'2018-03-01 12:45:17.924159', u'NODE_NAME': u'Node#1', u'SENSOR_NAME': u'DHT12', u'DATA': 16.40868532604395, u'TYPE': u'Temperature'}, adding to database
+2018-03-01 12:45:17,942 Server add_node_reading DEBUG ENTER
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name DEBUG ENTER
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name DEBUG 
+  Querying for name DHT12 with nodes.name Node#1 in sensor
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name ERROR near ")": syntax error
+2018-03-01 12:45:17,942 DBHelper get_sensor_id_by_name DEBUG EXIT
+2018-03-01 12:45:17,942 Server add_node_reading DEBUG 
+ Inserting "reading" (u'Temperature', u'2018-03-01 12:45:17.924159', 16.40868532604395, 1)
+2018-03-01 12:45:17,942 DBHelper insert_reading DEBUG ENTER
+2018-03-01 12:45:17,943 DBHelper insert_reading DEBUG 
+  Inserting (u'Temperature', u'2018-03-01 12:45:17.924159', 16.40868532604395, 1) into table "readings"
+2018-03-01 12:45:17,944 DBHelper insert_reading INFO 
+   Inserted (u'Temperature', u'2018-03-01 12:45:17.924159', 16.40868532604395, 1) into table "readings"
+2018-03-01 12:45:17,944 DBHelper insert_reading DEBUG EXIT
+2018-03-01 12:45:17,944 Server add_node_reading DEBUG EXIT
+2018-03-01 12:45:17,944 Server node_data_packet_handler DEBUG EXIT
+2018-03-01 12:45:17,945 _internal _log INFO 127.0.0.1 - - [01/Mar/2018 12:45:17] "POST /Temp HTTP/1.1" 201 -

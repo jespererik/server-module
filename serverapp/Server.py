@@ -2,8 +2,6 @@ import sys
 import DBHelper
 import logging
 
-DB_CONNECTION = DBHelper.create_connection('../shared/database/test.db')
-
 FORMAT = '%(asctime)s %(module)s %(funcName)s %(levelname)s %(message)s'
 logging.basicConfig(
     format = FORMAT,
@@ -12,8 +10,10 @@ logging.basicConfig(
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
+DB_CONNECTION = DBHelper.create_connection('../shared/database/test.db')
+
 def init_database():
-    DBHelper.create_node_tables()
+    DBHelper.create_node_tables(DB_CONNECTION)
 
 
 def __is_init_packet(recieved_packet):
@@ -42,12 +42,12 @@ def __is_init_packet(recieved_packet):
         SERVER_LOGGER.debug('\n Check passed for {}'.format(recieved_packet))
         SERVER_LOGGER.debug('EXIT')
         return True
+
     else:
         SERVER_LOGGER.debug('\n Check failed for {}'.format(recieved_packet)) 
         SERVER_LOGGER.debug('EXIT')
         return False
         
-
 
 def __is_sensor_data_packet(recieved_packet):
     '''
@@ -121,9 +121,9 @@ def create_new_node(location):
     #Refactor this, too messy?
     SERVER_LOGGER.debug('ENTER')
 
-    if DBHelper.is_table_empty('nodes'):
+    if DBHelper.is_table_empty(DB_CONNECTION, 'nodes'):
         SERVER_LOGGER.debug('\n   No nodes in table "nodes" creating first node "Node#1"')
-        DBHelper.insert_node(('Node#1', location))
+        DBHelper.insert_node(DB_CONNECTION, ('Node#1', location))
 
         SERVER_LOGGER.debug('EXIT')
         return 'Node#1'
@@ -132,7 +132,7 @@ def create_new_node(location):
         new_name, new_id = latest_name.split('#')
         new_node_name = new_name + '#' + str(int(new_id) + 1)
         SERVER_LOGGER.debug('\n Inserting new "node" {} with location {}'.format(new_node_name, location))
-        DBHelper.insert_node((new_node_name, location))
+        DBHelper.insert_node(DB_CONNECTION, (new_node_name, location))
 
         SERVER_LOGGER.debug('EXIT')
         return new_node_name
@@ -142,19 +142,19 @@ def add_sensor_to_node(sensor_name, node_name):
     SERVER_LOGGER.debug('ENTER')
 
     SERVER_LOGGER.debug('\n Inserting "sensor" {} on "node" {}'.format(sensor_name, node_name))
-    sensor_info = (sensor_name, DBHelper.get_node_id_by_name(node_name))
-    DBHelper.insert_sensor(sensor_info)
+    sensor_info = (sensor_name, DBHelper.get_node_id_by_name(DB_CONNECTION, node_name))
+    DBHelper.insert_sensor(DB_CONNECTION, sensor_info)
 
     SERVER_LOGGER.debug('EXIT')
 
 def add_node_reading(sensor_name, node_name, reading_entry):
     SERVER_LOGGER.debug('ENTER')
 
-    if(DBHelper.get_sensor_id_by_name(sensor_name, node_name) is None):
+    if(DBHelper.get_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name) is None):
         SERVER_LOGGER.debug('\n "sensor" {} not found on "node" adding'.format(sensor_name, node_name))
-        DBHelper.add_sensor_to_node(new_sensor_name, node_name)
-    reading_entry += DBHelper.get_sensor_id_by_name(sensor_name, node_name)
+        DBHelper.add_sensor_to_node(DB_CONNECTION, new_sensor_name, node_name)
+    reading_entry += (DBHelper.get_sensor_id_by_name(DB_CONNECTION ,sensor_name, node_name),)
     SERVER_LOGGER.debug('\n Inserting "reading" {}'.format(reading_entry))
-    DBHelper.insert_reading(reading_entry)
+    DBHelper.insert_reading(DB_CONNECTION, reading_entry)
 
     SERVER_LOGGER.debug('EXIT')

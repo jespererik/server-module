@@ -35,7 +35,7 @@ def postTemp(addr):
     while True:
         try:
             sensorData['DATA'] = getTemperature()
-            sensorData['timestamp'] = str(datetime.now())
+            sensorData['TIMESTAMP'] = str(datetime.now())
             requests.post(url, json=sensorData)
         except requests.exceptions.ConnectionError as err:
             errorLog(url, err)

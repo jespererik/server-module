@@ -18,14 +18,14 @@ DB_LOGGER.propagate = True
 #TODO CRUD for each table
 
 
-def is_table_empty(table_name):
+def is_table_empty(conn, table_name):
     #Will there be a problem with True return for success and 1 return on error?
     #This function is probably too long aswell
     DB_LOGGER.debug('ENTER')
 
     tokens = (table_name,)
     try:
-        c_cursor = DB_CONNECTION.cursor()
+        c_cursor = conn.cursor()
         DB_LOGGER.debug('\n  is empty? {}'.format(table_name))
         query_result = c_cursor.execute('SELECT count(*) FROM = ?', tokens)
 
@@ -47,23 +47,23 @@ def is_table_empty(table_name):
 def create_connection(db_file):
     DB_LOGGER.debug('ENTER')
     try:
-        DB_CONNECTION = sqlite3.connect(db_file)
-        return DB_CONNECTION
+        conn = sqlite3.connect(db_file, check_same_thread = False)
+        return conn
     except sqlite3.Error as e:
         DB_LOGGER.error('\n  '.format(e))
         DB_LOGGER.debug('EXIT')
         return 1
 
 
-def create_table(create_table_sql):
+def create_table(conn, create_table_sql):
     DB_LOGGER.debug('ENTER')
 
     try:
-        c_cursor = DB_CONNECTION.cursor()
+        c_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Creating table {}'.format(create_table_sql))
         c_cursor.execute(create_table_sql)
         DB_LOGGER.info('\n   Created table {}'.format(create_table_sql))
-        DB_CONNECTION.commit()
+        conn.commit()
 
         DB_LOGGER.debug('EXIT')
         return 0
@@ -73,11 +73,11 @@ def create_table(create_table_sql):
         return 1
 
 '''
-def create_index(DB_CONNECTION, index_name, table_name, column_name):
+def create_index(conn, index_name, table_name, column_name):
     DB_LOGGER.debug('ENTER')
     tokens = (index_name, table_name, column_name)
     try:
-        c_cursor = DB_CONNECTION.cursor()
+        c_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Creating index {} for table {}'.format(index_name, table_name))
         c_cursor.execute('CREATE INDEX ? ON ?(?)', tokens)
         
@@ -90,15 +90,15 @@ def create_index(DB_CONNECTION, index_name, table_name, column_name):
     DB_LOGGER.debug('EXIT')
     return 1
 '''
-def insert_node(node_info):
+def insert_node(conn, node_info):
     DB_LOGGER.debug('ENTER')
 
     try:
-        insert_cursor = DB_CONNECTION.cursor()
+        insert_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Inserting {} into table "nodes"'.format(node_info))
 
         insert_cursor.execute('INSERT INTO nodes(name, location) VALUES (?, ?)', node_info)
-        DB_CONNECTION.commit()
+        conn.commit()
         
         DB_LOGGER.info('\n   Inserted {} into table "nodes"'.format(node_info))
         return 0
@@ -108,15 +108,15 @@ def insert_node(node_info):
         return 1
 
 
-def insert_sensor(sensor_info):
+def insert_sensor(conn, sensor_info):
     DB_LOGGER.debug('ENTER')
 
     try:
-        insert_cursor = DB_CONNECTION.cursor()
+        insert_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Inserting {} into table "sensors"'.format(sensor_info))
 
         insert_cursor.execute('INSERT INTO sensors(name, node_id) VALUES (?, ?)', sensor_info)
-        DB_CONNECTION.commit()
+        conn.commit()
         
         DB_LOGGER.info('\n   Inserted {} into table "sensors"'.format(sensor_info))
         return 0
@@ -127,15 +127,15 @@ def insert_sensor(sensor_info):
         return 1
 
 
-def insert_reading(reading):
+def insert_reading(conn, reading):
     DB_LOGGER.debug('ENTER')
 
     try:
-        insert_cursor = DB_CONNECTION.cursor()
+        insert_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Inserting {} into table "readings"'.format(reading))
 
         insert_cursor.execute('INSERT INTO readings(readingtype, data, timestamp, sensor_id) VALUES (?, ?, ?, ?)', reading)
-        DB_CONNECTION.commit()
+        conn.commit()
         
         DB_LOGGER.info('\n   Inserted {} into table "readings"'.format(reading))
         DB_LOGGER.debug('EXIT')
@@ -146,11 +146,11 @@ def insert_reading(reading):
         DB_LOGGER.debug('EXIT')
         return 1
     
-def get_latest_node_name():
+def get_latest_node_name(conn):
     DB_LOGGER.debug('ENTER')
 
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER('\n    Querying for latest "nodes" entry "name"')
 
         query_result = query_cursor.execute('SELECT name FROM nodes GROUP BY name').fetchone()[0]
@@ -165,12 +165,12 @@ def get_latest_node_name():
         return 1
 
 
-def get_nodes_by_name(node_name):
+def get_nodes_by_name(conn, node_name):
     DB_LOGGER.debug('ENTER')
 
     tokens = (node_name,)
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Querying nodes for * with name {}'.format(node_name))
 
         query_result = query_cursor.execute('SELECT * FROM nodes WHERE name = ?', tokens).fetchall()
@@ -186,12 +186,12 @@ def get_nodes_by_name(node_name):
         return 1
 
 
-def get_sensors_by_name(sensor_name):
+def get_sensors_by_name(conn, sensor_name):
     '''
-        Executes a SELECT statement on the given database DB_CONNECTIONection "DB_CONNECTION" to get all entries of the "sensors" table
+        Executes a SELECT statement on the given database connection "conn" to get all entries of the "sensors" table
         where column "name" == "sensor_name"
 
-        params: DB_CONNECTION sqlite3.DB_CONNECTIONection('path/to/file.db')
+        params: conn sqlite3.connection('path/to/file.db')
                 sensor_name string
 
         return: on success a list of tuples containing all columns of the matching "sensors" entries
@@ -208,7 +208,7 @@ def get_sensors_by_name(sensor_name):
 
     tokens = (sensor_name,)
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Querying sensors for * with name {}'.format(sensor_name))
 
         query_result = query_cursor.execute('SELECT * FROM sensors WHERE name = ?', tokens).fetchall()
@@ -224,12 +224,12 @@ def get_sensors_by_name(sensor_name):
         return 1
 
 
-def get_node_id_by_name(node_name):
+def get_node_id_by_name(conn, node_name):
     '''
-        Executes a SELECT statement on the given database DB_CONNECTIONection "DB_CONNECTION" to get all entries of the "nodes" table
+        Executes a SELECT statement on the given database connection "conn" to get all entries of the "nodes" table
         where column "name" == "node_name"
 
-        params: DB_CONNECTION sqlite3.DB_CONNECTIONection('path/to/file.db')
+        params: conn sqlite3.connection('path/to/file.db')
                 node_name string
 
         return: on sucess returns the id of the matching entry as an integer
@@ -246,7 +246,7 @@ def get_node_id_by_name(node_name):
 
     tokens = (node_name,)
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Querying for id with name {} in nodes'.format(node_name))
 
         query_result = query_cursor.execute('SELECT id FROM nodes WHERE name = ?', tokens).fetchone()[0]
@@ -261,14 +261,14 @@ def get_node_id_by_name(node_name):
         DB_LOGGER.debug('EXIT')
         return 1
     
-def get_sensor_id_by_name(sensor_name, node_name):
+def get_sensor_id_by_name(conn, sensor_name, node_name):
     '''
-        Executes a SELECT statement on the given database DB_CONNECTIONection "DB_CONNECTION" 
+        Executes a SELECT statement on the given database connection "conn" 
         to get all entries of the "sensors" table which
         have the "node_id" of "node_name" in table "nodes" and the name sensor_name in "sensors"
 
         Args: 
-            DB_CONNECTION: an instance sqlite3.DB_CONNECTIONection('path/to/file.db')
+            conn: an instance sqlite3.connection('path/to/file.db')
             sensor_name: A string representing the sensor_name that is being searched for
             node_name: A string representing the node_name that is being searched for
 
@@ -291,7 +291,7 @@ def get_sensor_id_by_name(sensor_name, node_name):
 
     tokens = (sensor_name, node_name,)
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Querying for name {} with nodes.name {} in sensor'.format(sensor_name, node_name))
 
         query_result = query_cursor.execute(
@@ -308,12 +308,12 @@ def get_sensor_id_by_name(sensor_name, node_name):
         return 1
 
 
-def get_readings_by_sensor_id(sensor_id):
+def get_readings_by_sensor_id(conn, sensor_id):
     '''
-        Executes a SELECT statement on the given database DB_CONNECTIONection to get all entries of the readings table which
+        Executes a SELECT statement on the given database connection to get all entries of the readings table which
         have a matching sensor_id
 
-        params: DB_CONNECTION sqlite3.DB_CONNECTIONection('path/to/file.db')
+        params: conn sqlite3.connection('path/to/file.db')
                 sensor_id integer
 
         return: on sucessA list of tuples containing the data and timestamps columns of the readings table
@@ -322,7 +322,7 @@ def get_readings_by_sensor_id(sensor_id):
         Example usaage:
             get_readings_by_sensor_id(
                 
-                get_sensor_id_by_name( 'DHT11', 'Node#1')
+                get_sensor_id_by_name('DHT11', 'Node#1')
             )
 
     '''
@@ -330,7 +330,7 @@ def get_readings_by_sensor_id(sensor_id):
 
     tokens = (sensor_id,)
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Querying for sensor_id {} in readings'.format(sensor_id))
 
         query_result = query_cursor.execute('SELECT data, timestamp FROM readings WHERE sensor_id = ?', tokens).fetchall()
@@ -345,12 +345,12 @@ def get_readings_by_sensor_id(sensor_id):
         DB_LOGGER.debug('EXIT')
         return 1
 
-def get_readings_by_location(node_location):
+def get_readings_by_location(conn, node_location):
     '''
-        Executes a SELECT statement on the given database DB_CONNECTIONection to get all entries of the readings table which
-        are DB_CONNECTIONected to a node with the given location 
+        Executes a SELECT statement on the given database connection to get all entries of the readings table which
+        are connected to a node with the given location 
 
-        params: DB_CONNECTION is the database DB_CONNECTIONection
+        params: conn is the database connection
                 node_location is the physical placement of a node given a symbolic name for access
         return: on success a List of tuples where the tuples contain the data and timestamp columns of the table readings
                 on sqlite3.error 1
@@ -359,7 +359,7 @@ def get_readings_by_location(node_location):
 
     tokens = (node_location,)
     try:
-        query_cursor = DB_CONNECTION.cursor()
+        query_cursor = conn.cursor()
         DB_LOGGER.debug('\n  Querying for readings with location {}'.format(node_location))
 
         query_result = query_cursor.execute(
@@ -375,9 +375,9 @@ def get_readings_by_location(node_location):
         return 1
     
 
-def create_node_tables():
+def create_node_tables(conn):
     '''
-        Creates all tables related to a node to the given database DB_CONNECTIONection 
+        Creates all tables related to a node to the given database connection 
         with the function create_table()
 
         sql statements:
@@ -410,7 +410,7 @@ def create_node_tables():
 
     try:
         create_table(
-            DB_CONNECTION,
+            conn,
             '''CREATE TABLE IF NOT EXISTS nodes(
                     id integer PRIMARY KEY, 
                     name text NOT NULL UNIQUE ,
@@ -420,7 +420,7 @@ def create_node_tables():
             '''
         )
         create_table(
-            DB_CONNECTION,
+            conn,
             '''CREATE TABLE IF NOT EXISTS sensors(
                 id integer PRIMARY KEY, 
                 name text NOT NULL,
@@ -432,7 +432,7 @@ def create_node_tables():
             '''
         )
         create_table(
-            DB_CONNECTION,
+            conn,
             '''CREATE TABLE IF NOT EXISTS readings (
                 readingtype text, 
                 data float, 
@@ -442,7 +442,7 @@ def create_node_tables():
                 );
             '''
         )
-        DB_CONNECTION.commit()
+        conn.commit()
         DB_LOGGER.debug('EXIT')
         return 0
     except:
@@ -450,25 +450,30 @@ def create_node_tables():
         DB_LOGGER.debug('EXIT')
         return 1
 
-DB_CONNECTION = create_connection('../shared/database/test.db')
     
 if __name__ == '__main__':
 
-    create_node_tables()
-    insert_node(('Node#1', 'outhouse'))
-    insert_node(('Node#2', 'outhouse'))
-    insert_node(('Node#3', 'inhouse'))
-    insert_sensor(('DHT11', get_node_id_by_name( 'Node#1')))
-    insert_sensor(('DHT11', get_node_id_by_name( 'Node#2')))
-    insert_sensor( ('DHT11', get_node_id_by_name( 'Node#3')))
+    DB_CONNECTION = create_connection('../shared/database/test.db')
+
+    create_node_tables(DB_CONNECTION)
+
+    insert_node(DB_CONNECTION, ('Node#1', 'outhouse'))
+    insert_node(DB_CONNECTION, ('Node#2', 'outhouse'))
+    insert_node(DB_CONNECTION, ('Node#3', 'inhouse'))
+
+    insert_sensor(DB_CONNECTION, ('DHT11', get_node_id_by_name(DB_CONNECTION, 'Node#1')))
+    insert_sensor(DB_CONNECTION, ('DHT11', get_node_id_by_name(DB_CONNECTION, 'Node#2')))
+    insert_sensor(DB_CONNECTION, ('DHT11', get_node_id_by_name(DB_CONNECTION, 'Node#3')))
 
 
     insert_reading(
+        DB_CONNECTION,
         (
             'temperature',
             23.43,
             datetime.now(),
-            get_sensor_id_by_name(    
+            get_sensor_id_by_name(
+                DB_CONNECTION,   
                 'DHT11',
                 'Node#1'
             )
@@ -477,11 +482,13 @@ if __name__ == '__main__':
 
 
     insert_reading(
+        DB_CONNECTION,
         (
             'temperature',
             23.43,
             datetime.now(),
-            get_sensor_id_by_name(    
+            get_sensor_id_by_name( 
+                DB_CONNECTION, 
                 'DHT11',
                 'Node#3'
             )
@@ -490,34 +497,40 @@ if __name__ == '__main__':
 
 
     print(
-        get_readings_by_location(   
+        get_readings_by_location(
+            DB_CONNECTION,  
             'outhouse'
         )
     )
 
 
     print(
-        get_readings_by_location(    
+        get_readings_by_location(
+            DB_CONNECTION,   
             'inhouse'
         )
     )
 
 
     print(
-        get_nodes_by_name( 
+        get_nodes_by_name(
+            DB_CONNECTION, 
             'Node#1'
         )
     )
 
     print(
         get_sensors_by_name(
+            DB_CONNECTION,
             'DHT11'
         )
     )
 
     print(
         get_readings_by_sensor_id(
-            get_sensor_id_by_name(      
+            DB_CONNECTION,
+            get_sensor_id_by_name(
+                DB_CONNECTION,      
                 'DHT11',
                 'Node#1'
             )
