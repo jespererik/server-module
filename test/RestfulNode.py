@@ -6,6 +6,8 @@ import requests
 import sys
 
 #app = Flask(__name__)
+#Change this so thay all packet fields are filld by the sensor
+#implementation
 
 sensorData = {
         'NODE_NAME': '',
@@ -30,12 +32,13 @@ def errorLog(url, err):
 
 def postTemp(addr): 
     sensorData['TYPE'] = "Temperature"
-    sensorData['SENSOR_NAME'] = 'DHT12'
-    url = addr + '/Temp'
+    sensorData['SENSOR_NAME'] = "DHT12"
+    sensorData['TIMESTAMP'] = str(datetime.now())
+    url = addr + '/POST/reading'
     while True:
         try:
             sensorData['DATA'] = getTemperature()
-            sensorData['TIMESTAMP'] = str(datetime.now())
+            
             requests.post(url, json=sensorData)
         except requests.exceptions.ConnectionError as err:
             errorLog(url, err)
