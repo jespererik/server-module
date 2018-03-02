@@ -5,7 +5,7 @@ import logging
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = 'shared/log/server.log',
+    filename = 'shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
