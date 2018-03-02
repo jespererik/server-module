@@ -39,7 +39,7 @@ coverage.xml
 *.db
 
 #Log
-#.log
+.log
 
 #Shared
-#shared/*
+shared/*
