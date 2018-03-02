@@ -5,7 +5,7 @@ import logging
 FORMAT = '%(asctime)s %(module)s %(funcName)s %(levelname)s %(message)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '../shared/log/Database.log',
+    filename = 'shared/log/Database.log',
     filemode = 'w',
     level = logging.DEBUG
 )

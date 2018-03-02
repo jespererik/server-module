@@ -5,12 +5,12 @@ import logging
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '../shared/log/server.log',
+    filename = 'shared/log/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = DBHelper.create_connection('../shared/test.db')
+DB_CONNECTION = DBHelper.create_connection('./shared/test.db')
 
 
 def init_database():

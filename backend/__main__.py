@@ -1,3 +1,1 @@
 import restfulapi
-
-restfulapi.run()
