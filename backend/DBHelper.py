@@ -6,6 +6,7 @@ FORMAT = '%(asctime)s %(module)s %(funcName)s %(levelname)s %(message)s'
 logging.basicConfig(
     format = FORMAT,
     filename = '../shared/log/Database.log',
+    filemode = 'w',
     level = logging.DEBUG
 )
 
@@ -18,39 +19,65 @@ DB_LOGGER.propagate = True
 #TODO CRUD for each table
 
 
-def is_table_empty(conn, table_name):
+def is_empty_table(conn, table):
+    
+    '''Checks if a table is empty
+
+        counts all the rows in the sql statement
+        'SELECT count(*) FROM <table>' and returns it
+
+        Args:
+            conn: is the connection returned by the function
+            create_connection(db_file)
+            table: A table in the db_file associated with conn
+
+        Return:
+            query_result: The number of rows in the given table
+
+        Raises:
+            sqlite3.Error        
+
+    '''
+
     #Will there be a problem with True return for success and 1 return on error?
     #This function is probably too long aswell
     DB_LOGGER.debug('ENTER')
 
-    tokens = (table_name,)
+    sql = ('SELECT count(*) FROM {}'.format(table))
+
     try:
         c_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  is empty? {}'.format(table_name))
-        query_result = c_cursor.execute('SELECT count(*) FROM = ?', tokens)
+        DB_LOGGER.debug('is empty? {}'.format(table))
+        query_result = c_cursor.execute(sql).fetchone()[0]
 
-        if query_result is 0:
-            DB_LOGGER.debug('EXIT') 
-            return True
-
-        else:
-            DB_LOGGER.debug('EXIT')
-            return False
+        return query_result
 
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
-        return True
+        return None
 
 
 #CRUD
 def create_connection(db_file):
+    '''Creates a connection to a the specified .db file <db_file>
+
+        Args:
+            db_file: the path of the .db file that is to be opened
+        
+        Return:
+            conn: The sqlite3.connection object related to the specified file
+        
+        Raises:
+            sqlite3.Error which is written to a log file
+    '''
     DB_LOGGER.debug('ENTER')
+    DB_LOGGER.info('CONNECTING TO: {}'.format(db_file))
     try:
         conn = sqlite3.connect(db_file, check_same_thread = False)
         return conn
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
         return None
 
@@ -60,15 +87,15 @@ def create_table(conn, create_table_sql):
 
     try:
         c_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Creating table {}'.format(create_table_sql))
+        DB_LOGGER.debug('Creating table {}'.format(create_table_sql))
         c_cursor.execute(create_table_sql)
-        DB_LOGGER.info('\n   Created table {}'.format(create_table_sql))
+        DB_LOGGER.info('Created table {}'.format(create_table_sql))
         conn.commit()
 
         DB_LOGGER.debug('EXIT')
         return True
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))    
+        DB_LOGGER.error(e)    
         DB_LOGGER.debug('EXIT')
         return False
 
@@ -78,14 +105,14 @@ def create_index(conn, index_name, table_name, column_name):
     tokens = (index_name, table_name, column_name)
     try:
         c_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Creating index {} for table {}'.format(index_name, table_name))
+        DB_LOGGER.debug('  Creating index {} for table {}'.format(index_name, table_name))
         c_cursor.execute('CREATE INDEX ? ON ?(?)', tokens)
         
         DB_LOGGER.debug('EXIT')
         return 0
 
     except sqlite3.error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error('  '.format(e))
 
     DB_LOGGER.debug('EXIT')
     return 1
@@ -95,15 +122,15 @@ def insert_node(conn, node_info):
 
     try:
         insert_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Inserting {} into table "nodes"'.format(node_info))
+        DB_LOGGER.debug('  Inserting {} into table "nodes"'.format(node_info))
 
         insert_cursor.execute('INSERT INTO nodes(name, location) VALUES (?, ?)', node_info)
         conn.commit()
         
-        DB_LOGGER.info('\n   Inserted {} into table "nodes"'.format(node_info))
+        DB_LOGGER.info('   Inserted {} into table "nodes"'.format(node_info))
         return True
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))  
+        DB_LOGGER.error(e)  
         DB_LOGGER.debug('EXIT')
     
     return False
@@ -114,16 +141,16 @@ def insert_sensor(conn, sensor_info):
 
     try:
         insert_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Inserting {} into table "sensors"'.format(sensor_info))
+        DB_LOGGER.debug('  Inserting {} into table "sensors"'.format(sensor_info))
 
         insert_cursor.execute('INSERT INTO sensors(name, node_id) VALUES (?, ?)', sensor_info)
         conn.commit()
         
-        DB_LOGGER.info('\n   Inserted {} into table "sensors"'.format(sensor_info))
+        DB_LOGGER.info('   Inserted {} into table "sensors"'.format(sensor_info))
         return True
 
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
     
     return False
@@ -134,17 +161,17 @@ def insert_reading(conn, reading):
 
     try:
         insert_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Inserting {} into table "readings"'.format(reading))
+        DB_LOGGER.debug('  Inserting {} into table "readings"'.format(reading))
 
         insert_cursor.execute('INSERT INTO readings(readingtype, data, timestamp, sensor_id) VALUES (?, ?, ?, ?)', reading)
         conn.commit()
         
-        DB_LOGGER.info('\n   Inserted {} into table "readings"'.format(reading))
+        DB_LOGGER.info('   Inserted {} into table "readings"'.format(reading))
         DB_LOGGER.debug('EXIT')
         return True
 
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
     
     return False
@@ -154,18 +181,18 @@ def get_latest_node_name(conn):
 
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER('\n    Querying for latest "nodes" entry "name"')
+        DB_LOGGER.debug('Querying for latest "nodes" entry "name"')
 
-        query_result = query_cursor.execute('SELECT name FROM nodes GROUP BY name').fetchone()[0]
-
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
-        DB_LOGGER.debug('EXIT')
-        return query_result
+        query_result = query_cursor.execute('SELECT name FROM nodes GROUP BY name').fetchone()
+        if query_result is not None:
+            DB_LOGGER.debug('Found {}'.format(query_result))
+            DB_LOGGER.debug('EXIT')
+            return query_result[0]
 
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
-        DB_LOGGER.debug('EXIT')
-
+        DB_LOGGER.error(e)
+    
+    DB_LOGGER.debug('EXIT')
     return None
 
 
@@ -175,17 +202,17 @@ def get_nodes_by_name(conn, node_name):
     tokens = (node_name,)
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Querying nodes for * with name {}'.format(node_name))
+        DB_LOGGER.debug('  Querying nodes for * with name {}'.format(node_name))
 
         query_result = query_cursor.execute('SELECT * FROM nodes WHERE name = ?', tokens).fetchall()
 
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
+        DB_LOGGER.debug('  Found {}'.format(query_result))
         
         DB_LOGGER.debug('EXIT')
         return query_result
     
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
     
     return None
@@ -204,7 +231,7 @@ def get_sensors_by_name(conn, sensor_name):
 
         Example usaage:
             get_readings_by_sensor_id(
-                
+                DB_CONNECTION
                 'DHT11'
             )
 
@@ -214,17 +241,17 @@ def get_sensors_by_name(conn, sensor_name):
     tokens = (sensor_name,)
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Querying sensors for * with name {}'.format(sensor_name))
+        DB_LOGGER.debug('  Querying sensors for * with name {}'.format(sensor_name))
 
         query_result = query_cursor.execute('SELECT * FROM sensors WHERE name = ?', tokens).fetchall()
         
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
+        DB_LOGGER.debug('  Found {}'.format(query_result))
 
         DB_LOGGER.debug('EXIT')
         return query_result
     
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
     
     return None
@@ -253,11 +280,13 @@ def get_node_id_by_name(conn, node_name):
     tokens = (node_name,)
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Querying for id with name {} in nodes'.format(node_name))
+        DB_LOGGER.debug('  Querying for id with name {} in nodes'.format(node_name))
 
-        query_result = query_cursor.execute('SELECT id FROM nodes WHERE name = ?', tokens).fetchone()[0]
+        query_result = query_cursor.execute('SELECT id FROM nodes WHERE name = ?', tokens).fetchone()
+        if query_result is not None:
+            return query_result[0]
 
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
+        DB_LOGGER.debug('  Found {}'.format(query_result))
         
         DB_LOGGER.debug('EXIT')
         return query_result
@@ -299,12 +328,13 @@ def get_sensor_id_by_name(conn, sensor_name, node_name):
     tokens = (sensor_name, node_name,)
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Querying for name {} with nodes.name {} in sensor'.format(sensor_name, node_name))
+        DB_LOGGER.debug('Querying for name {} with nodes.name {} in sensor'.format(sensor_name, node_name))
 
-        query_result = query_cursor.execute(
-            'SELECT sensors.id FROM sensors,nodes WHERE sensors.name = ? AND nodes.name = ?)', tokens).fetchone()[0]
+        query_result = query_cursor.execute('SELECT sensors.id FROM sensors,nodes WHERE sensors.name = ? AND nodes.name = ?', tokens).fetchone()
+        if query_result is not None:
+            return query_result[0]
 
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
+        DB_LOGGER.debug('Found {}'.format(query_result))
 
         DB_LOGGER.debug('EXIT')
         return query_result
@@ -312,8 +342,7 @@ def get_sensor_id_by_name(conn, sensor_name, node_name):
     except sqlite3.Error as e:
         DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
-    
-    return None
+        return None
 
 
 def get_readings_by_sensor_id(conn, sensor_id):
@@ -339,11 +368,11 @@ def get_readings_by_sensor_id(conn, sensor_id):
     tokens = (sensor_id,)
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Querying for sensor_id {} in readings'.format(sensor_id))
+        DB_LOGGER.debug('  Querying for sensor_id {} in readings'.format(sensor_id))
 
         query_result = query_cursor.execute('SELECT data, timestamp FROM readings WHERE sensor_id = ?', tokens).fetchall()
 
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
+        DB_LOGGER.debug('  Found {}'.format(query_result))
 
         DB_LOGGER.debug('EXIT')
         return query_result
@@ -369,17 +398,17 @@ def get_readings_by_location(conn, node_location):
     tokens = (node_location,)
     try:
         query_cursor = conn.cursor()
-        DB_LOGGER.debug('\n  Querying for readings with location {}'.format(node_location))
+        DB_LOGGER.debug('  Querying for readings with location {}'.format(node_location))
 
         query_result = query_cursor.execute(
             'SELECT data, timestamp FROM readings WHERE sensor_id = (SELECT id FROM sensors WHERE node_id = (SELECT id FROM nodes WHERE location = ?))', tokens).fetchall()
         
-        DB_LOGGER.debug('\n  Found {}'.format(query_result))
+        DB_LOGGER.debug('  Found {}'.format(query_result))
         DB_LOGGER.debug('EXIT')
         return query_result
 
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n  '.format(e))
+        DB_LOGGER.error(e)
         DB_LOGGER.debug('EXIT')
     
     return None
@@ -456,16 +485,17 @@ def create_node_tables(conn):
         DB_LOGGER.debug('EXIT')
         return 0
     except:
-        DB_LOGGER.error('\n  Failed to create all tables, see create_table() calls for more information')
+        DB_LOGGER.error('Failed to create all tables, see create_table() calls for more information')
         DB_LOGGER.debug('EXIT')
         return 1
 
     
 if __name__ == '__main__':
 
-    DB_CONNECTION = create_connection('../shared/database/test.db')
+    DB_CONNECTION = create_connection('../shared/database/example.db')
 
     create_node_tables(DB_CONNECTION)
+    print(is_empty_nodes(DB_CONNECTION))
 
     insert_node(DB_CONNECTION, ('Node#1', 'outhouse'))
     insert_node(DB_CONNECTION, ('Node#2', 'outhouse'))
@@ -504,6 +534,8 @@ if __name__ == '__main__':
             )
         )
     )
+
+    print(is_empty_nodes(DB_CONNECTION))
 
 
     print(

@@ -28,7 +28,6 @@ def getAll():
 
 
 if __name__ == "__main__":
- 
     myThread = threading.Thread(target = DHT11DataStream)
     myThread.start()
 

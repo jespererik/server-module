@@ -51,7 +51,7 @@ def Start_Threads():
 
 def __init():
     Read_Node_Config()
-    url = "http://127.0.0.1:5000/init"
+    url = "http://127.0.0.1:5000/node_init"
     while True:
         try:
             response = requests.post(url, json = node_config)
