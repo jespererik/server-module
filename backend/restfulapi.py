@@ -2,7 +2,7 @@
 from flask  import Flask, request, jsonify
 from ast    import literal_eval
 import DBHelper
-import Server
+import server as Server
 import json
 
 app = Flask(__name__)

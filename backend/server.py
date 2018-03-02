@@ -10,7 +10,7 @@ logging.basicConfig(
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = DBHelper.create_connection('../shared/database/test.db')
+DB_CONNECTION = DBHelper.create_connection('../shared/test.db')
 
 
 def init_database():

@@ -1,3 +1,3 @@
-import DummyServer
+import restfulapi
 
-DummyServer.run()
+restfulapi.run()
