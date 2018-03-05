@@ -5,12 +5,12 @@ import logging
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '/home/pi/server-module/shared/server.log',
+    filename = '/server-module/shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = DBHelper.create_connection('/home/pi/server-module/shared/test.db')
+DB_CONNECTION = DBHelper.create_connection('/server-module/shared/test.db')
 
 
 def init_database():
@@ -141,8 +141,6 @@ def create_new_node(location):
 def add_sensor_to_node(sensor_name, node_name):
     SERVER_LOGGER.debug('ENTER')
 
-    #TODO fix this, doesn't add the sensors to the database
-
     SERVER_LOGGER.debug('\n QUERYING: Table: "nodes" value: "{}"'.format(node_name))
     sensor_info = (sensor_name, DBHelper.get_node_id_by_name(DB_CONNECTION, node_name))
     SERVER_LOGGER.debug('\n INSERT "{}"'.format(sensor_info))
@@ -152,9 +150,6 @@ def add_sensor_to_node(sensor_name, node_name):
 
 def add_node_reading(sensor_name, node_name, reading_entry):
     SERVER_LOGGER.debug('ENTER')
-
-    #TODO Fix values being added under the wrong column namely data and timestamp
-    #might be a fault in the insert_reading() function in DBHelper
 
     if not (DBHelper.get_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name)):
         SERVER_LOGGER.debug('\n "sensor" {} not found on "node" adding'.format(sensor_name, node_name))
