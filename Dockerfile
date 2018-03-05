@@ -4,7 +4,7 @@ WORKDIR /server-module
 
 ADD /shared ./shared
 COPY /shared ./shared
-ADD /sensorapp ./sensorapp
+ADD /backend ./backend
 
 RUN pip install requests
 RUN pip install flask
