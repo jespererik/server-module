@@ -20,7 +20,6 @@ DB_LOGGER.propagate = True
 
 
 def is_empty_table(conn, table):
-    
     '''Checks if a table is empty
 
         counts all the rows in the sql statement
@@ -38,7 +37,6 @@ def is_empty_table(conn, table):
             sqlite3.Error        
 
     '''
-
     #Will there be a problem with True return for success and 1 return on error?
     #This function is probably too long aswell
     DB_LOGGER.debug('ENTER')
@@ -50,7 +48,8 @@ def is_empty_table(conn, table):
         DB_LOGGER.debug('is empty? {}'.format(table))
         query_result = c_cursor.execute(sql).fetchone()[0]
 
-        return query_result
+        if query_result == 0: return True
+        else return False
 
     except sqlite3.Error as e:
         DB_LOGGER.error(e)

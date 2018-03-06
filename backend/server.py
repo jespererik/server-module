@@ -118,19 +118,18 @@ def node_init_packet_handler(node_init_packet):
 
 
 def create_new_node(location):
-    #Refactor this, too messy?
     SERVER_LOGGER.debug('ENTER')
 
     if not DBHelper.is_empty_table(DB_CONNECTION, 'nodes'):
-        SERVER_LOGGER.debug('\n   No nodes in table "nodes" creating first node "Node#1"')
+        SERVER_LOGGER.info('\n   INSERT: Table: "nodes" Values: ({}, {})'.format("Node#1", location))
         DBHelper.insert_node(DB_CONNECTION, ('Node#1', location))
 
         SERVER_LOGGER.debug('EXIT')
         return 'Node#1'
     else:
         latest_name = DBHelper.get_latest_node_name(DB_CONNECTION)
-        new_name, new_id = latest_name.split('#')
-        new_node_name = new_name + '#' + str(int(new_id) + 1)
+        new_id = latest_name.split('#')[1]
+        new_node_name = "Node#" + str(int(new_id) + 1)
         SERVER_LOGGER.debug('\n INSERT: table: "nodes" values {}'.format((new_node_name, location)))
         DBHelper.insert_node(DB_CONNECTION, (new_node_name, location))
 
@@ -159,3 +158,6 @@ def add_node_reading(sensor_name, node_name, reading_entry):
     DBHelper.insert_reading(DB_CONNECTION, reading_entry)
 
     SERVER_LOGGER.debug('EXIT')
+
+def get_connected_sensors(sensor_name):
+    return DBHelper.get_sensors_by_name

@@ -28,6 +28,10 @@ def process_reading_post():
 @app.route('/GET/reading/<reading_type>')
 def process_reading_get(reading_type):
     pass
+
+@app.route("/GET/sensors/<sensor_name>", methods = ['GET'])
+def getSensors(sensor_name):
+    Server.get_connected_sensors(sensor_name)
     
 
 def main():
