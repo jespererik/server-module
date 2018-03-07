@@ -1,20 +1,22 @@
+from datetime import datetime
 import sys
-import DBHelper
+import dbhelper
 import logging
+
 
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '/server-module/shared/server.log',
+    filename = '../shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = DBHelper.create_connection('/server-module/shared/test.db')
+DB_CONNECTION = dbhelper.create_connection(':memory:')
 
 
 def init_database():
-    DBHelper.create_node_tables(DB_CONNECTION)
+    dbhelper.create_node_tables(DB_CONNECTION)
 
 
 def __is_init_packet(recieved_packet):
@@ -99,7 +101,7 @@ def node_data_packet_handler(sensor_data_packet):
                             sensor_data_packet['DATA'],
                             sensor_data_packet['TIMESTAMP']
                         )
-        add_node_reading(sensor_name, node_name, reading_entry)
+        add_reading(sensor_name, node_name, reading_entry)
         return sensor_data_packet
     else:
         return 
@@ -111,70 +113,91 @@ def node_init_packet_handler(node_init_packet):
     SERVER_LOGGER.debug('ENTER')
     if __is_init_packet(node_init_packet):
         if node_init_packet['NODE_NAME'] == '':
-            node_init_packet['NODE_NAME'] = create_new_node(node_init_packet['LOCATION'])
+            node_init_packet['NODE_NAME'] = add_node(node_init_packet['LOCATION'])
 
     SERVER_LOGGER.debug('EXIT')    
     return node_init_packet
 
+def __generate_new_node_id():
+    latest_name = dbhelper.select_latest_node_name(DB_CONNECTION)
+    return 'NODE#' + str(int(latest_name.split('#')[1]) + 1)
 
-def create_new_node(location):
+def add_node(location):
     SERVER_LOGGER.debug('ENTER')
 
-    if not DBHelper.is_empty_table(DB_CONNECTION, 'nodes'):
-        SERVER_LOGGER.info('\n   INSERT: Table: "nodes" Values: ({}, {})'.format("Node#1", location))
-        DBHelper.insert_node(DB_CONNECTION, ('Node#1', location))
+    if dbhelper.is_empty_nodes(DB_CONNECTION):
+        dbhelper.insert_node(DB_CONNECTION, ('NODE#1', location,))
 
         SERVER_LOGGER.debug('EXIT')
-        return 'Node#1'
+        return 'NODE#1'
     else:
-        latest_name = DBHelper.query_latest_node_name(DB_CONNECTION)
-        new_id = latest_name.split('#')[1]
-        new_node_name = "Node#" + str(int(new_id) + 1)
-        SERVER_LOGGER.debug('\n INSERT: table: "nodes" values {}'.format((new_node_name, location)))
-        DBHelper.insert_node(DB_CONNECTION, (new_node_name, location))
+        new_node_name = __generate_new_node_id()
+        dbhelper.insert_node(DB_CONNECTION, (new_node_name, location,))
 
         SERVER_LOGGER.debug('EXIT')
         return new_node_name
     
 
-def add_sensor_to_node(sensor_name, node_name):
+def add_sensor(sensor_name, node_name):
     SERVER_LOGGER.debug('ENTER')
 
-    SERVER_LOGGER.debug('\n QUERYING: Table: "nodes" value: "{}"'.format(node_name))
-    sensor_info = (sensor_name, DBHelper.query_node_id_by_name(DB_CONNECTION, node_name))
-    SERVER_LOGGER.debug('\n INSERT "{}"'.format(sensor_info))
-    DBHelper.insert_sensor(DB_CONNECTION, sensor_info)
+    dbhelper.insert_sensor(DB_CONNECTION, (sensor_name, dbhelper.select_node_id_by_name(DB_CONNECTION, node_name)))
 
     SERVER_LOGGER.debug('EXIT')
 
-def add_node_reading(sensor_name, node_name, reading_entry):
+def add_reading(sensor_name, node_name, reading_entry):
+    #When a node reading comes in, we will also register the sensor it came from
+    #instead of pre-registrering it with the node init.
+
+    #@Cleanup Move Sensor adding to node_data_packet_handler()
+
     SERVER_LOGGER.debug('ENTER')
 
-    if not (DBHelper.query_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name)):
-        SERVER_LOGGER.debug('\n "sensor" {} not found on "node" adding'.format(sensor_name, node_name))
-        add_sensor_to_node(sensor_name, node_name)
-    reading_entry += (DBHelper.query_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name),)
-    SERVER_LOGGER.debug('\n Inserting "reading" {}'.format(reading_entry))
-    DBHelper.insert_reading(DB_CONNECTION, reading_entry)
+    if not (dbhelper.select_sensor_id_by_name_and_node(DB_CONNECTION, sensor_name, node_name)):
+        SERVER_LOGGER.info('\n=> "sensor" {} not found on "node", adding'.format(sensor_name, node_name))
+        add_sensor(sensor_name, node_name)
+    reading_entry += (dbhelper.select_sensor_id_by_name_and_node(DB_CONNECTION, sensor_name, node_name),)
+    dbhelper.insert_reading(DB_CONNECTION, reading_entry)
 
     SERVER_LOGGER.debug('EXIT')
 
-def get_connected_sensors(sensor_name):
-    return DBHelper.query_sensors_by_name(sensor_name)
 
-def get_readings_by_location(node_location):
-    return DBHelper.query_readings_by_location(DB_Connection, node_location)
+#@Note get all the reading information from db, filter later? or filter with sql?
+#@Note add checks for the params on the get functions? Or should they just be a interface between the restfulapi.py and dbhelper.py
+def get_location_readings(node_location):
+    SERVER_LOGGER.debug('ENTER')
+    
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_readings_by_location(DB_CONNECTION, node_location)
 
-def get_readings_by_location_and_type(node_location, reading_type):
-    return DBHelper.query_readings_by_location_and_readingtype(
+def get_node_readings(node_name):
+    
+    SERVER_LOGGER.debug('ENTER')
+
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_readings_by_node(DB_CONNECTION, node_name)
+
+
+
+if __name__ == '__main__':
+    if sys.argv[1]:
+        dbhelper.create_node_tables(DB_CONNECTION)
+        add_node('Outhouse')
+        add_sensor('DHT11', 'NODE#1')
+        add_reading(
+            'DHT11',
+            'NODE#1',
+            ('temp', 12.345, datetime.now())    
+        )
+
+
+    print(dbhelper.select_node_by_location(DB_CONNECTION, 'Outhouse'))
+
+    print(dbhelper.execute_select_fetchall(
         DB_CONNECTION, 
-        node_location, 
-        reading_type
+        'SELECT * FROM sensors WHERE name = ?',
+        ('DHT11',)
+        )
     )
 
-def get_readings_by_type(reading_type):
-    return DBHelper.query_readings_by_sensor_name_and_readingtype(
-        DB_CONNECTION,
-        'DHT11',
-        'temperature'
-    )
+    print(dbhelper.select_readings_by_type(DB_CONNECTION, 'temp'))
