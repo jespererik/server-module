@@ -127,7 +127,7 @@ def create_new_node(location):
         SERVER_LOGGER.debug('EXIT')
         return 'Node#1'
     else:
-        latest_name = DBHelper.get_latest_node_name(DB_CONNECTION)
+        latest_name = DBHelper.query_latest_node_name(DB_CONNECTION)
         new_id = latest_name.split('#')[1]
         new_node_name = "Node#" + str(int(new_id) + 1)
         SERVER_LOGGER.debug('\n INSERT: table: "nodes" values {}'.format((new_node_name, location)))
@@ -141,7 +141,7 @@ def add_sensor_to_node(sensor_name, node_name):
     SERVER_LOGGER.debug('ENTER')
 
     SERVER_LOGGER.debug('\n QUERYING: Table: "nodes" value: "{}"'.format(node_name))
-    sensor_info = (sensor_name, DBHelper.get_node_id_by_name(DB_CONNECTION, node_name))
+    sensor_info = (sensor_name, DBHelper.query_node_id_by_name(DB_CONNECTION, node_name))
     SERVER_LOGGER.debug('\n INSERT "{}"'.format(sensor_info))
     DBHelper.insert_sensor(DB_CONNECTION, sensor_info)
 
@@ -150,14 +150,31 @@ def add_sensor_to_node(sensor_name, node_name):
 def add_node_reading(sensor_name, node_name, reading_entry):
     SERVER_LOGGER.debug('ENTER')
 
-    if not (DBHelper.get_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name)):
+    if not (DBHelper.query_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name)):
         SERVER_LOGGER.debug('\n "sensor" {} not found on "node" adding'.format(sensor_name, node_name))
         add_sensor_to_node(sensor_name, node_name)
-    reading_entry += (DBHelper.get_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name),)
+    reading_entry += (DBHelper.query_sensor_id_by_name(DB_CONNECTION, sensor_name, node_name),)
     SERVER_LOGGER.debug('\n Inserting "reading" {}'.format(reading_entry))
     DBHelper.insert_reading(DB_CONNECTION, reading_entry)
 
     SERVER_LOGGER.debug('EXIT')
 
 def get_connected_sensors(sensor_name):
-    return DBHelper.get_sensors_by_name
+    return DBHelper.query_sensors_by_name(sensor_name)
+
+def get_readings_by_location(node_location):
+    return DBHelper.query_readings_by_location(DB_Connection, node_location)
+
+def get_readings_by_location_and_type(node_location, reading_type):
+    return DBHelper.query_readings_by_location_and_readingtype(
+        DB_CONNECTION, 
+        node_location, 
+        reading_type
+    )
+
+def get_readings_by_type(reading_type):
+    return DBHelper.query_readings_by_sensor_name_and_readingtype(
+        DB_CONNECTION,
+        'DHT11',
+        'temperature'
+    )
