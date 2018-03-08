@@ -28,27 +28,36 @@ def process_reading_post():
 
 
 #Get routes
-@app.route('reading/<reading_type>', methods = ['GET'])
-def process_reading_get(reading_type):
-    pass
+@app.route('/node/<string:node_location>', mehtods = ['GET'])
+def get_location_node(node_location):
+    content = Server.get_location_nodes(node_location)
+    return json.dumps(content)
 
-@app.route("/sensors/<sensor_name>", methods = ['GET'])
-def getSensors(sensor_name):
-    Server.get_connected_sensors(sensor_name)
 
-@app.route("/redings/<node_location>/", methods = ['GET'])
-def readings_by_location():
-    return json.dumps(Server.get_readings_by_location(node_location))
+@app.route('reading/<string:reading_type>', methods = ['GET'])
+def get_readings_type(reading_type):
+    content = Server.get_type_readings(reading_type)
+    return json.dumps(content)
 
-@app.route("/readings/<reading_type>/<node_location>", methods = ['GET'])
-def readings_by_type_and_location(node_location, reading_type):
-    return json.dumps(Server.get_readings_by_location_and_type(node_location, reading_type))
 
-@app.route("/readings/<reading_type>/", methods = ['GET'])
-def readings_by_type(reading_type):
-    return json.dumps(Server.get_readings_by_type(reading_type))
+@app.route('/reading/<string:node_location>', mehtods = ['GET'])
+def get_readings_location(node_location):
+    content = Server.get_location_readings(node_location)
+    return json.dumps(content)
 
-    
+
+@app.route("/sensors/<string:node_name>", methods = ['GET'])
+def get_sensors_node(node_name):
+    content = Server.get_node_sensors(node_name)
+    return json.dumps(content)
+
+
+@app.route('/sensors/<string:node_location>', mehtods = ['GET'])
+def get_sensors_location(node_location):
+    content = Server.get_location_sensors(node_location)
+    return json.dumps(content)
+
+
 def main():
     Server.init_database()
     app.run(debug = True, host = '0.0.0.0', port = 5000)

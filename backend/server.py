@@ -7,14 +7,14 @@ import logging
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '../shared/server.log',
+    filename = '/server-module/shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = dbhelper.create_connection(':memory:')
 
 
+DB_CONNECTION = dbhelper.create_connection('/server-module/shared/skynet.db')
 def init_database():
     dbhelper.create_node_tables(DB_CONNECTION)
 
@@ -164,18 +164,49 @@ def add_reading(sensor_name, node_name, reading_entry):
 
 #@Note get all the reading information from db, filter later? or filter with sql?
 #@Note add checks for the params on the get functions? Or should they just be a interface between the restfulapi.py and dbhelper.py
-def get_location_readings(node_location):
+
+#Node GETs
+def get_nodes():
+    SERVER_LOGGER.debug('ENTER')
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_all_nodes(DB_CONNECTION)
+
+
+def get_location_nodes(node_location):
+    SERVER_LOGGER.debug('ENTER')
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_node_by_location(DB_CONNECTION, node_location)
+
+
+#Sensor GETs
+def get_node_sensors(node_name):
+    SERVER_LOGGER.debug('ENTER')
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_all_node_sensors(node_name)
+
+def get_location_sensors(node_location):
+    SERVER_LOGGER.debug('ENTER')
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_all_location_sensors(DB_CONNECTION, node_location)
+
+#Reading GETs
+def get_type_readings(reading_type):
     SERVER_LOGGER.debug('ENTER')
     
     SERVER_LOGGER.debug('EXIT')
-    return dbhelper.select_readings_by_location(DB_CONNECTION, node_location)
+    return dbhelper.select_readings_by_type(DB_CONNECTION, reading_type)
 
 def get_node_readings(node_name):
-    
     SERVER_LOGGER.debug('ENTER')
 
     SERVER_LOGGER.debug('EXIT')
     return dbhelper.select_readings_by_node(DB_CONNECTION, node_name)
+
+def get_location_readings(node_location):
+    SERVER_LOGGER.debug('ENTER')
+
+    SERVER_LOGGER.debug('EXIT')
+    return dbhelper.select_readings_by_node_location(DB_CONNECTION, node_location)
 
 
 

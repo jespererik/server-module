@@ -143,43 +143,56 @@ def execute_select_fetchall(conn, select_statement, tokens = ()):
         query_result = select_cursor.execute(select_statement, tokens).fetchall()
 
         DB_LOGGER.debug('\n=> Found: {}'.format(query_result))
+
+        return query_result
     except sqlite3.Error as e:
         DB_LOGGER.error('\n{}'.format(e))
 
     DB_LOGGER.debug('EXIT')
-    return query_result
+    return None
+    
     
 
 #####################################################################
 #Select Statements for nodes                                     
 #####################################################################
-def select_latest_node_name(conn):
-    DB_LOGGER.debug('ENTER')
-    sql = 'SELECT name FROM nodes GROUP BY name'
-    
-    result = execute_select_fetchone(conn, sql)
-    DB_LOGGER.debug('EXIT')
-
-    return result
-
-def select_node_id_by_name(conn, node_name):
+def select_all_nodes(conn):
     DB_LOGGER.debug('ENTER')
 
-    sql = 'SELECT id FROM nodes WHERE name = ?'
-    tokens = (node_name,)
-    
-    result = execute_select_fetchone(conn, sql, tokens)
-    DB_LOGGER.debug('EXIT')
+    sql = 'SELECT * FROM nodes'
+    result = execute_select_fetchall(conn, sql)
 
+    DB_LOGGER.debug('EXIT')
     return result
+
 
 def select_node_by_location(conn, node_location):
     DB_LOGGER.debug('ENTER')
 
     sql = 'SELECT * FROM nodes WHERE location = ?'
     tokens = (node_location,)
-
     result = execute_select_fetchall(conn, sql, tokens)
+
+    DB_LOGGER.debug('EXIT')
+    return result
+
+
+def select_latest_node_name(conn):
+    DB_LOGGER.debug('ENTER')
+
+    sql = 'SELECT name FROM nodes GROUP BY name'    
+    result = execute_select_fetchone(conn, sql)
+
+    DB_LOGGER.debug('EXIT')
+    return result
+
+
+def select_node_id_by_name(conn, node_name):
+    DB_LOGGER.debug('ENTER')
+
+    sql = 'SELECT id FROM nodes WHERE name = ?'
+    tokens = (node_name,) 
+    result = execute_select_fetchone(conn, sql, tokens)
 
     DB_LOGGER.debug('EXIT')
     return result
@@ -188,23 +201,58 @@ def select_node_by_location(conn, node_location):
 #####################################################################
 #Select Statements for sensors                                     
 #####################################################################
+def select_all_sensors(conn):
+    DB_LOGGER.debug('ENTER')
+
+    sql = 'SELECT * FROM sensors, nodes'
+    result = execute_select_fetchall(conn, sql)
+    
+    DB_LOGGER.debug('EXIT')
+    return result
+
+
+def select_all_node_sensors(conn, node_name):
+    DB_LOGGER.debug('ENTER')
+
+    sql = 'SELECT * FROM sensors WHERE node_id IN(SELECT id FROM nodes WHERE name = ?)'
+    tokens = (node_name,)
+    result = execute_select_fetchall(conn, sql, tokens)
+
+    DB_LOGGER.debug('EXIT')
+    return result
+
+def select_all_location_sensors(conn, sensor_location):
+    DB_LOGGER.debug('ENTER')
+
+    sql = 'SELECT * FROM sensors WHERE node_id IN(SELECT id FROM nodes WHERE location = ?)'
+    tokens = (sensor_location,)
+    result = execute_select_fetchall(conn, sql, tokens)
+
+    DB_LOGGER.debug('EXIT')
+    return result
+
+
 def select_sensor_id_by_name(conn, sensor_name):
     DB_LOGGER.debug('ENTER')
+
     sql = 'SELECT id FROM sensors WHERE name = ?'
     tokens = (sensor_name,)
     result = execute_select_fetchall(conn, sql, tokens)
+    
     DB_LOGGER.debug('EXIT')
-
     return result
+
 
 def select_sensor_id_by_node(conn, node_name):
     DB_LOGGER.debug('ENTER')
+
     sql = 'SELECT id FROM sensors WHERE node_id IN (SELECT id FROM nodes WHERE name = ?)'
     tokens = (node_name,)
     result = execute_select_fetchall(conn, sql, tokens)
+    
     DB_LOGGER.debug('EXIT')
-
     return result
+
 
 def select_sensor_id_by_name_and_node(conn, sensor_name, node_name):
     DB_LOGGER.debug('ENTER')
@@ -222,30 +270,45 @@ def select_sensor_id_by_name_and_node(conn, sensor_name, node_name):
 #####################################################################
 def select_readings_by_sensor(conn, sensor_name):
     DB_LOGGER.debug('ENTER')
+
     sql = 'SELECT data, timestamp FROM readings WHERE sensor_id IN (SELECT id FROM sensors WHERE name = ?)'
     tokens = (sensor_name,)
     result = execute_select_fetchall(conn, sql, tokens)
-    DB_LOGGER.debug('EXIT')
 
+    DB_LOGGER.debug('EXIT')
     return result
 
 def select_readings_by_sensor_and_node(conn, sensor_name, node_name):
     DB_LOGGER.debug('ENTER')
+    
     sql = 'SELECT data, timestamp FROM readings WHERE sensor_id IN\
             (SELECT id FROM sensors WHERE name = ? AND node_id IN\
                 (SELECT id FROM nodes WHERE name = ?))'
     tokens = (sensor_name, node_name,)
     result = execute_select_fetchall(conn, sql, tokens)
+    
     DB_LOGGER.debug('EXIT')
-
     return result
 def select_readings_by_type(conn, reading_type):
     DB_LOGGER.debug('ENTER')
+
     sql = 'SELECT data, timestamp FROM readings WHERE type = ?'
     tokens = (reading_type,)
     result = execute_select_fetchall(conn, sql, tokens)
+    
     DB_LOGGER.debug('EXIT')
+    return result
 
+def select_readings_by_node_location(conn, node_location):
+    DB_LOGGER.debug('ENTER')
+
+    sql = 'SELECT data, timestamp FROM readings WHERE sensor_id IN\
+            (SELECT id FROM sensors WHERE node_id IN\
+                (SELECT id FROM nodes WHERE location = ?))'
+    tokens = (node_location,)
+    result = execute_select_fetchall(conn, sql, tokens)
+    
+    DB_LOGGER.debug('EXIT')
     return result
 
         
@@ -329,21 +392,24 @@ def create_node_tables(conn):
 
 if __name__ == '__main__':
 
-    DB_CONNECTION = create_connection('../shared/example.db')
+    DB_CONNECTION = create_connection(':memory:')
     print(is_empty_nodes(DB_CONNECTION))
     if sys.argv[1]:
         create_node_tables(DB_CONNECTION)
 
-        insert_node(DB_CONNECTION, 'NODE#1', 'Inhouse')
-        insert_sensor(DB_CONNECTION, 'DHT11', select_node_id_by_name(DB_CONNECTION, 'NODE#1'))
+        insert_node(DB_CONNECTION, ('NODE#1', 'Inhouse'))
+        insert_sensor(DB_CONNECTION, ('DHT11', select_node_id_by_name(DB_CONNECTION, 'NODE#1')))
         insert_reading(
             DB_CONNECTION, 
-            "temperature", 
-            12.34, 
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
-            select_sensor_id_by_name_and_node(DB_CONNECTION, 'DHT11', 'NODE#1')
+            (
+                "temperature", 
+                12.34, 
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
+                select_sensor_id_by_name_and_node(DB_CONNECTION, 'DHT11', 'NODE#1')
+            )
         )
 
     print(select_readings_by_sensor(DB_CONNECTION, 'DHT11'))
     print(select_readings_by_sensor_and_node(DB_CONNECTION, 'DHT11', 'NODE#1'))
+    print(select_readings_by_node_location(DB_CONNECTION, 'Inhouse'))
     print(is_empty_nodes(DB_CONNECTION))
