@@ -52,7 +52,7 @@ def get_sensors_node(node_name):
     return json.dumps(content)
 
 
-@app.route('/sensors/<string:node_location>', mehtods = ['GET'])
+@app.route('/sensors/<string:node_location>', methods = ['GET'])
 def get_sensors_location(node_location):
     content = Server.get_location_sensors(node_location)
     return json.dumps(content)
