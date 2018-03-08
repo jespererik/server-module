@@ -2,9 +2,9 @@
 The server module runs in a docker container.
 To create the image run:
 
-docker build -t server-module .
+docker build -t server-module
 
-docker run -v ~/server-module/shared/:/server-module/shared/ --net=host -ti server-module:latest bash
+docker run -v ~/server-module/shared/:/server-module/shared/ --net=host -ti bash
 
 From bash run:
 
