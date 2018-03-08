@@ -28,19 +28,19 @@ def process_reading_post():
 
 
 #Get routes
-@app.route('/node/<string:node_location>', mehtods = ['GET'])
+@app.route('/node/<string:node_location>', methods = ['GET'])
 def get_location_node(node_location):
     content = Server.get_location_nodes(node_location)
     return json.dumps(content)
 
 
-@app.route('reading/<string:reading_type>', methods = ['GET'])
+@app.route('/reading/<string:reading_type>', methods = ['GET'])
 def get_readings_type(reading_type):
     content = Server.get_type_readings(reading_type)
     return json.dumps(content)
 
 
-@app.route('/reading/<string:node_location>', mehtods = ['GET'])
+@app.route('/reading/<string:node_location>', methods = ['GET'])
 def get_readings_location(node_location):
     content = Server.get_location_readings(node_location)
     return json.dumps(content)
