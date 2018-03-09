@@ -180,7 +180,7 @@ def select_node_by_location(conn, node_location):
 def select_latest_node_name(conn):
     DB_LOGGER.debug('ENTER')
 
-    sql = 'SELECT name FROM nodes GROUP BY name'    
+    sql = 'SELECT name FROM nodes ORDER BY name DESC LIMIT 1;'    
     result = execute_select_fetchone(conn, sql)
 
     DB_LOGGER.debug('EXIT')
@@ -237,7 +237,7 @@ def select_sensor_id_by_name(conn, sensor_name):
 
     sql = 'SELECT id FROM sensors WHERE name = ?'
     tokens = (sensor_name,)
-    result = execute_select_fetchall(conn, sql, tokens)
+    result = execute_select_fetchone(conn, sql, tokens)
     
     DB_LOGGER.debug('EXIT')
     return result
