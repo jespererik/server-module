@@ -292,7 +292,7 @@ def select_readings_by_sensor_and_node(conn, sensor_name, node_name):
 def select_readings_by_type(conn, reading_type):
     DB_LOGGER.debug('ENTER')
 
-    sql = 'SELECT data, timestamp FROM readings WHERE type = ?'
+    sql = 'SELECT data, timestamp FROM readings WHERE type = ? ORDER BY timestamp DESC LIMIT 1'
     tokens = (reading_type,)
     result = execute_select_fetchall(conn, sql, tokens)
     
