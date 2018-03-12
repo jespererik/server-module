@@ -32,12 +32,11 @@ def process_reading_post(node_name, sensor_name):
     response = server.create_reading(content, node_name, sensor_name)
     return jsonify(response), 201
 
-
-#Get routes
-@app.route('/readings/<string:reading_type>', methods = ['GET'])
-def get_readings_type(reading_type):
-    return json.dumps(None)
-
+#Get reading
+@app.route('/api/nodes/<string:node_name>/sensors/<string:sensor_name>/readings', methods = ['GET'])
+def get_readings_type(node_name, sensor_name):
+    response = server.get_readings(node_name, sensor_name)
+    return jsonify(response)
 
 def main():
     server.init_database()
