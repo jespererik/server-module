@@ -36,8 +36,7 @@ def process_reading_post(node_name, sensor_name):
 #Get routes
 @app.route('/readings/<string:reading_type>', methods = ['GET'])
 def get_readings_type(reading_type):
-    content = server.get_type_readings(reading_type)
-    return json.dumps(content)
+    return json.dumps(None)
 
 
 def main():
