@@ -1,7 +1,7 @@
 from datetime import datetime
 import sys
-import dbhelper
 import logging
+import dbhelper
 
 
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
@@ -42,12 +42,12 @@ def __is_init_packet(recieved_packet):
     packet_check = ('LOCATION', 'NODE_NAME')
     
     if bool(set(recieved_packet.keys()) & set(packet_check)):
-        SERVER_LOGGER.debug('\n Check passed for {}'.format(recieved_packet))
+        SERVER_LOGGER.debug('\n Check passed for %s', recieved_packet)
         SERVER_LOGGER.debug('EXIT')
         return True
 
     else:
-        SERVER_LOGGER.debug('\n Check failed for {}'.format(recieved_packet)) 
+        SERVER_LOGGER.debug('\n Check failed for %s', recieved_packet)
         SERVER_LOGGER.debug('EXIT')
         return False
         
@@ -70,11 +70,11 @@ def __is_sensor_data_packet(recieved_packet):
     packet_check = ('DATA', 'TIMESTAMP', 'TYPE', 'SENSOR_NAME', 'NODE_NAME')
 
     if bool(set(recieved_packet.keys()) & set(packet_check)):
-        SERVER_LOGGER.debug('\n Check passed for {}'.format(recieved_packet))
+        SERVER_LOGGER.debug('\n Check passed for %s', recieved_packet)
         SERVER_LOGGER.debug('EXIT')
         return True
     else:
-        SERVER_LOGGER.debug('\n Check Failed for {}'.format(recieved_packet)) 
+        SERVER_LOGGER.debug('\n Check Failed for %s', recieved_packet) 
         SERVER_LOGGER.debug('EXIT')
         return False
         
@@ -93,18 +93,18 @@ def node_data_packet_handler(sensor_data_packet):
     SERVER_LOGGER.debug('ENTER')
 
     if __is_sensor_data_packet(sensor_data_packet):
-        SERVER_LOGGER.debug('\n Recieved "sensor_data_packet" {}, adding to database'.format(sensor_data_packet))
-        node_name   = sensor_data_packet['NODE_NAME']
+        SERVER_LOGGER.debug('\n Recieved "sensor_data_packet" %s, adding to database', sensor_data_packet)
+        node_name = sensor_data_packet['NODE_NAME']
         sensor_name = sensor_data_packet['SENSOR_NAME']
         reading_entry = (
-                            sensor_data_packet['TYPE'],
-                            sensor_data_packet['DATA'],
-                            sensor_data_packet['TIMESTAMP']
-                        )
+            sensor_data_packet['TYPE'],
+            sensor_data_packet['DATA'],
+            sensor_data_packet['TIMESTAMP']
+        )
         add_reading(sensor_name, node_name, reading_entry)
         return sensor_data_packet
     else:
-        return 
+        return sensor_data_packet
     
     SERVER_LOGGER.debug('EXIT')
     
@@ -153,8 +153,8 @@ def add_reading(sensor_name, node_name, reading_entry):
 
     SERVER_LOGGER.debug('ENTER')
 
-    if not (dbhelper.select_sensor_id_by_name_and_node(DB_CONNECTION, sensor_name, node_name)):
-        SERVER_LOGGER.info('\n=> "sensor" {} not found on "node", adding'.format(sensor_name, node_name))
+    if not dbhelper.select_sensor_id_by_name_and_node(DB_CONNECTION, sensor_name, node_name):
+        SERVER_LOGGER.info('\n=> "sensor" %s not found on "node", adding', (sensor_name, node_name,))
         add_sensor(sensor_name, node_name)
     reading_entry += (dbhelper.select_sensor_id_by_name_and_node(DB_CONNECTION, sensor_name, node_name),)
     dbhelper.insert_reading(DB_CONNECTION, reading_entry)
@@ -228,7 +228,6 @@ if __name__ == '__main__':
         DB_CONNECTION, 
         'SELECT * FROM sensors WHERE name = ?',
         ('DHT11',)
-        )
-    )
+        ))
 
     print(dbhelper.select_readings_by_type(DB_CONNECTION, 'temp'))
