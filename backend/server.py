@@ -1,7 +1,7 @@
 from datetime import datetime
 import sys
-import dbhelper
 import logging
+import dbhelper
 
 
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'

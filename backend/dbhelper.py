@@ -1,3 +1,4 @@
+#!usr/bin/env python3
 from datetime import datetime
 import sys
 import sqlite3
@@ -47,7 +48,7 @@ def create_connection(db_file):
             sqlite3.Error which is written to a log file
     '''
     DB_LOGGER.debug('ENTER')
-    DB_LOGGER.info('\n=> CONNECTING TO: {}'.format(db_file))
+    DB_LOGGER.info('\n=> CONNECTING TO: %s', db_file)
     try:
         conn = sqlite3.connect(db_file, check_same_thread = False)
         return conn
@@ -63,9 +64,9 @@ def create_table(conn, create_table_sql):
 
     try:
         c_cursor = conn.cursor()
-        DB_LOGGER.debug('\n=> Creating table {}'.format(create_table_sql))
+        DB_LOGGER.debug('\n=> Creating table %s', create_table_sql)
         c_cursor.execute(create_table_sql)
-        DB_LOGGER.info('\n=> Created table {}'.format(create_table_sql))
+        DB_LOGGER.info('\n=> Created table %s', create_table_sql)
         conn.commit()
 
         DB_LOGGER.debug('EXIT')
@@ -80,12 +81,12 @@ def execute_insert(conn, insert_statement, tokens):
     DB_LOGGER.debug('ENTER')
     try:
         insert_cursor = conn.cursor()
-        DB_LOGGER.debug('\n=> Excecuting: {}'.format(insert_statement))
+        DB_LOGGER.debug('\n=> Excecuting: %s', insert_statement)
 
         insert_cursor.execute(insert_statement, tokens)
         conn.commit()
         
-        DB_LOGGER.info('\n=> Executed: {}'.format(insert_statement))
+        DB_LOGGER.info('\n=> Executed: %s',insert_statement)
         return True
 
     except sqlite3.Error as e:
@@ -97,34 +98,27 @@ def execute_insert(conn, insert_statement, tokens):
 
 def insert_node(conn, values):
     sql = 'INSERT INTO nodes(name, location) VALUES (?, ?)'
-    if execute_insert(conn, sql, values):
-        return True
-    else:
-        return False
+    return execute_insert(conn, sql, values)
+
 
 def insert_sensor(conn, values):
     sql = 'INSERT INTO sensors(name, node_id) VALUES (?, ?)'
-    if execute_insert(conn, sql, values):
-        return True
-    else:
-        return False
+    return execute_insert(conn, sql, values)
 
 def insert_reading(conn, values):
     sql = 'INSERT INTO readings(type, data, timestamp, sensor_id) VALUES (?, ?, ?, ?)'
-    if execute_insert(conn, sql, values):
-        return True
-    else:
-        return False
+    return execute_insert(conn, sql, values)
+
 
 def execute_select_fetchone(conn, select_statement, tokens = ()):
     DB_LOGGER.debug('ENTER')
-    DB_LOGGER.debug('\n=> Executing: {} with Values: {}'.format(select_statement, tokens))
+    DB_LOGGER.debug('\n=> Executing: %s \nValues: %s', select_statement, tokens)
     try:
         select_cursor = conn.cursor()
         query_result = select_cursor.execute(select_statement, tokens).fetchone()
 
         if query_result is not None:
-            DB_LOGGER.debug('\n=> Found: {}'.format(query_result))
+            DB_LOGGER.debug('\n=> Found: %s', query_result)
             DB_LOGGER.debug('EXIT')
             return query_result[0]
 
@@ -137,16 +131,16 @@ def execute_select_fetchone(conn, select_statement, tokens = ()):
 
 def execute_select_fetchall(conn, select_statement, tokens = ()):
     DB_LOGGER.debug('ENTER')
-    DB_LOGGER.debug('\n=> Executing: {} with Values: {}'.format(select_statement, tokens))
+    DB_LOGGER.debug('\n=> Executing: %s with Values: %s', select_statement, tokens)
     try:
         select_cursor = conn.cursor()
         query_result = select_cursor.execute(select_statement, tokens).fetchall()
 
-        DB_LOGGER.debug('\n=> Found: {}'.format(query_result))
+        DB_LOGGER.debug('\n=> Found: %s', query_result)
 
         return query_result
     except sqlite3.Error as e:
-        DB_LOGGER.error('\n{}'.format(e))
+        DB_LOGGER.error('\n%s', e)
 
     DB_LOGGER.debug('EXIT')
     return None
@@ -278,6 +272,7 @@ def select_readings_by_sensor(conn, sensor_name):
     DB_LOGGER.debug('EXIT')
     return result
 
+
 def select_readings_by_sensor_and_node(conn, sensor_name, node_name):
     DB_LOGGER.debug('ENTER')
     
@@ -286,16 +281,18 @@ def select_readings_by_sensor_and_node(conn, sensor_name, node_name):
                 (SELECT id FROM nodes WHERE name = ?))'
     tokens = (sensor_name, node_name,)
     result = execute_select_fetchall(conn, sql, tokens)
-    
+
     DB_LOGGER.debug('EXIT')
     return result
+
+
 def select_readings_by_type(conn, reading_type):
     DB_LOGGER.debug('ENTER')
 
     sql = 'SELECT data, timestamp FROM readings WHERE type = ? ORDER BY timestamp DESC LIMIT 1'
     tokens = (reading_type,)
     result = execute_select_fetchall(conn, sql, tokens)
-    
+
     DB_LOGGER.debug('EXIT')
     return result
 
@@ -307,11 +304,10 @@ def select_readings_by_node_location(conn, node_location):
                 (SELECT id FROM nodes WHERE location = ?))'
     tokens = (node_location,)
     result = execute_select_fetchall(conn, sql, tokens)
-    
+
     DB_LOGGER.debug('EXIT')
     return result
 
-        
 
 #CRUD
 def create_node_tables(conn):
