@@ -7,7 +7,7 @@ import logging
 FORMAT = '%(asctime)s %(module)s %(funcName)s %(levelname)s %(message)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '/server-module/shared/database.log',
+    filename = '../shared/database.log',
     filemode = 'w',
     level = logging.DEBUG
 )
@@ -51,6 +51,7 @@ def create_connection(db_file):
     DB_LOGGER.info('\n=> CONNECTING TO: %s', db_file)
     try:
         conn = sqlite3.connect(db_file, check_same_thread = False)
+        conn.row_factory = lambda cursor, row: dict(zip([col[0] for col in cursor.description], row))
         return conn
     except sqlite3.Error as e:
         DB_LOGGER.error(e)
@@ -113,25 +114,22 @@ def insert_reading(conn, values):
 def execute_select_fetchone(conn, select_statement, tokens = ()):
     DB_LOGGER.debug('ENTER')
     DB_LOGGER.debug('\n=> Executing: %s \nValues: %s', select_statement, tokens)
+    query_result = {}
     try:
         select_cursor = conn.cursor()
         query_result = select_cursor.execute(select_statement, tokens).fetchone()
-
-        if query_result is not None:
-            DB_LOGGER.debug('\n=> Found: %s', query_result)
-            DB_LOGGER.debug('EXIT')
-            return query_result[0]
+        DB_LOGGER.debug('\n=> Found: %s', query_result)
 
     except sqlite3.Error as e:
         DB_LOGGER.error(e)
 
     DB_LOGGER.debug('EXIT')
-    return None
-
+    return query_result if not None else {}
 
 def execute_select_fetchall(conn, select_statement, tokens = ()):
     DB_LOGGER.debug('ENTER')
     DB_LOGGER.debug('\n=> Executing: %s with Values: %s', select_statement, tokens)
+    query_result = {}
     try:
         select_cursor = conn.cursor()
         query_result = select_cursor.execute(select_statement, tokens).fetchall()
@@ -143,7 +141,7 @@ def execute_select_fetchall(conn, select_statement, tokens = ()):
         DB_LOGGER.error('\n%s', e)
 
     DB_LOGGER.debug('EXIT')
-    return None
+    return query_result if not None else {}
     
     
 
@@ -181,7 +179,7 @@ def select_latest_node_name(conn):
     return result
 
 
-def select_node_id_by_name(conn, node_name):
+def select_node_by_name(conn, node_name):
     DB_LOGGER.debug('ENTER')
 
     sql = 'SELECT id FROM nodes WHERE name = ?'
@@ -226,7 +224,7 @@ def select_all_location_sensors(conn, sensor_location):
     return result
 
 
-def select_sensor_id_by_name(conn, sensor_name):
+def select_sensor_by_name(conn, sensor_name):
     DB_LOGGER.debug('ENTER')
 
     sql = 'SELECT id FROM sensors WHERE name = ?'
@@ -236,19 +234,7 @@ def select_sensor_id_by_name(conn, sensor_name):
     DB_LOGGER.debug('EXIT')
     return result
 
-
-def select_sensor_id_by_node(conn, node_name):
-    DB_LOGGER.debug('ENTER')
-
-    sql = 'SELECT id FROM sensors WHERE node_id IN (SELECT id FROM nodes WHERE name = ?)'
-    tokens = (node_name,)
-    result = execute_select_fetchall(conn, sql, tokens)
-    
-    DB_LOGGER.debug('EXIT')
-    return result
-
-
-def select_sensor_id_by_name_and_node(conn, sensor_name, node_name):
+def select_sensor_by_name_and_node(conn, sensor_name, node_name):
     DB_LOGGER.debug('ENTER')
 
     sql = 'SELECT id FROM sensors WHERE name = ? AND node_id IN (SELECT id FROM nodes WHERE name = ?)'
@@ -394,18 +380,17 @@ if __name__ == '__main__':
         create_node_tables(DB_CONNECTION)
 
         insert_node(DB_CONNECTION, ('NODE#1', 'Inhouse'))
-        insert_sensor(DB_CONNECTION, ('DHT11', select_node_id_by_name(DB_CONNECTION, 'NODE#1')))
+        insert_sensor(DB_CONNECTION, ('DHT11', select_node_by_name(DB_CONNECTION, 'NODE#1')['id']))
         insert_reading(
             DB_CONNECTION, 
             (
                 "temperature", 
                 12.34, 
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
-                select_sensor_id_by_name_and_node(DB_CONNECTION, 'DHT11', 'NODE#1')
+                select_sensor_by_name_and_node(DB_CONNECTION, 'DHT11', 'NODE#1')['id']
             )
         )
-
-    print(select_readings_by_sensor(DB_CONNECTION, 'DHT11'))
-    print(select_readings_by_sensor_and_node(DB_CONNECTION, 'DHT11', 'NODE#1'))
-    print(select_readings_by_node_location(DB_CONNECTION, 'Inhouse'))
+    [print(x) for x in select_readings_by_sensor(DB_CONNECTION, 'DHT11')]
+    [print(x) for x in select_readings_by_sensor_and_node(DB_CONNECTION, 'DHT11', 'NODE#1')]
+    [print(x) for x in select_readings_by_node_location(DB_CONNECTION, 'Inhouse')]
     print(is_empty_nodes(DB_CONNECTION))
