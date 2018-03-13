@@ -30,7 +30,7 @@ def is_empty_nodes(conn):
     result = execute_select_fetchone(conn, sql)
 
     DB_LOGGER.debug('EXIT')
-    return not result
+    return not result['count(*)']
 
         
 
