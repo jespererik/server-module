@@ -26,7 +26,7 @@ def __generate_new_node_id():
 
 #create
 def create_node(content):
-    if content['NODE_NAME'] = '':
+    if (content['NODE_NAME'] == ''):
         if dbhelper.is_empty_nodes(DB_CONNECTION):
             content['NODE_NAME'] = 'NODE_1'
             dbhelper.insert_node(DB_CONNECTION, (content['NODE_NAME'], content['LOCATION'],))
