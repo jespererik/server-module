@@ -9,5 +9,5 @@ ADD /backend ./backend
 RUN pip install requests
 RUN pip install flask
 
-CMD ["python"]
+CMD python backend/start.py
 

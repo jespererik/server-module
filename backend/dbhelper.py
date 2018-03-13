@@ -7,7 +7,7 @@ import logging
 FORMAT = '%(asctime)s %(module)s %(funcName)s %(levelname)s %(message)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '../shared/database.log',
+    filename = '/server-module/shared/database.log',
     filemode = 'w',
     level = logging.DEBUG
 )
@@ -30,7 +30,7 @@ def is_empty_nodes(conn):
     result = execute_select_fetchone(conn, sql)
 
     DB_LOGGER.debug('EXIT')
-    return not result
+    return not result['count(*)']
 
         
 
@@ -371,7 +371,7 @@ def create_node_tables(conn):
         DB_LOGGER.debug('EXIT')
         return False
 
-
+'''
 if __name__ == '__main__':
 
     DB_CONNECTION = create_connection(':memory:')
@@ -394,3 +394,4 @@ if __name__ == '__main__':
     [print(x) for x in select_readings_by_sensor_and_node(DB_CONNECTION, 'DHT11', 'NODE#1')]
     [print(x) for x in select_readings_by_node_location(DB_CONNECTION, 'Inhouse')]
     print(is_empty_nodes(DB_CONNECTION))
+'''

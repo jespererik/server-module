@@ -20,13 +20,13 @@ def init_database():
 
 
 def __generate_new_node_id():
-    latest_name = dbhelper.select_latest_node_name(DB_CONNECTION)
+    latest_name = dbhelper.select_latest_node_name(DB_CONNECTION)['name']
     return 'NODE_' + str(int(latest_name.split('_')[1]) + 1)
 
 
 #create
 def create_node(content):
-    if content['NODE_NAME'] = '':
+    if (content['NODE_NAME'] == ''):
         if dbhelper.is_empty_nodes(DB_CONNECTION):
             content['NODE_NAME'] = 'NODE_1'
             dbhelper.insert_node(DB_CONNECTION, (content['NODE_NAME'], content['LOCATION'],))

@@ -4,11 +4,12 @@ To create the image run:
 
 docker build -t server-module .
 
-docker run -v ~/server-module/shared/:/server-module/shared/ --net=host -ti server-module:latest bash
+docker run -v ~/server-module/shared/:/server-module/shared/ --net=host -ti -d server-module:latest
 
-From bash run:
+To check log run:
 
-python backend/start.py
+tail -f shared/database.log
+tailf -f shared/server.log
 
 Stop all containers:
 
