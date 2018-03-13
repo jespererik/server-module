@@ -55,4 +55,50 @@ def get_readings(node_name, sensor_name):
     content = dbhelper.select_readings_by_sensor_and_node(DB_CONNECTION, sensor_name, node_name)
     return content
 
+def get_locations():
+    pass
+
+#Location queries
+def get_location_reading_type_readings(location, reading_type)
+    pass
+
+def get_location_readings(location):
+    pass
+
+def get_location_nodes(location):
+    pass
+
+def get_location_sensors(location):
+    pass
+
+def get_location_sensor(location, sensor):
+    pass
+
+def get_location_sensor_readings(location, sensor)
+    pass
+
+#Node Queries
+def get_node(node)
+    pass
+
+def get_node_readings(node):
+    pass
+
+def get_node_sensors(node):
+    pass
+
+def get_node_sensors_readings(node):
+    pass
+
+def get_node_sensors_type_readings(node, reading_type):
+    pass
+
+def get_node_sensor(node, sensor):
+    pass
+
+def get_node_sensor_readings(node, sensor):
+    pass
+
+def get_node_sensor_type_readings(node, sensor, reading_type):
+    pass
 
