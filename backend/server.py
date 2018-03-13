@@ -20,7 +20,7 @@ def init_database():
 
 
 def __generate_new_node_id():
-    latest_name = dbhelper.select_latest_node_name(DB_CONNECTION)
+    latest_name = dbhelper.select_latest_node_name(DB_CONNECTION)['name']
     return 'NODE_' + str(int(latest_name.split('_')[1]) + 1)
 
 
