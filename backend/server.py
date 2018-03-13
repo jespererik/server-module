@@ -26,12 +26,13 @@ def __generate_new_node_id():
 
 #create
 def create_node(content):
-    if dbhelper.is_empty_nodes(DB_CONNECTION):
-        content['NODE_NAME'] = 'NODE_1'
-        dbhelper.insert_node(DB_CONNECTION, (content['NODE_NAME'], content['LOCATION'],))
-    else:
-        content['NODE_NAME'] = __generate_new_node_id()
-        dbhelper.insert_node(DB_CONNECTION, (content['NODE_NAME'], content['LOCATION'],))
+    if content['NODE_NAME'] = '':
+        if dbhelper.is_empty_nodes(DB_CONNECTION):
+            content['NODE_NAME'] = 'NODE_1'
+            dbhelper.insert_node(DB_CONNECTION, (content['NODE_NAME'], content['LOCATION'],))
+        else:
+            content['NODE_NAME'] = __generate_new_node_id()
+            dbhelper.insert_node(DB_CONNECTION, (content['NODE_NAME'], content['LOCATION'],))
     return content
 
 
@@ -53,4 +54,5 @@ def create_reading(content, node_name, sensor_name):
 def get_readings(node_name, sensor_name):
     content = dbhelper.select_readings_by_sensor_and_node(DB_CONNECTION, sensor_name, node_name)
     return content
+
 
