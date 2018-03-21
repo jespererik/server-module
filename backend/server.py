@@ -7,12 +7,12 @@ import dbhelper
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '../shared/server.log',
+    filename = '/server-module/shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = dbhelper.create_connection('../shared/skynet.db')
+DB_CONNECTION = dbhelper.create_connection('/server-module/shared/skynet.db')
 
 
 def init_database():
@@ -61,49 +61,14 @@ def get_locations():
     content = [[location for location in dicts.values()] for dicts in content]
     return {"LOCATIONS": content}
 
-#Location queries
-def get_location_reading_type_readings(location, reading_type):
-    pass
 
-def get_location_readings(location):
-    pass
+def get_locations_nodes():
+    content = dbhelper.select_all_locaton_node(DB_CONNECTION)
+    
+    content = 
 
-def get_location_nodes(location):
-    pass
+    return {"NODE LOCATIONS": content}
 
-def get_location_sensors(location):
-    pass
-
-def get_location_sensor(location, sensor):
-    pass
-
-def get_location_sensor_readings(location, sensor):
-    pass
-
-#Node Queries
-def get_node(node):
-    pass
-
-def get_node_readings(node):
-    pass
-
-def get_node_sensors(node):
-    pass
-
-def get_node_sensors_readings(node):
-    pass
-
-def get_node_sensors_type_readings(node, reading_type):
-    pass
-
-def get_node_sensor(node, sensor):
-    pass
-
-def get_node_sensor_readings(node, sensor):
-    pass
-
-def get_node_sensor_type_readings(node, sensor, reading_type):
-    pass
 
 if __name__ == "__main__":
     if sys.argv[1]:
