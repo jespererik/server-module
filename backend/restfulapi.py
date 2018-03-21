@@ -5,7 +5,7 @@ import server
 import json
 
 app = Flask(__name__)
-
+CORS(app)
 
 '''
 Add function to check authentication(HMAC, pre-shared key etc.) 
