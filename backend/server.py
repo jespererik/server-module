@@ -58,12 +58,23 @@ def get_readings(node_name, sensor_name):
 def get_locations():
     content = dbhelper.select_all_locations(DB_CONNECTION)
     print(content)
-    content = [[location for location in dicts.values()] for dicts in content]
-    return {"LOCATIONS": content}
-
+    content = [dicts["location"] for dicts in content]
+    return content
 
 def get_locations_nodes():
-    pass    
+
+    location_nodes = {}
+    locations = get_locations()
+    content = dbhelper.select_all_nodes(DB_CONNECTION)
+
+    for location in locations:
+        nodes = []
+        for node in content:
+            if node["location"] == location:
+                nodes.append(node["name"])
+        location_nodes[location] = nodes
+
+    return {"NODE LOCATIONS": location_nodes}    
 
 
 if __name__ == "__main__":
@@ -90,5 +101,13 @@ if __name__ == "__main__":
         [create_node(node) for node in inhouse_nodes]
         [create_node(node) for node in outhouse_nodes]
         [create_node(node) for node in heater_nodes]
-
+    print("*"*50)
+    print("get_locations")
     print(get_locations())
+    print("*"*50)
+    print("\n")
+    print("*"*50)
+    print("get_locations_nodes()")
+    print(get_locations_nodes())
+    print("*"*50)
+    print("\n")
