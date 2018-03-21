@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask  import Flask, request, jsonify
 from ast    import literal_eval
+from flask_cors import CORS
 import server
 import json
 
