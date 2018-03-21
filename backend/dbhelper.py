@@ -7,7 +7,7 @@ import logging
 FORMAT = '%(asctime)s %(module)s %(funcName)s %(levelname)s %(message)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '/server-module/shared/database.log',
+    filename = '../shared/database.log',
     filemode = 'w',
     level = logging.DEBUG
 )
@@ -155,6 +155,16 @@ def select_all_nodes(conn):
     result = execute_select_fetchall(conn, sql)
 
     DB_LOGGER.debug('EXIT')
+    return result
+
+
+def select_all_locations(conn):
+    DB_LOGGER.debug("ENTER")
+
+    sql = 'SELECT DISTINCT location FROM nodes'
+    result = execute_select_fetchall(conn, sql)
+
+    DB_LOGGER.debug("EXIT")
     return result
 
 

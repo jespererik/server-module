@@ -38,6 +38,14 @@ def get_readings_type(node_name, sensor_name):
     response = server.get_readings(node_name, sensor_name)
     return jsonify(response)
 
+@app.route("/api/location/", methods = ["GET"])
+def get_all_locations():
+    reponse = server.get_locations()
+    return jsonify(reponse)
+
+
+
+
 def main():
     server.init_database()
     app.run(debug = True, host = '0.0.0.0', port = 5000)

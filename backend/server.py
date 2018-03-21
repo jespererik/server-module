@@ -7,12 +7,12 @@ import dbhelper
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '/server-module/shared/server.log',
+    filename = '../shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = dbhelper.create_connection('/server-module/shared/skynet.db')
+DB_CONNECTION = dbhelper.create_connection('../shared/skynet.db')
 
 
 def init_database():
@@ -56,10 +56,13 @@ def get_readings(node_name, sensor_name):
     return content
 
 def get_locations():
-    pass
+    content = dbhelper.select_all_locations(DB_CONNECTION)
+    print(content)
+    content = [[location for location in dicts.values()] for dicts in content]
+    return {"LOCATIONS": content}
 
 #Location queries
-def get_location_reading_type_readings(location, reading_type)
+def get_location_reading_type_readings(location, reading_type):
     pass
 
 def get_location_readings(location):
@@ -74,11 +77,11 @@ def get_location_sensors(location):
 def get_location_sensor(location, sensor):
     pass
 
-def get_location_sensor_readings(location, sensor)
+def get_location_sensor_readings(location, sensor):
     pass
 
 #Node Queries
-def get_node(node)
+def get_node(node):
     pass
 
 def get_node_readings(node):
@@ -102,3 +105,29 @@ def get_node_sensor_readings(node, sensor):
 def get_node_sensor_type_readings(node, sensor, reading_type):
     pass
 
+if __name__ == "__main__":
+    if sys.argv[1]:
+        init_database()
+
+        inhouse_node = {
+            "NODE_NAME": "",
+            "LOCATION": "inhouse"
+        }
+        outhouse_node = {
+            "NODE_NAME": "",
+            "LOCATION": "outhouse"
+        }
+        heater_node = {
+            "NODE_NAME": "",
+            "LOCATION": "heater"
+        }
+
+        inhouse_nodes = [inhouse_node]*5
+        outhouse_nodes = [outhouse_node]*5
+        heater_nodes = [heater_node]*5
+
+        [create_node(node) for node in inhouse_nodes]
+        [create_node(node) for node in outhouse_nodes]
+        [create_node(node) for node in heater_nodes]
+
+    print(get_locations())
