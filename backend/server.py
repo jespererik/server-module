@@ -76,6 +76,9 @@ def get_locations_nodes():
 
     return {"NODE LOCATIONS": location_nodes}    
 
+def get_nodes():
+    content = dbhelper.select_all_nodes(DB_CONNECTION)
+    return content
 
 if __name__ == "__main__":
     if sys.argv[1]:
