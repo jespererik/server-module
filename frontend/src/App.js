@@ -1,24 +1,38 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import { ListGroup, ListGroupItem} from 'react-bootstrap';
 import './index.css';
 
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { readings: [] };
+    this.state = { readings: [] , nodes: []};
   }
 
   componentDidMount() {
+    this.fetchReadings();
+    this.fetchNodes();
+  }
+
+  fetchReadings(){
     fetch('http://localhost:5000/api/nodes/NODE_1/sensors/DHT11/readings')
     .then(response => response.json())
-    .then(json =>{
-      console.log(json)
-      const readings = json.map(object => (object));
+    .then(jsonData =>{
+      console.log(jsonData)
+      const readings = jsonData.map(object => (object));
       this.setState({readings})
     })
-}
+  }
+
+  fetchNodes(){
+    fetch('http://localhost:5000/api/nodes')
+    .then(response => response.json())
+    .then(jsonData =>{
+      console.log(jsonData)
+      const nodes = jsonData.nodes.map(object => (object)) //this is an object with an array in it
+      this.setState({nodes})
+    })
+  }
 
   render() {
     var listStyle = {
@@ -32,10 +46,10 @@ export default class App extends React.Component {
     };
     return (
       <div style={listStyle}>
-        <h4 align="center"> Readings </h4>
+        <h4 align="center"> Nodes </h4>
         <ListGroup>
-          {this.state.readings.map((reading, index) =>
-            <ListGroupItem key={index}> Date: {reading.timestamp} : Temperature {reading.data} C</ListGroupItem>
+          {this.state.nodes.map((nodes, index) =>
+            <ListGroupItem key={index}> Name: {nodes.name} Location: {nodes.location} Created: {nodes.created}  </ListGroupItem>
           )}
         </ListGroup>
       </div>
