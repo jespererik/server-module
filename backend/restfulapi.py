@@ -44,7 +44,10 @@ def get_all_locations():
     reponse = server.get_locations()
     return jsonify(reponse)
 
-
+@app.route("/api/nodes", methods = ["GET"])
+def get_nodes():
+    reponse = server.get_nodes()
+    return jsonify({'nodes': reponse})
 
 
 def main():
