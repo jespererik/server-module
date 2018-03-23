@@ -2,8 +2,6 @@ FROM python:2
 
 WORKDIR /backend
 
-ADD /shared ./shared
-COPY /shared ./shared
 ADD . .
 
 RUN pip install requests
