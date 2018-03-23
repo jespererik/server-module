@@ -39,10 +39,10 @@ def get_readings_type(node_name, sensor_name):
     response = server.get_readings(node_name, sensor_name)
     return jsonify(response)
 
-@app.route("/api/location/", methods = ["GET"])
+@app.route("/api/locations", methods = ["GET"])
 def get_all_locations():
-    reponse = server.get_locations()
-    return jsonify(reponse)
+    response = server.get_locations()
+    return jsonify({'locations' : response})
 
 @app.route("/api/nodes", methods = ["GET"])
 def get_nodes():
