@@ -2,6 +2,8 @@ from datetime import datetime
 import sys
 import logging
 import dbhelper
+import random
+from datetime import datetime
 
 
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
@@ -80,6 +82,16 @@ def get_nodes():
     content = dbhelper.select_all_nodes(DB_CONNECTION)
     return content
 
+
+def creading(sensor_name, reading_type):
+    return {
+        "TYPE": reading_type,
+        "DATA": random.uniform(-15, 40),
+        "TIMESTAMP": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "SENSOR_NAME": sensor_name
+    }
+
+
 if __name__ == "__main__":
     if sys.argv[1]:
         init_database()
@@ -97,6 +109,17 @@ if __name__ == "__main__":
             "LOCATION": "heater"
         }
 
+        DHT11_sensor = {
+            "SENSOR_NAME": "DHT11"
+        }
+
+        DHT12_sensor = {
+            "SENSOR_NAME": "DHT12"
+        }
+
+
+
+
         inhouse_nodes = [inhouse_node]*5
         outhouse_nodes = [outhouse_node]*5
         heater_nodes = [heater_node]*5
@@ -104,11 +127,27 @@ if __name__ == "__main__":
         [create_node(node) for node in inhouse_nodes]
         [create_node(node) for node in outhouse_nodes]
         [create_node(node) for node in heater_nodes]
+
+        [dbhelper.insert_sensor(DB_CONNECTION, ("DHT11", x)) for x in range(1, 11)]
+        [dbhelper.insert_sensor(DB_CONNECTION, ("DHT12", x)) for x in range(1, 11)]
+
+
+
+
     print("*"*50)
     print("get_locations")
     print(get_locations())
     print("*"*50)
     print("\n")
+
+
+    print("*"*50)
+    print("get_locations_nodes()")
+    print(get_locations_nodes())
+    print("*"*50)
+    print("\n")
+
+
     print("*"*50)
     print("get_locations_nodes()")
     print(get_locations_nodes())
