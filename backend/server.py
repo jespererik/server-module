@@ -83,12 +83,11 @@ def get_nodes():
     return content
 
 
-def creading(sensor_name, reading_type):
+def creading(reading_type):
     return {
         "TYPE": reading_type,
         "DATA": random.uniform(-15, 40),
         "TIMESTAMP": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "SENSOR_NAME": sensor_name
     }
 
 
@@ -131,6 +130,11 @@ if __name__ == "__main__":
         [dbhelper.insert_sensor(DB_CONNECTION, ("DHT11", x)) for x in range(1, 11)]
         [dbhelper.insert_sensor(DB_CONNECTION, ("DHT12", x)) for x in range(1, 11)]
 
+        [create_reading(creading("temperature"), ("NODE_" + str(x)), "DHT11") for x in range(1, 6)]
+        [create_reading(creading("temperature"), ("NODE_" + str(x)), "DHT11") for x in range(1, 6)]
+
+        [create_reading(creading("humidity"), ("NODE_" + str(x)), "DHT12") for x in range(1, 6)]
+        [create_reading(creading("humidity"), ("NODE_" + str(x)), "DHT12") for x in range(1, 6)]
 
 
 
