@@ -15,7 +15,7 @@ export default class App extends React.Component {
   }
 
   fetchReadings(){
-    fetch('http://localhost:5000/api/nodes/NODE_1/sensors/DHT11/readings')
+    fetch('http://localhost:3000/api/nodes/NODE_1/sensors/DHT11/readings')
     .then(response => response.json())
     .then(jsonData =>{
       console.log(jsonData)
@@ -25,7 +25,7 @@ export default class App extends React.Component {
   }
 
   fetchNodes(){
-    fetch('http://localhost:5000/api/nodes')
+    fetch('http://localhost:3000/api/nodes')
     .then(response => response.json())
     .then(jsonData =>{
       console.log(jsonData)
