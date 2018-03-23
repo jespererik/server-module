@@ -52,7 +52,7 @@ def get_nodes():
 
 def main():
     server.init_database()
-    app.run(debug = True, host = '0.0.0.0', port = 5000)
+    app.run(debug = True, host = '0.0.0.0', port = 3000)
 
 
 if __name__ == '__main__':

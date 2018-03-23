@@ -1,15 +1,18 @@
 #server-module
-The server module runs in a docker container.
-To create the image run:
+The server module hosts a backend server and a frontend server.
 
-docker build -t server-module .
+Run docker build -t backend . from backend folder
 
-docker run -v ~/server-module/shared/:/server-module/shared/ --net=host -ti -d server-module:latest
+Run docker build -t frontend . from frontend folder
+ 
+Run docker run -v $(pwd)/backend/shared/:/backend/shared/ --net=host -ti -d backend:latest to start the backend and mount a shared volume for storage.
+
+Run docker run --net-host -ti frontend:latest
 
 To check log run:
 
-tail -f shared/database.log
-tailf -f shared/server.log
+tail -f backend/shareddatabase.log
+tailf -f backend/shared/server.log
 
 Stop all containers:
 

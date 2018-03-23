@@ -7,12 +7,12 @@ import dbhelper
 FORMAT = '%(asctime)s - %(module)s - %(funcName)s - %(levelname)s - %(\nmessage)s'
 logging.basicConfig(
     format = FORMAT,
-    filename = '/server-module/shared/server.log',
+    filename = '/backend/shared/server.log',
     level = logging.DEBUG,
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = dbhelper.create_connection('/server-module/shared/skynet.db')
+DB_CONNECTION = dbhelper.create_connection('/backend/shared/skynet.db')
 
 
 def init_database():
