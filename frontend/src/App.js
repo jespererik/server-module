@@ -36,8 +36,8 @@ export default class App extends React.Component {
 
   render() {
     var listStyle = {
-      width:  500,
-      margin: 100,
+      // width:  500,
+      // margin: 100,
       fontFamily: "monospace",
       fontSize: 12,
       backgroundColor: "#FFF",
@@ -45,7 +45,7 @@ export default class App extends React.Component {
       filter: "drop-shadow(0px 0px 5px #666)",
     };
     return (
-      <div style={listStyle}>
+      <div style={listStyle} className="offset-md-4 col-md-4">
         <h4 align="center"> Nodes </h4>
         <ListGroup>
           {this.state.nodes.map((nodes, index) =>
