@@ -34,25 +34,24 @@ def process_reading_post(node_name, sensor_name):
     return jsonify(response), 201
 
 #Get reading
-
 @app.route("/api/locations", methods = ["GET"])
 def get_all_locations():
     response = server.get_locations()
     return jsonify({'locations' : response})
 
-@app.route("/api/locations/nodes", methods = ["GET"])
-def get_nodes():
-    response = None
+@app.route("/api/locations/<string:location>/nodes", methods = ["GET"])
+def get_nodes(location):
+    response = server.get_location_nodes(location)
     return jsonify({'nodes' : response})
 
-@app.route("/api/locations/nodes/<string:node_name>/sensors", methods = ["GET"])
-def get_sensors():
-    response = None
+@app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
+def get_sensors(node_name):
+    response = server.get_node_sensors(node_name)
     return jsonify({'sensors' : response})
 
-@app.route("/api/locations/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
-def get_latest_reading():
-    response = None
+@app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
+def get_latest_reading(node_name, sensor_name):
+    response = server.get_sensor_latest_reading(node_name, sensor_name)
     return jsonify({'reading' : response})
 
 

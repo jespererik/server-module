@@ -53,16 +53,26 @@ def create_reading(content, node_name, sensor_name):
 
 
 #read
-def get_readings(node_name, sensor_name):
-    content = dbhelper.select_readings_by_sensor_and_node(DB_CONNECTION, sensor_name, node_name)
-    return content
-
 def get_locations():
     content = dbhelper.select_all_locations(DB_CONNECTION)
     print(content)
     content = [dicts["location"] for dicts in content]
     return content
 
+def get_location_nodes(location):
+    content = dbhelper.select_node_by_location(DB_CONNECTION, location)
+    return content
+
+def get_node_sensors(node_name):
+    content = dbhelper.select_all_node_sensors(DB_CONNECTION, node_name)
+    return content
+
+def get_sensor_latest_reading(node_name, sensor_name):
+    content = dbhelper.select_latest_reading_by_sensor_and_node(DB_CONNECTION, node_name, sensor_name)
+    return content
+   
+
+#function for debugging
 def get_locations_nodes():
 
     location_nodes = {}
@@ -76,12 +86,7 @@ def get_locations_nodes():
                 nodes.append(node["name"])
         location_nodes[location] = nodes
 
-    return {"NODE LOCATIONS": location_nodes}    
-
-def get_nodes():
-    content = dbhelper.select_all_nodes(DB_CONNECTION)
-    return content
-
+    return {"NODE LOCATIONS": location_nodes} 
 
 def creading(reading_type):
     return {
