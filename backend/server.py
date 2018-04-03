@@ -63,11 +63,13 @@ def get_location_nodes(location):
     content = dbhelper.select_node_by_location(DB_CONNECTION, location)
     return content
 
-def get_node_sensors(node_name):
+def get_node_sensors(location, node_name):
+    location = dbhelper.select_node_by_location(DB_CONNECTION, location) #what do with this
     content = dbhelper.select_all_node_sensors(DB_CONNECTION, node_name)
     return content
 
-def get_sensor_latest_reading(node_name, sensor_name):
+def get_sensor_latest_reading(location, node_name, sensor_name):
+    location = dbhelper.select_node_by_location(DB_CONNECTION, location) #what do with this
     content = dbhelper.select_latest_reading_by_sensor_and_node(DB_CONNECTION, node_name, sensor_name)
     return content
    

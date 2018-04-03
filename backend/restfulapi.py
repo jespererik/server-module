@@ -45,13 +45,13 @@ def get_nodes(location):
     return jsonify({'nodes' : response})
 
 @app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
-def get_sensors(node_name):
-    response = server.get_node_sensors(node_name)
+def get_sensors(location, node_name):
+    response = server.get_node_sensors(location, node_name)
     return jsonify({'sensors' : response})
 
 @app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
-def get_latest_reading(node_name, sensor_name):
-    response = server.get_sensor_latest_reading(node_name, sensor_name)
+def get_latest_reading(location, node_name, sensor_name):
+    response = server.get_sensor_latest_reading(location, node_name, sensor_name)
     return jsonify({'reading' : response})
 
 
