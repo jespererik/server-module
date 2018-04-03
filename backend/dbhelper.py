@@ -281,11 +281,23 @@ def select_readings_by_sensor_and_node(conn, sensor_name, node_name):
     DB_LOGGER.debug('EXIT')
     return result
 
+def select_latest_reading_by_sensor_and_node(conn, node_name, sensor_name):
+    DB_LOGGER.debug('ENTER')
+    
+    sql = 'SELECT data, timestamp FROM readings WHERE sensor_id IN\
+            (SELECT id FROM sensors WHERE name = ? AND node_id IN\
+                (SELECT id FROM nodes WHERE name = ?)) ORDER BY timestamp DESC LIMIT 1'
+    tokens = (sensor_name, node_name,)
+    result = execute_select_fetchall(conn, sql, tokens)
+
+    DB_LOGGER.debug('EXIT')
+    return result
+
 
 def select_readings_by_type(conn, reading_type):
     DB_LOGGER.debug('ENTER')
 
-    sql = 'SELECT data, timestamp FROM readings WHERE type = ? ORDER BY timestamp DESC LIMIT 1'
+    sql = 'SELECT data, timestamp FROM readings WHERE type = ?'
     tokens = (reading_type,)
     result = execute_select_fetchall(conn, sql, tokens)
 
