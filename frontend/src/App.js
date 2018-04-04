@@ -6,7 +6,7 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { readings: [] , nodes: [], locations: []};
+    this.state = { reading: [] , nodes: [], locations: [], sensors: []};
   }
 
   componentDidMount() {
@@ -25,6 +25,9 @@ export default class App extends React.Component {
     return (
       <div >
         <Location  />
+        <Nodes />
+        <Sensors /> 
+        <Readings /> 
       </div>
     );
   }
@@ -57,6 +60,120 @@ class Location extends App {
         <ListGroup>
           {this.state.locations.map((locations, index) =>
             <ListGroupItem key={index}> {locations} </ListGroupItem>
+          )}
+        </ListGroup>
+    </div>);
+  }
+
+}
+
+class Nodes extends App {
+  constructor(props){
+    super(props)
+  };
+
+  componentDidMount() {
+    this.fetchNodes();
+  }
+
+  fetchNodes(){
+    var location = 'inhouse';
+    var url = 'http://localhost:3000/api/locations/' + location + '/nodes';
+    console.log(url);
+    
+    fetch(url)
+    .then(response => response.json())
+    .then(jsonData =>{
+      console.log(jsonData)
+      const nodes = jsonData.nodes.map(object => (object)) //this is an object with an array in it
+      this.setState({nodes})
+    })
+  }
+
+  render(){
+    return( 
+      <div className="offset-md-4 col-md-4">
+        <h4 align="center"> Nodes at inhouse </h4>
+        <ListGroup>
+          {this.state.nodes.map((nodes, index) =>
+            <ListGroupItem key={index}> {nodes.name} </ListGroupItem>
+          )}
+        </ListGroup>
+    </div>);
+  }
+
+}
+
+class Sensors extends App {
+  constructor(props){
+    super(props)
+  };
+
+  componentDidMount() {
+    this.fetchSensors();
+  }
+
+  fetchSensors(){
+    var location = 'inhouse';
+    var node_name = 'NODE_4'
+    var url = 'http://localhost:3000/api/locations/' + location + '/nodes' + '/' + node_name + '/sensors';
+    console.log(url);
+    
+    fetch(url)
+    .then(response => response.json())
+    .then(jsonData =>{
+      console.log(jsonData)
+      const sensors = jsonData.sensors.map(object => (object)) //this is an object with an array in it
+      this.setState({sensors})
+    })
+  }
+
+  render(){
+    return( 
+      <div className="offset-md-4 col-md-4">
+        <h4 align="center"> Sensors at NODE_4 </h4>
+        <ListGroup>
+          {this.state.sensors.map((sensors, index) =>
+            <ListGroupItem key={index}> {sensors.name} </ListGroupItem>
+          )}
+        </ListGroup>
+    </div>);
+  }
+
+}
+
+class Readings extends App {
+  constructor(props){
+    super(props)
+  };
+
+  componentDidMount() {
+    this.fetchReadings();
+  }
+
+  fetchReadings(){
+    var location = 'inhouse';
+    var node_name = 'NODE_4'
+    var sensor_name = 'DHT11'
+    var url = 'http://localhost:3000/api/locations/' + location + '/nodes' + '/' + node_name + '/sensors' + '/' + sensor_name + '/readings/latest';
+    console.log(url);
+    
+    fetch(url)
+    .then(response => response.json())
+    .then(jsonData =>{
+      console.log(jsonData)
+      const reading = jsonData.reading.map(object => (object)) //this is an object with an array in it
+      this.setState({reading})
+    })
+  }
+
+  render(){
+    return( 
+      <div className="offset-md-4 col-md-4">
+        <h4 align="center"> Latest reading for sensor DHT11 </h4>
+        <ListGroup>
+          {this.state.reading.map((reading, index) =>
+            <ListGroupItem key={index}> Temp: {reading.data} Date: {reading.timestamp} </ListGroupItem>
           )}
         </ListGroup>
     </div>);
