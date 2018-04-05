@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem} from 'react-bootstrap';
+import { ListGroup, ListGroupItem, ButtonToolbar, Button} from 'react-bootstrap';
 import './index.css';
 
 export default class App extends React.Component {
@@ -37,7 +37,18 @@ export default class App extends React.Component {
 class Location extends App {
   constructor(props){
     super(props)
+
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      ...this.state,
+      isClicked: false
+    }
   };
+
+  handleClick() {
+    this.setState({isClicked: true});
+  }
 
   componentDidMount() {
     this.fetchLocation();
@@ -54,14 +65,21 @@ class Location extends App {
   }
 
   render(){
+    const {isClicked } = this.state;
+
     return( 
       <div className="offset-md-4 col-md-4">
         <h4 align="center"> Location </h4>
-        <ListGroup>
-          {this.state.locations.map((locations, index) =>
-            <ListGroupItem key={index}> {locations} </ListGroupItem>
+        <ButtonToolbar>
+          {this.state.locations.map((loc, index) =>
+            <Button 
+              key={index}
+              onClick = {!isClicked ? this.handleClick : null}
+            > 
+              {!isClicked ? {loc} : <div> {loc} <Nodes value={loc} /> </div> } 
+            </Button>
           )}
-        </ListGroup>
+        </ButtonToolbar>
     </div>);
   }
 
@@ -77,7 +95,7 @@ class Nodes extends App {
   }
 
   fetchNodes(){
-    var location = 'inhouse';
+    var location = this.props.value;
     var url = 'http://localhost:3000/api/locations/' + location + '/nodes';
     console.log(url);
     
