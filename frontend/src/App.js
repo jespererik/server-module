@@ -39,12 +39,12 @@ class Location extends App {
 
     this.state = {
       ...this.state,
-      isClicked: false
+      currentLocation: false
     }
   };
 
-  handleClick() {
-    this.setState({isClicked: true});
+  handleClick(location) {
+    this.setState({currentLocation: location});
   }
 
   componentDidMount() {
@@ -56,31 +56,27 @@ class Location extends App {
     .then(response => response.json())
     .then(jsonData =>{
       console.log(jsonData)
-      const locations = jsonData.locations.map(object => (object)) //this is an object with an array in it
+      const locations = jsonData.locations
       this.setState({locations})
     })
   }
-
-  renderNodes(locations){
-
-    <div> <Nodes value={locations}/> </div>
-   }
   
   render() {
-    const { isClicked } = this.state;
+    const { currentLocation } = this.state;
+
 
     return (
       <div className="offset-md-4 col-md-4">
-        <h4 align="center"> Location </h4>
+        <h4 align="center"> Locations </h4>
           <ListGroup>
-            {this.state.locations.map((locations, index) =>
+            {this.state.locations.map((location, index) => 
             <div>
               <ListGroupItem key={index}> 
-                <Button bsSize="large" block key={index} onClick={!isClicked ? this.handleClick : null}>
-                  {locations}
+                <Button bsSize="large" block key={index} onClick={() => this.handleClick(location)}>
+                  {location}
                 </Button>
               </ListGroupItem>
-              <ListGroupItem> {isClicked ? <Nodes value = {locations} /> : null } </ListGroupItem>
+              <ListGroupItem> {currentLocation === location ? <Nodes value = {location} /> : null } </ListGroupItem>
               </div>
             )}
           </ListGroup>  
