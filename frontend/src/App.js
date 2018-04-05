@@ -25,9 +25,6 @@ export default class App extends React.Component {
     return (
       <div >
         <Location  />
-        <Nodes />
-        <Sensors /> 
-        <Readings /> 
       </div>
     );
   }
@@ -64,26 +61,34 @@ class Location extends App {
     })
   }
 
-  render(){
-    const {isClicked } = this.state;
+  renderNodes(locations){
 
-    return( 
+    <div> <Nodes value={locations}/> </div>
+   }
+  
+  render() {
+    const { isClicked } = this.state;
+
+    return (
       <div className="offset-md-4 col-md-4">
         <h4 align="center"> Location </h4>
-        <ButtonToolbar>
-          {this.state.locations.map((loc, index) =>
-            <Button 
-              key={index}
-              onClick = {!isClicked ? this.handleClick : null}
-            > 
-              {!isClicked ? {loc} : <div> {loc} <Nodes value={loc} /> </div> } 
-            </Button>
-          )}
-        </ButtonToolbar>
-    </div>);
+          <ListGroup>
+            {this.state.locations.map((locations, index) =>
+            <div>
+              <ListGroupItem key={index}> 
+                <Button bsSize="large" block key={index} onClick={!isClicked ? this.handleClick : null}>
+                  {locations}
+                </Button>
+              </ListGroupItem>
+              <ListGroupItem> {isClicked ? <Nodes value = {locations} /> : null } </ListGroupItem>
+              </div>
+            )}
+          </ListGroup>  
+      </div>);
   }
 
 }
+
 
 class Nodes extends App {
   constructor(props){
@@ -111,7 +116,6 @@ class Nodes extends App {
   render(){
     return( 
       <div className="offset-md-4 col-md-4">
-        <h4 align="center"> Nodes at inhouse </h4>
         <ListGroup>
           {this.state.nodes.map((nodes, index) =>
             <ListGroupItem key={index}> {nodes.name} </ListGroupItem>
