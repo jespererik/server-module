@@ -72,7 +72,7 @@ class Location extends App {
             {this.state.locations.map((location, index) => 
             <div>
               <ListGroupItem key={index}> 
-                <Button bsSize="large" bsStyle="primary" disabled={currentLocation === location.name} block key={index} onClick={() => this.handleClick(location)}>
+                <Button bsSize="large" bsStyle="primary" disabled={currentLocation === location} block key={index} onClick={() => this.handleClick(location)}>
                   {location}
                 </Button>
               </ListGroupItem>
