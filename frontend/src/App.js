@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, ButtonToolbar, Button} from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Button} from 'react-bootstrap';
 import './index.css';
 
 export default class App extends React.Component {
@@ -72,11 +72,11 @@ class Location extends App {
             {this.state.locations.map((location, index) => 
             <div>
               <ListGroupItem key={index}> 
-                <Button bsSize="large" block key={index} onClick={() => this.handleClick(location)}>
+                <Button bsSize="large" bsStyle="primary" disabled={currentLocation === location.name} block key={index} onClick={() => this.handleClick(location)}>
                   {location}
                 </Button>
               </ListGroupItem>
-              <ListGroupItem> {currentLocation === location ? <Nodes value = {location} /> : null } </ListGroupItem>
+              <ListGroupItem> {currentLocation === location ? <Nodes location = {location} /> : null } </ListGroupItem>
               </div>
             )}
           </ListGroup>  
@@ -89,14 +89,26 @@ class Location extends App {
 class Nodes extends App {
   constructor(props){
     super(props)
+
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      ...this.state,
+      currentNode: false
+    }
+
   };
+
+  handleClick(node) {
+    this.setState({currentNode: node.name});
+  }
 
   componentDidMount() {
     this.fetchNodes();
   }
 
   fetchNodes(){
-    var location = this.props.value;
+    var location = this.props.location;
     var url = 'http://localhost:3000/api/locations/' + location + '/nodes';
     console.log(url);
     
@@ -104,20 +116,30 @@ class Nodes extends App {
     .then(response => response.json())
     .then(jsonData =>{
       console.log(jsonData)
-      const nodes = jsonData.nodes.map(object => (object)) //this is an object with an array in it
+      const nodes = jsonData.nodes //this is an object with an array in it
       this.setState({nodes})
     })
   }
 
-  render(){
-    return( 
-      <div className="offset-md-4 col-md-4">
+  render() {
+
+    const { currentNode } = this.state;
+
+    return (
+      <div>
         <ListGroup>
-          {this.state.nodes.map((nodes, index) =>
-            <ListGroupItem key={index}> {nodes.name} </ListGroupItem>
+          {this.state.nodes.map((node, index) =>
+            <div>
+              <ListGroupItem key={index}>
+                <Button bsSize="large" bsStyle="info" disabled={currentNode === node.name} block key={index} onClick={() => this.handleClick(node)}>
+                  {node.name}
+                </Button>
+              </ListGroupItem>
+              <ListGroupItem> {currentNode === node.name ? <Sensors nodeName={node.name} location={this.props.location} /> : null} </ListGroupItem>
+            </div>
           )}
         </ListGroup>
-    </div>);
+      </div>);
   }
 
 }
@@ -125,15 +147,27 @@ class Nodes extends App {
 class Sensors extends App {
   constructor(props){
     super(props)
+
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      ...this.state,
+      currentSensor: false
+    }
+
   };
+
+  handleClick(sensor) {
+    this.setState({currentSensor: sensor.name});
+  }
 
   componentDidMount() {
     this.fetchSensors();
   }
 
   fetchSensors(){
-    var location = 'inhouse';
-    var node_name = 'NODE_4'
+    var location = this.props.location;
+    var node_name = this.props.nodeName;
     var url = 'http://localhost:3000/api/locations/' + location + '/nodes' + '/' + node_name + '/sensors';
     console.log(url);
     
@@ -141,21 +175,29 @@ class Sensors extends App {
     .then(response => response.json())
     .then(jsonData =>{
       console.log(jsonData)
-      const sensors = jsonData.sensors.map(object => (object)) //this is an object with an array in it
+      const sensors = jsonData.sensors //this is an object with an array in it
       this.setState({sensors})
     })
   }
 
-  render(){
-    return( 
-      <div className="offset-md-4 col-md-4">
-        <h4 align="center"> Sensors at NODE_4 </h4>
+  render() {
+    const { currentSensor } = this.state;
+
+    return (
+      <div>
         <ListGroup>
-          {this.state.sensors.map((sensors, index) =>
-            <ListGroupItem key={index}> {sensors.name} </ListGroupItem>
+          {this.state.sensors.map((sensor, index) =>
+            <div>
+              <ListGroupItem key={index}>
+                <Button bsSize="large" bsStyle="success" disabled={currentSensor === sensor.name} block key={index} onClick={() => this.handleClick(sensor)}>
+                  {sensor.name}
+                </Button>
+              </ListGroupItem>
+              <ListGroupItem> {currentSensor === sensor.name ? <Readings nodeName={this.props.nodeName} location={this.props.location} sensorName={sensor.name} /> : null} </ListGroupItem>
+            </div>
           )}
         </ListGroup>
-    </div>);
+      </div>);
   }
 
 }
@@ -170,9 +212,9 @@ class Readings extends App {
   }
 
   fetchReadings(){
-    var location = 'inhouse';
-    var node_name = 'NODE_4'
-    var sensor_name = 'DHT11'
+    var location = this.props.location;
+    var node_name = this.props.nodeName;
+    var sensor_name = this.props.sensorName;
     var url = 'http://localhost:3000/api/locations/' + location + '/nodes' + '/' + node_name + '/sensors' + '/' + sensor_name + '/readings/latest';
     console.log(url);
     
@@ -180,15 +222,14 @@ class Readings extends App {
     .then(response => response.json())
     .then(jsonData =>{
       console.log(jsonData)
-      const reading = jsonData.reading.map(object => (object)) //this is an object with an array in it
+      const reading = jsonData.reading //this is an object with an array in it
       this.setState({reading})
     })
   }
 
   render(){
     return( 
-      <div className="offset-md-4 col-md-4">
-        <h4 align="center"> Latest reading for sensor DHT11 </h4>
+      <div>
         <ListGroup>
           {this.state.reading.map((reading, index) =>
             <ListGroupItem key={index}> Temp: {reading.data} Date: {reading.timestamp} </ListGroupItem>
