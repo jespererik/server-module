@@ -1,13 +1,21 @@
 #server-module
 The server module hosts a backend server and a frontend server.
 
-Run docker build -t backend . from backend folder
+From backend folder run:
 
-Run docker build -t frontend . from frontend folder
- 
-Run docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d backend:latest from backend folder. This will mount a shared volume for storage.
+docker build -t backend . 
 
-Run docker run --net=host -ti -d frontend:latest from frontend folder
+From frontend folder run:
+
+docker build -t frontend . 
+
+From backend folder run and mount a shared volume for storage:
+
+docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d backend:latest
+
+From frontendfolder run:
+
+docker run --net=host -ti -d frontend:latest from frontend folder
 
 To check log run:
 
