@@ -52,7 +52,7 @@ def process_reading_post(node_name, sensor_name):
 @auth.login_required
 def get_all_locations():
     response = server.get_locations()
-    return jsonify({'locations' : response})
+    return jsonify({'locations' : response}), 200
 
 @app.route("/api/locations/<string:location>/nodes", methods = ["GET"])
 @auth.login_required
@@ -60,7 +60,7 @@ def get_nodes(location):
     response = server.get_location_nodes(location)
     if len(response) == 0:
         abort(404)
-    return jsonify({'nodes' : response})
+    return jsonify({'nodes' : response}), 200
 
 @app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
 @auth.login_required
@@ -68,7 +68,7 @@ def get_sensors(location, node_name):
     response = server.get_node_sensors(location, node_name)
     if len(response) == 0:
         abort(404)
-    return jsonify({'sensors' : response})
+    return jsonify({'sensors' : response}), 200
 
 @app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
 @auth.login_required
@@ -76,7 +76,7 @@ def get_latest_reading(location, node_name, sensor_name):
     response = server.get_sensor_latest_reading(location, node_name, sensor_name)
     if len(response) == 0:
         abort(404)
-    return jsonify({'reading' : response})
+    return jsonify({'reading' : response}),200
 
 
 def main():
