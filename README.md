@@ -13,9 +13,9 @@ From backend folder run and mount a shared volume for storage:
 
 docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d backend:latest
 
-From frontendfolder run:
+From frontend folder run:
 
-docker run --net=host -ti -d frontend:latest from frontend folder
+docker run --net=host -ti -d frontend:latest
 
 To check log run:
 

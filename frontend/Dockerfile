@@ -1,4 +1,4 @@
-FROM node:9.8.0
+FROM node:stretch
 
 # Override the base log level (info).
 ENV NPM_CONFIG_LOGLEVEL warn
@@ -6,6 +6,10 @@ ENV NPM_CONFIG_LOGLEVEL warn
 WORKDIR /frontend
 
 ADD . .
+
+ADD package.json package.json
+
+RUN npm install --only=production
 
 RUN npm run build --production
 
