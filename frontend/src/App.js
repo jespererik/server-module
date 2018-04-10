@@ -43,7 +43,11 @@ class Location extends App {
   }
 
   fetchLocation() {
-    var url = 'http://localhost:3000/api/locations'
+    var urlArr = window.location.href;
+    urlArr = urlArr.split(':');
+    console.log(urlArr);
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations';
+    console.log(url);
     fetch(url, {
       headers: {
         Authorization: "Basic " + btoa("test" + ":" + "python")
@@ -105,7 +109,10 @@ class Nodes extends App {
 
   fetchNodes() {
     var location = this.props.location;
-    var url = 'http://localhost:3000/api/locations/' + location + '/nodes';
+    var urlArr = window.location.href;
+    urlArr = urlArr.split(':');
+    console.log(urlArr);
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations' + '/' + location + '/nodes';
     console.log(url);
 
     fetch(url, {
@@ -168,7 +175,10 @@ class Sensors extends App {
   fetchSensors() {
     var location = this.props.location;
     var node_name = this.props.nodeName;
-    var url = 'http://localhost:3000/api/locations/' + location + '/nodes' + '/' + node_name + '/sensors';
+    var urlArr = window.location.href;
+    urlArr = urlArr.split(':');
+    console.log(urlArr);
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations' + '/' + location + '/nodes' + '/' + node_name + '/sensors';
     console.log(url);
 
     fetch(url, {
@@ -219,7 +229,10 @@ class Readings extends App {
     var location = this.props.location;
     var node_name = this.props.nodeName;
     var sensor_name = this.props.sensorName;
-    var url = 'http://localhost:3000/api/locations/' + location + '/nodes' + '/' + node_name + '/sensors' + '/' + sensor_name + '/readings/latest';
+    var urlArr = window.location.href;
+    urlArr = urlArr.split(':');
+    console.log(urlArr);
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations' + '/' + location + '/nodes' + '/' + node_name + '/sensors' + '/' + sensor_name + '/readings/latest';
     console.log(url);
 
     fetch(url, {
