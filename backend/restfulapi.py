@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask  import Flask, request, jsonify
+from flask  import Flask, request, jsonify, abort
 from ast    import literal_eval
 from flask_cors import CORS
 import server
@@ -42,16 +42,22 @@ def get_all_locations():
 @app.route("/api/locations/<string:location>/nodes", methods = ["GET"])
 def get_nodes(location):
     response = server.get_location_nodes(location)
+    if len(response) == 0:
+        abort(404)
     return jsonify({'nodes' : response})
 
 @app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
 def get_sensors(location, node_name):
     response = server.get_node_sensors(location, node_name)
+    if len(response) == 0:
+        abort(404)
     return jsonify({'sensors' : response})
 
 @app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
 def get_latest_reading(location, node_name, sensor_name):
     response = server.get_sensor_latest_reading(location, node_name, sensor_name)
+    if len(response) == 0:
+        abort(404)
     return jsonify({'reading' : response})
 
 

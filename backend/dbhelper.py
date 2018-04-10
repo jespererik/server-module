@@ -168,7 +168,7 @@ def select_all_locations(conn):
     return result
 
 
-def select_node_by_location(conn, node_location):
+def select_nodes_by_location(conn, node_location):
     DB_LOGGER.debug('ENTER')
 
     sql = 'SELECT * FROM nodes WHERE location = ?'
