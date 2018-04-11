@@ -72,7 +72,7 @@ class Location extends App {
           {this.state.locations.map((location, index) =>
             <div>
               <ListGroupItem key={index}>
-                <Button bsSize="large" bsStyle="primary" disabled={currentLocation === location} block key={index} onClick={() => this.handleClick(location)}>
+                <Button bsSize="large" bsStyle="primary" block key={index} onClick={() => this.handleClick(location)}>
                   {location}
                 </Button>
               </ListGroupItem>
@@ -123,7 +123,7 @@ class Nodes extends App {
       .then(response => response.json())
       .then(jsonData => {
         console.log(jsonData)
-        const nodes = jsonData.nodes //this is an object with an array in it
+        const nodes = jsonData.nodes
         this.setState({ nodes })
       })
   }
@@ -138,7 +138,7 @@ class Nodes extends App {
           {this.state.nodes.map((node, index) =>
             <div>
               <ListGroupItem key={index}>
-                <Button bsSize="large" bsStyle="info" disabled={currentNode === node.name} block key={index} onClick={() => this.handleClick(node)}>
+                <Button bsSize="large" bsStyle="info" block key={index} onClick={() => this.handleClick(node)}>
                   {node.name}
                 </Button>
               </ListGroupItem>
@@ -189,7 +189,7 @@ class Sensors extends App {
       .then(response => response.json())
       .then(jsonData => {
         console.log(jsonData)
-        const sensors = jsonData.sensors //this is an object with an array in it
+        const sensors = jsonData.sensors
         this.setState({ sensors })
       })
   }
@@ -203,7 +203,7 @@ class Sensors extends App {
           {this.state.sensors.map((sensor, index) =>
             <div>
               <ListGroupItem key={index}>
-                <Button bsSize="large" bsStyle="success" disabled={currentSensor === sensor.name} block key={index} onClick={() => this.handleClick(sensor)}>
+                <Button bsSize="large" bsStyle="success" block key={index} onClick={() => this.handleClick(sensor)}>
                   {sensor.name}
                 </Button>
               </ListGroupItem>
