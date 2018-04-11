@@ -252,7 +252,7 @@ class Readings extends App {
       <div>
         <ListGroup>
           {this.state.reading.map((reading, index) =>
-            <ListGroupItem key={index}> Temp: {reading.data} Date: {reading.timestamp} </ListGroupItem>
+            <ListGroupItem key={index}> {reading.type} : {reading.data} Date: {reading.timestamp} </ListGroupItem>
           )}
         </ListGroup>
       </div>);
