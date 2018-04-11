@@ -48,16 +48,21 @@ class Location extends App {
     console.log(urlArr);
     var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations';
     console.log(url);
+
+    // const username = prompt('Ange användarnamn');
+    // const password = prompt('Ange lösen');
+
     fetch(url, {
-      headers: {
-        Authorization: "Basic " + btoa("test" + ":" + "python")
-      },
+      credentials: 'include',
     })
       .then(response => response.json())
       .then(jsonData => {
         console.log(jsonData)
         const locations = jsonData.locations
         this.setState({ locations })
+      })
+      .catch(err => {
+        alert(err);
       })
   }
 
@@ -116,9 +121,7 @@ class Nodes extends App {
     console.log(url);
 
     fetch(url, {
-      headers: {
-        Authorization: "Basic " + btoa("test" + ":" + "python")
-      },
+      credentials: 'include',
     })
       .then(response => response.json())
       .then(jsonData => {
@@ -182,9 +185,7 @@ class Sensors extends App {
     console.log(url);
 
     fetch(url, {
-      headers: {
-        Authorization: "Basic " + btoa("test" + ":" + "python")
-      },
+      credentials: 'include',
     })
       .then(response => response.json())
       .then(jsonData => {
@@ -236,9 +237,7 @@ class Readings extends App {
     console.log(url);
 
     fetch(url, {
-      headers: {
-        Authorization: "Basic " + btoa("test" + ":" + "python")
-      },
+      credentials: 'include',
     })
       .then(response => response.json())
       .then(jsonData => {
