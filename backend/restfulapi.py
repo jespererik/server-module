@@ -1,4 +1,4 @@
-from flask  import Flask, request, jsonify, abort
+from flask  import Flask, request, jsonify, abort, Response, make_response
 from ast    import literal_eval
 from flask_cors import CORS
 import server
@@ -7,6 +7,7 @@ from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
 CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*", "supports_credentials": "true"}})
 
 '''
 Add function to check authentication(HMAC, pre-shared key etc.) 
@@ -52,6 +53,9 @@ def process_reading_post(node_name, sensor_name):
 @auth.login_required
 def get_all_locations():
     response = server.get_locations()
+    #header = response.headers
+    #header['Access-Control-Allow-Origin'] = 'http://localhost:3001'
+    #header['Access-Control-Allow-Credentials'] = 'true'
     return jsonify({'locations' : response}), 200
 
 @app.route("/api/locations/<string:location>/nodes", methods = ["GET"])
