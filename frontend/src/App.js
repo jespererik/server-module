@@ -220,7 +220,15 @@ class Sensors extends App {
 class Readings extends App {
   constructor(props) {
     super(props)
+
+    this.handleClick = this.handleClick.bind(this);
+
+
   };
+
+  handleClick() {
+    this.fetchReadings();
+  }
 
   componentDidMount() {
     this.fetchReadings();
@@ -252,8 +260,10 @@ class Readings extends App {
       <div>
         <ListGroup>
           {this.state.reading.map((reading, index) =>
-            <ListGroupItem key={index}> {reading.type} : {reading.data} Date: {reading.timestamp} </ListGroupItem>
-          )}
+            <ListGroupItem key={index}>  {reading.type} : {reading.data} Date: {reading.timestamp}</ListGroupItem>
+            )}
+            <ListGroupItem>
+          <Button bsSize="xssmall" block onClick={() => this.handleClick()}> Refresh </Button></ListGroupItem> 
         </ListGroup>
       </div>);
   }
