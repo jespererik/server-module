@@ -50,7 +50,7 @@ def process_reading_post(node_name, sensor_name):
 
 #Get reading
 @app.route("/api/v1.0/locations", methods = ["GET"])
-@auth.login_required
+#@auth.login_required
 def get_all_locations():
     response = server.get_locations()
     #header = response.headers
@@ -59,7 +59,7 @@ def get_all_locations():
     return jsonify({'locations' : response}), 200
 
 @app.route("/api/v1.0/locations/<string:location>/nodes", methods = ["GET"])
-@auth.login_required
+#@auth.login_required
 def get_nodes(location):
     response = server.get_location_nodes(location)
     if len(response) == 0:
@@ -67,7 +67,7 @@ def get_nodes(location):
     return jsonify({'nodes' : response}), 200
 
 @app.route("/api/v1.0/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
-@auth.login_required
+#@auth.login_required
 def get_sensors(location, node_name):
     response = server.get_node_sensors(location, node_name)
     if len(response) == 0:
@@ -75,7 +75,7 @@ def get_sensors(location, node_name):
     return jsonify({'sensors' : response}), 200
 
 @app.route("/api/v1.0/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
-@auth.login_required
+#@auth.login_required
 def get_latest_reading(location, node_name, sensor_name):
     response = server.get_sensor_latest_reading(location, node_name, sensor_name)
     if len(response) == 0:
