@@ -11,11 +11,11 @@ docker build -t frontend .
 
 From backend folder run and mount a shared volume for storage:
 
-docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d backend:latest
+docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d --restart unless-stopped backend:latest
 
 From frontend folder run:
 
-docker run --net=host -ti -d frontend:latest
+docker run --net=host -ti -d --restart unless-stopped frontend:latest
 
 To check log run:
 
