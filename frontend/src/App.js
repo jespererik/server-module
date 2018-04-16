@@ -46,7 +46,7 @@ class Location extends App {
     var urlArr = window.location.href;
     urlArr = urlArr.split(':');
     console.log(urlArr);
-    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations';
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/v1.0/locations';
     console.log(url);
 
     // const username = prompt('Ange användarnamn');
@@ -117,7 +117,7 @@ class Nodes extends App {
     var urlArr = window.location.href;
     urlArr = urlArr.split(':');
     console.log(urlArr);
-    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations' + '/' + location + '/nodes';
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/v1.0/locations' + '/' + location + '/nodes';
     console.log(url);
 
     fetch(url, {
@@ -181,7 +181,7 @@ class Sensors extends App {
     var urlArr = window.location.href;
     urlArr = urlArr.split(':');
     console.log(urlArr);
-    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations' + '/' + location + '/nodes' + '/' + node_name + '/sensors';
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/v1.0/locations' + '/' + location + '/nodes' + '/' + node_name + '/sensors';
     console.log(url);
 
     fetch(url, {
@@ -241,7 +241,7 @@ class Readings extends App {
     var urlArr = window.location.href;
     urlArr = urlArr.split(':');
     console.log(urlArr);
-    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/locations' + '/' + location + '/nodes' + '/' + node_name + '/sensors' + '/' + sensor_name + '/readings/latest';
+    var url = urlArr[0] + ':' + urlArr[1] + ':3000/' + 'api/v1.0/locations' + '/' + location + '/nodes' + '/' + node_name + '/sensors' + '/' + sensor_name + '/readings/latest';
     console.log(url);
 
     fetch(url, {

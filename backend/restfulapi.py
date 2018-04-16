@@ -7,7 +7,7 @@ from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
 CORS(app)
-cors = CORS(app, resources={r"/api/*": {"origins": "*", "supports_credentials": "true"}})
+cors = CORS(app, resources={r"/api/v1.0/*": {"origins": "*", "supports_credentials": "true"}})
 
 '''
 Add function to check authentication(HMAC, pre-shared key etc.) 
@@ -25,7 +25,7 @@ def unauthorized():
     return jsonify({'error': 'Unauthorized access'}), 401
 
 #Create node
-@app.route('/api/nodes', methods=['POST'])
+@app.route('/api/v1.0/v1.0/nodes', methods=['POST'])
 @auth.login_required
 def create_node():
     content = request.json
@@ -33,7 +33,7 @@ def create_node():
     return jsonify(response), 201
 
 #Create sensor
-@app.route('/api/nodes/<string:node_name>/sensors', methods=['POST'])
+@app.route('/api/v1.0/nodes/<string:node_name>/sensors', methods=['POST'])
 @auth.login_required
 def create_sensor(node_name):
     content = request.json
@@ -41,7 +41,7 @@ def create_sensor(node_name):
     return jsonify(response), 201
 
 #Create reading
-@app.route('/api/nodes/<string:node_name>/sensors/<string:sensor_name>/readings', methods=['POST'])
+@app.route('/api/v1.0/nodes/<string:node_name>/sensors/<string:sensor_name>/readings', methods=['POST'])
 @auth.login_required
 def process_reading_post(node_name, sensor_name):
     content = request.json
@@ -49,7 +49,7 @@ def process_reading_post(node_name, sensor_name):
     return jsonify(response), 201
 
 #Get reading
-@app.route("/api/locations", methods = ["GET"])
+@app.route("/api/v1.0/locations", methods = ["GET"])
 @auth.login_required
 def get_all_locations():
     response = server.get_locations()
@@ -58,7 +58,7 @@ def get_all_locations():
     #header['Access-Control-Allow-Credentials'] = 'true'
     return jsonify({'locations' : response}), 200
 
-@app.route("/api/locations/<string:location>/nodes", methods = ["GET"])
+@app.route("/api/v1.0/locations/<string:location>/nodes", methods = ["GET"])
 @auth.login_required
 def get_nodes(location):
     response = server.get_location_nodes(location)
@@ -66,7 +66,7 @@ def get_nodes(location):
         abort(404)
     return jsonify({'nodes' : response}), 200
 
-@app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
+@app.route("/api/v1.0/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
 @auth.login_required
 def get_sensors(location, node_name):
     response = server.get_node_sensors(location, node_name)
@@ -74,7 +74,7 @@ def get_sensors(location, node_name):
         abort(404)
     return jsonify({'sensors' : response}), 200
 
-@app.route("/api/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
+@app.route("/api/v1.0/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
 @auth.login_required
 def get_latest_reading(location, node_name, sensor_name):
     response = server.get_sensor_latest_reading(location, node_name, sensor_name)
