@@ -50,7 +50,7 @@ def process_reading_post(node_name, sensor_name):
 
 #Get reading
 @app.route("/api/v1.0/locations", methods = ["GET"])
-@auth.login_required
+#@auth.login_required
 def get_all_locations():
     response = server.get_locations()
     return jsonify({'locations' : response}), 200
