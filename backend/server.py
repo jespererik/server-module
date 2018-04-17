@@ -67,10 +67,13 @@ def get_locations():
     return content
 
 def get_location_nodes(location):
-    content = dbhelper.select_nodes_by_location(DB_CONNECTION, location)
-    if content["location"] == location:
-        return content
+    nodes = dbhelper.select_nodes_by_location(DB_CONNECTION, location)
+    for node in nodes:
+        if node["location"] == location:
+            content = dbhelper.select_nodes_by_location(DB_CONNECTION, location)
+            return content
     return None
+
 
 def get_node_sensors(location, node_name):
     nodes = dbhelper.select_nodes_by_location(DB_CONNECTION, location) 

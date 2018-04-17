@@ -59,30 +59,30 @@ def get_all_locations():
 #@auth.login_required
 def get_nodes(location):
     response = server.get_location_nodes(location)
-    if len(response) == 0:
-        return '', 204
     if response is None:
         abort(404)
+    if len(response) == 0:
+        return '', 204
     return jsonify({'nodes' : response}), 200
 
 @app.route("/api/v1.0/locations/<string:location>/nodes/<string:node_name>/sensors", methods = ["GET"])
 #@auth.login_required
 def get_sensors(location, node_name):
     response = server.get_node_sensors(location, node_name)
-    if len(response) == 0:
-        return '', 204
     if response is None:
         abort(404)
+    if len(response) == 0:
+        return '', 204
     return jsonify({'sensors' : response}), 200
 
 @app.route("/api/v1.0/locations/<string:location>/nodes/<string:node_name>/sensors/<string:sensor_name>/readings/latest", methods = ["GET"])
 #@auth.login_required
 def get_latest_reading(location, node_name, sensor_name):
     response = server.get_sensor_latest_reading(location, node_name, sensor_name)
+    if response is None:
+        abort(404)    
     if len(response) == 0:
         return '', 204
-    if response is None:
-        abort(404)
     return jsonify({'reading' : response}),200
 
 
