@@ -13,7 +13,7 @@ export default class App extends React.Component {
   }
 
   render() {
-      return (
+    return (
       <div >
         <Location />
       </div>
@@ -256,7 +256,7 @@ class Readings extends App {
       .then(response => response.json())
       .then(jsonData => {
         console.log(jsonData)
-        const reading = jsonData.reading 
+        const reading = jsonData.reading
         this.setState({ reading })
       })
       .catch(err => {
@@ -270,9 +270,9 @@ class Readings extends App {
         <ListGroup>
           {this.state.reading.map((reading, index) =>
             <ListGroupItem key={index}>  {reading.type} : {reading.data} Date: {reading.timestamp}</ListGroupItem>
-            )}
-            <ListGroupItem>
-          <Button bsSize="xssmall" block onClick={() => this.handleClick()}> Refresh </Button></ListGroupItem> 
+          )}
+          <ListGroupItem>
+            <Button bsSize="xssmall" block onClick={() => this.handleClick()}> Refresh </Button></ListGroupItem>
         </ListGroup>
       </div>);
   }
