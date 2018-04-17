@@ -260,7 +260,7 @@ class Readings extends App {
         this.setState({ reading })
       })
       .catch(err => {
-        alert(err);
+        alert('204 No Content. Please wait some seconds for sensor to post readings');
       })
   }
 

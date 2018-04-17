@@ -60,6 +60,8 @@ def get_all_locations():
 def get_nodes(location):
     response = server.get_location_nodes(location)
     if len(response) == 0:
+        return '', 204
+    if response is None:
         abort(404)
     return jsonify({'nodes' : response}), 200
 
@@ -68,6 +70,8 @@ def get_nodes(location):
 def get_sensors(location, node_name):
     response = server.get_node_sensors(location, node_name)
     if len(response) == 0:
+        return '', 204
+    if response is None:
         abort(404)
     return jsonify({'sensors' : response}), 200
 
@@ -76,6 +80,8 @@ def get_sensors(location, node_name):
 def get_latest_reading(location, node_name, sensor_name):
     response = server.get_sensor_latest_reading(location, node_name, sensor_name)
     if len(response) == 0:
+        return '', 204
+    if response is None:
         abort(404)
     return jsonify({'reading' : response}),200
 

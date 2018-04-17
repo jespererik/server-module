@@ -68,7 +68,9 @@ def get_locations():
 
 def get_location_nodes(location):
     content = dbhelper.select_nodes_by_location(DB_CONNECTION, location)
-    return content
+    if content["location"] == location:
+        return content
+    return None
 
 def get_node_sensors(location, node_name):
     nodes = dbhelper.select_nodes_by_location(DB_CONNECTION, location) 
@@ -76,7 +78,7 @@ def get_node_sensors(location, node_name):
         if node["name"] == node_name:
             content = dbhelper.select_all_node_sensors(DB_CONNECTION, node_name)
             return content
-    return []
+    return None
 
 def get_sensor_latest_reading(location, node_name, sensor_name):
     #nodes = dbhelper.select_nodes_by_location(DB_CONNECTION, location)
@@ -86,7 +88,7 @@ def get_sensor_latest_reading(location, node_name, sensor_name):
         if sensor["name"] == sensor_name:
             content = dbhelper.select_latest_reading_by_sensor_and_node(DB_CONNECTION, node_name, sensor_name)
             return content
-    return []
+    return None
 
 def get_user(username):
     result = dbhelper.select_user_name(DB_CONNECTION, username)
