@@ -129,6 +129,9 @@ class Nodes extends App {
         const nodes = jsonData.nodes
         this.setState({ nodes })
       })
+      .catch(err => {
+        alert(err);
+      })
   }
 
   render() {
@@ -193,6 +196,9 @@ class Sensors extends App {
         const sensors = jsonData.sensors
         this.setState({ sensors })
       })
+      .catch(err => {
+        alert(err);
+      })
   }
 
   render() {
@@ -252,6 +258,9 @@ class Readings extends App {
         console.log(jsonData)
         const reading = jsonData.reading 
         this.setState({ reading })
+      })
+      .catch(err => {
+        alert(err);
       })
   }
 
