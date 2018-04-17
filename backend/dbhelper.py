@@ -414,8 +414,8 @@ def create_node_tables(conn):
             conn,
             '''CREATE TABLE IF NOT EXISTS users(
                     id integer PRIMARY KEY, 
-                    name text,
-                    password text,
+                    name text NOT NULL UNIQUE,
+                    password text
                 );
             '''
         )
