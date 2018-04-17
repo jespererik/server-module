@@ -96,6 +96,10 @@ def execute_insert(conn, insert_statement, tokens):
     
     return False
 
+def insert_user(conn):
+    values = ("test", "python")
+    sql = 'INSERT INTO users(name, password) VALUES(?, ?)'
+    return execute_insert(conn, sql, values)
 
 def insert_node(conn, values):
     sql = 'INSERT INTO nodes(name, location) VALUES (?, ?)'
@@ -143,7 +147,28 @@ def execute_select_fetchall(conn, select_statement, tokens = ()):
     DB_LOGGER.debug('EXIT')
     return query_result if not None else {}
     
+#####################################################################
+#Select Statements for users                                     
+##################################################################### 
+def select_user_name(conn, username):
+    DB_LOGGER.debug('ENTER')
     
+    tokens = (username,)
+    sql = 'SELECT name FROM nodes WHERE name = ?'
+    result = execute_select_fetchone(conn, sql, tokens)
+
+    DB_LOGGER.debug('EXIT')
+    return result
+
+def select_user_password(conn, username):
+    DB_LOGGER.debug('ENTER')
+    
+    tokens = (username,)
+    sql = 'SELECT password FROM nodes WHERE name = ?'
+    result = execute_select_fetchone(conn, sql, tokens)
+
+    DB_LOGGER.debug('EXIT')
+    return result
 
 #####################################################################
 #Select Statements for nodes                                     
@@ -382,6 +407,15 @@ def create_node_tables(conn):
                 timestamp DateTime,
                 sensor_id integer NOT NULL,
                     FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE RESTRICT ON UPDATE CASCADE
+                );
+            '''
+        )
+        create_table(
+            conn,
+            '''CREATE TABLE IF NOT EXISTS users(
+                    id integer PRIMARY KEY, 
+                    name text,
+                    password text,
                 );
             '''
         )

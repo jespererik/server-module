@@ -16,6 +16,8 @@ SERVER_LOGGER = logging.getLogger(__name__)
 
 DB_CONNECTION = dbhelper.create_connection('/backend/shared/skynet.db')
 
+dbhelper.insert_user(DB_CONNECTION)
+
 
 def init_database():
     dbhelper.create_node_tables(DB_CONNECTION)
