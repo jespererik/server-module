@@ -16,8 +16,8 @@ auth = HTTPBasicAuth()
 
 @auth.get_password
 def get_password(username):
-    if username == 'test':
-        return 'python'
+    if username == server.get_user(username)['name']:
+        return server.get_user_password(username)['password']
     return None
 
 @auth.error_handler
@@ -50,12 +50,9 @@ def process_reading_post(node_name, sensor_name):
 
 #Get reading
 @app.route("/api/v1.0/locations", methods = ["GET"])
-#@auth.login_required
+@auth.login_required
 def get_all_locations():
     response = server.get_locations()
-    #header = response.headers
-    #header['Access-Control-Allow-Origin'] = 'http://localhost:3001'
-    #header['Access-Control-Allow-Credentials'] = 'true'
     return jsonify({'locations' : response}), 200
 
 @app.route("/api/v1.0/locations/<string:location>/nodes", methods = ["GET"])

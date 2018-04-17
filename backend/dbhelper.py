@@ -154,7 +154,7 @@ def select_user_name(conn, username):
     DB_LOGGER.debug('ENTER')
     
     tokens = (username,)
-    sql = 'SELECT name FROM nodes WHERE name = ?'
+    sql = 'SELECT name FROM users WHERE name = ?'
     result = execute_select_fetchone(conn, sql, tokens)
 
     DB_LOGGER.debug('EXIT')
@@ -164,7 +164,7 @@ def select_user_password(conn, username):
     DB_LOGGER.debug('ENTER')
     
     tokens = (username,)
-    sql = 'SELECT password FROM nodes WHERE name = ?'
+    sql = 'SELECT password FROM users WHERE name = ?'
     result = execute_select_fetchone(conn, sql, tokens)
 
     DB_LOGGER.debug('EXIT')
