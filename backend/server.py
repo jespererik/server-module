@@ -86,7 +86,14 @@ def get_node_sensors(location, node_name):
 def get_sensor_latest_reading(location, node_name, sensor_name):
     #nodes = dbhelper.select_nodes_by_location(DB_CONNECTION, location)
     #sensors = dbhelper.select_sensor_by_name_and_node(DB_CONNECTION, sensor_name, node_name)
+    nodes = get_location_nodes(location)
+    if nodes is None:
+        return None
+
     sensors = get_node_sensors(location, node_name)
+    if sensors is None:
+        return None
+        
     for sensor in sensors:
         if sensor["name"] == sensor_name:
             content = dbhelper.select_latest_reading_by_sensor_and_node(DB_CONNECTION, node_name, sensor_name)
