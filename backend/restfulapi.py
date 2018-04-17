@@ -25,7 +25,7 @@ def unauthorized():
     return jsonify({'error': 'Unauthorized access'}), 401
 
 #Create node
-@app.route('/api/v1.0/v1.0/nodes', methods=['POST'])
+@app.route('/api/v1.0/nodes', methods=['POST'])
 @auth.login_required
 def create_node():
     content = request.json
