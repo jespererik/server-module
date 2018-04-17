@@ -88,6 +88,14 @@ def get_sensor_latest_reading(location, node_name, sensor_name):
             return content
     return []
 
+def get_user(username):
+    result = dbhelper.select_user_name(DB_CONNECTION, username)
+    return result
+
+def get_user_password(username):
+    result = dbhelper.select_user_password(DB_CONNECTION, username)
+    return result
+
 #function for debugging
 def get_locations_nodes():
 
