@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 SERVER_LOGGER = logging.getLogger(__name__)
 
-DB_CONNECTION = dbhelper.create_connection('/backend/shared/skynet.db')
+DB_CONNECTION = dbhelper.create_connection('/backend/shared/sensordata.db')
 
 dbhelper.insert_user(DB_CONNECTION)
 
