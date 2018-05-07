@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+(cd backend && docker build -t backend . && docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d --restart unless-stopped backend:latest)
+(cd frontend && docker build -t frontend . && docker run --net=host -ti -d --restart unless-stopped frontend:latest)
