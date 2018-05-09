@@ -1,3 +1,0 @@
-#!/usr/bin/env bash 
-sudo docker build -t backend .
-sudo docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d backend:latest
