@@ -1,23 +1,26 @@
-#server-module
-The server module hosts a backend server and a frontend server.
+The server module hosts a backend server and a frontend server running in two Docker containers. 
 
-From backend folder run:
+When first running the applicaton use the build script which will build and start both the containers. 
+
+Alternatively build and run the images with the commands below (it's important the the mount path is the same every time the container is started!): 
+
+Navigate into backend folder and run:
 
 docker build -t backend . 
 
-From frontend folder run:
+Navigate intofrontend folder and run:
 
 docker build -t frontend . 
 
-From backend folder run and mount a shared volume for storage:
+From the backend folder run and mount a shared volume for storage:
 
 docker run -v $(pwd)/shared:/backend/shared --net=host -ti -d --restart unless-stopped backend:latest
 
-From frontend folder run:
+From the frontend folder run:
 
 docker run --net=host -ti -d --restart unless-stopped frontend:latest
 
-To check log run:
+To check log:
 
 tail -f backend/shareddatabase.log
 tailf -f backend/shared/server.log
